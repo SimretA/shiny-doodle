@@ -1,0 +1,53 @@
+import React, {useState, useEffect} from 'react';
+import './App.css';
+import {Nav} from './../navigation/Nav';
+import  {Home} from './../home/Home';
+import {Cart} from "../cart/Cart";
+import {Explore} from "../explore/Explore";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+
+function App(props) {
+    const [cart, setCart] = useState([]);
+    useEffect(
+        ()=>{
+
+        }, [cart]
+    );
+
+    const addToCart = (evt)=> {
+
+
+        setCart([...cart, evt.target.value]);
+        console.log(cart);
+    };
+
+  return (
+      <Router>
+        <div className="App">
+          <Nav/>
+        </div>
+
+          <div className={"container-fluid  my-3 w-100"}>
+              <div className={"row"}>
+                  <div className={".col-12 .col-md-8"}>
+
+                      <Switch>
+                          <Route path={"/"}  exact component={Home}/>
+                          <Route path={"/cart"} exact  render={()=><Cart {...props} cart={cart} />}/>
+                          <Route path={"/explore"} exact render={()=><Explore {...props} addToCart={addToCart}/>}/>
+                      </Switch>
+                  </div>
+                  {/*<div className={".col-6 .col-md-4"}>*/}
+                      {/*<Cart cart={cart}/>*/}
+                  {/*</div>*/}
+              </div>
+          </div>
+      </Router>
+  );
+}
+
+export default App;
