@@ -33,7 +33,7 @@ function App(props) {
 
           <div className={"container-fluid  my-3 w-100"}>
               <div className={"row"}>
-                  <div className={".col-12 .col-md-8"}>
+                  <div className={".col-12 .col-md-8 ml-5"}>
 
                       <Switch>
                           <Route path={"/"}  exact component={Home}/>

@@ -25,6 +25,12 @@ export function Nav(){
                     <li className="nav-item mx-2">
                         <Link to={"/cart"}><p className="nav-link text-light" >Cart</p></Link>
                     </li>
+                    <li className="nav-item mx-2">
+                        <Link to={"/login"}><p className="nav-link text-light" >Login</p></Link>
+                    </li>
+                    <li className="nav-item mx-2">
+                        <Link to={"/signup"}><p className="nav-link text-light" >Sign up</p></Link>
+                    </li>
 
                 </ul>
 
