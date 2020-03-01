@@ -1,5 +1,5 @@
 import React from 'react';
-import {Wrapper, Second, Button, SVG, FormContainer} from "./login.styled.components";
+import {Wrapper, Second, Button, SVG, FormContainer} from "./login.styled";
 
 export function Login() {
     return(

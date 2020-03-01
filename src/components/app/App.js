@@ -5,6 +5,7 @@ import  {Home} from './../home/Home';
 import {Cart} from "../cart/Cart";
 import {Explore} from "../explore/Explore";
 import {Login} from "../login/Login";
+import {Signup} from "../signup/Signup";
 import {
     BrowserRouter as Router,
     Switch,
@@ -41,6 +42,7 @@ function App(props) {
                           <Route path={"/cart"} exact  render={()=><Cart {...props} cart={cart} />}/>
                           <Route path={"/explore"} exact render={()=><Explore {...props} addToCart={addToCart}/>}/>
                           <Route path={"/login"} exact render={()=><Login/>}/>
+                          <Route path={"/signup"} exact render={()=><Signup/>}/>
                       </Switch>
                   </div>
                   {/*<div className={".col-6 .col-md-4"}>*/}

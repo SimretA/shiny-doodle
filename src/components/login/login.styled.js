@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const Wrapper = styled.div`
-    width: 50%;
+    width: 70%;
 `;
 
 export const Second = styled.p`
@@ -29,5 +29,6 @@ export const SVG = styled.svg`
 
 export const FormContainer = styled.div`
     position:relative;
-    
+    background-color: #FFF70066 !important;
+    padding: 5%;
 `;
