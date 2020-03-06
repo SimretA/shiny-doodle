@@ -29,6 +29,6 @@ export const SVG = styled.svg`
 
 export const FormContainer = styled.div`
     position:relative;
-    background-color: #FFF70066 !important;
+    background-color: #FFF70086 !important;
     padding: 5%;
 `;

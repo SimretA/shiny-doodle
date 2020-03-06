@@ -7,23 +7,22 @@ export function Login() {
             <SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>
                 <path
                     d="M 0 50 L 500 500 L 0 500 z"
-                    fill="#FFF700"/>
+                    fill="#FFF70022"/>
             </SVG>
             <FormContainer>
-                <form >
+                <form  >
                     <Second>Login</Second>
-                    <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    <div className="form-group row py-2 mx-auto">
+                        <label htmlFor="exampleInputEmail1" className={"col-sm-2 col-form-label "}>Email</label>
+                        <input type="email" className="form-control col-sm-8" id="exampleInputEmail1" aria-describedby="emailHelp"
                                placeholder="Enter email" />
-                            <small id="emailHelp" className="form-text text-muted">example@somewhere.com
-                            </small>
+
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                    <div className="form-group row py-3 mx-auto">
+                        <label htmlFor="exampleInputPassword1" className={"col-sm-2 col-form-label"}>Password</label>
+                        <input type="password" className="form-control col-sm-8" id="exampleInputPassword1" placeholder="Password" />
                     </div>
-                    <Button className={"px-4 py-1"} type="submit" >Login</Button>
+                    <Button className={"px-4 py-1 btn"} type="submit" >Login</Button>
                 </form>
             </FormContainer>
         </Wrapper>

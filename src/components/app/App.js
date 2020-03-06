@@ -35,7 +35,7 @@ function App(props) {
 
           <div className={"container-fluid  my-3 w-100 h-100 d-inline-block "}>
               <div className={"row"}>
-                  <div className={"col-12 col-md-8 ml-5"}>
+                  <div className={"col-12 m-auto"}>
 
                       <Switch>
                           <Route path={"/"}  exact component={Home}/>
