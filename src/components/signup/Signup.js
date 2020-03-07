@@ -15,6 +15,7 @@ export function Signup() {
         alert("yoo");
 
     };
+
     return (
         <Wrapper className={"m-auto pl-5"}>
             <SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>
@@ -53,7 +54,8 @@ export function Signup() {
                         <input type="telephone" className="form-control" id="inputPhoneNumber"
                                placeholder="Phone Number"/>
                     </div>
-                    <Button className={"px-4 py-1 btn mr-3"} type="submit" onClick={evt=>handleSignup(evt)}>Sign up</Button>
+
+                    <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit" onClick={evt=>handleSignup(evt)}>Sign up</button>
 
                 </Form>
             </FormContainer>

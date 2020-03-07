@@ -20,15 +20,19 @@ export const Button = styled.button`
 `;
 
 export const SVG = styled.svg`
-    height:100%;
+    height:90%;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 50%;
+    z-index:-1;
+    
 `;
 
 export const FormContainer = styled.div`
     position:relative;
-    background-color: #FFF70086 !important;
-    padding: 5%;
+    background-color: #f9d976ae  !important;
+    padding: 3%;
+    box-shadow: 3px 5px #e2cd8d86 ;
+    border-radius: 10px;
 `;

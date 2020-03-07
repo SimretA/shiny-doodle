@@ -33,9 +33,9 @@ function App(props) {
           <Nav/>
         </div>
 
-          <div className={"container-fluid  my-3 w-100 h-100 d-inline-block "}>
-              <div className={"row"}>
-                  <div className={"col-12 m-auto"}>
+          <div className={"container-fluid  w-100 h-100 d-inline-block "}>
+              <div className={"row gradient"}>
+                  <div className={"col-12 mx-auto  my-3 p-5"}>
 
                       <Switch>
                           <Route path={"/"}  exact component={Home}/>
