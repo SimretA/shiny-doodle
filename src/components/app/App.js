@@ -4,6 +4,8 @@ import {Nav} from './../navigation/Nav';
 import  {Home} from './../home/Home';
 import {Cart} from "../cart/Cart";
 import {Explore} from "../explore/Explore";
+import {Login} from "../login/Login";
+import {Signup} from "../signup/Signup";
 import {
     BrowserRouter as Router,
     Switch,
@@ -31,14 +33,16 @@ function App(props) {
           <Nav/>
         </div>
 
-          <div className={"container-fluid  my-3 w-100"}>
-              <div className={"row"}>
-                  <div className={".col-12 .col-md-8"}>
+          <div className={"container-fluid  w-100 h-100 d-inline-block "}>
+              <div className={"row gradient"}>
+                  <div className={"col-12 mx-auto  my-3 p-5"}>
 
                       <Switch>
                           <Route path={"/"}  exact component={Home}/>
                           <Route path={"/cart"} exact  render={()=><Cart {...props} cart={cart} />}/>
                           <Route path={"/explore"} exact render={()=><Explore {...props} addToCart={addToCart}/>}/>
+                          <Route path={"/login"} exact render={()=><Login/>}/>
+                          <Route path={"/signup"} exact render={()=><Signup/>}/>
                       </Switch>
                   </div>
                   {/*<div className={".col-6 .col-md-4"}>*/}

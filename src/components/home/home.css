@@ -1,21 +1,22 @@
-.span{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    height: 100vh;
-    width: 100vh;
-    transform: rotate(45deg);
-    row-gap: 3px;
-    column-gap: 2px;
+.search{
+    background-color: #f9d976ae  !important;
+    padding: 2%;
+    height: 70vh;
+    width: 50%;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    border-radius: 10px;
+
+
 }
-.item{
-    background-color: teal;
-    color: #fff;
-    padding: 6%;
-}
+
+
 .title{
     transform: rotate(-45deg);
     overflow-x: visible;
     white-space: nowrap;
     color: #705749 !important;
 }
+
+
