@@ -1,13 +1,15 @@
-import  React from 'react';
+import  React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import "./Nav.css";
 
 export function Nav(){
 
+    const [navBackground, setNavBackground] = useState(false);
+
 
 
     return(
-        <nav className="navbar navbar-expand-lg navigation">
+        <nav className="navbar navbar-expand-lg navigation" style={{backgroundColor: window.scrollY > 1 ? "white" : "transparent"}}>
             <p className="navbar-brand text-light font-weight-bold" href="#">NAME IS BLANK</p>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                     aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +25,7 @@ export function Nav(){
                         <Link to={"/explore"}><p className="nav-link text-light font-weight-bold">Explore</p></Link>
                     </li>
                     <li className="nav-item mx-2">
-                        <Link to={"/cart"}><p className="nav-link text-light font-weight-bold" >Add Listing</p></Link>
+                        <Link to={"/add-listing"}><p className="nav-link text-light font-weight-bold" >Add Listing</p></Link>
                     </li>
                     <li className="nav-item mx-2">
                         <Link to={"/login"}><p className="nav-link text-light font-weight-bold" >Login</p></Link>
