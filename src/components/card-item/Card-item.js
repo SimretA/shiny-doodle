@@ -2,8 +2,8 @@ import  React from 'react';
 
 export function CardItem(props) {
     return(
-        <div className={"col-sm-4"}>
-            <div className="card" style={{width: 300}}>
+        <div className={"col-sm-4 my-3"}>
+            <div className="card p-3" style={{width: 300, backgroundColor:"transparent"}}>
                 <img className="card-img-top" src="https://picsum.photos/seed/picsum/200/300" alt="Card image cap"
                      style={{width: 300, height:300 }} />
                     <div className="card-body">
