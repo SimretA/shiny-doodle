@@ -1,11 +1,59 @@
 import  React from 'react';
 import {CardItem} from "../card-item/Card-item";
 
+import {useQuery} from "@apollo/react-hooks";
+import{gql} from "apollo-boost";
+import Loading from "../shared/Loading.component";
+
+
 export function Explore(props) {
+    const getUsers= gql`
+    {
+        listings{
+            id
+            name
+            city
+            country
+            price
+            createdAt
+            geolocations{
+              lat
+              long
+            }
+            personCapacity
+            houseType
+            bedrooms
+            bedrooms
+            rating
+            reviews{
+              id
+              content
+            }
+            images{
+              url
+            }
+            anemitys{
+              name
+            }
+        }
+    }
+`;
+    const { loading, error, data } = useQuery(getUsers);
+
+    if(loading){
+        return<Loading/>;
+    }
+    if (error){
+        console.log(error);
+    }
+    const book=(listing)=>{
+        console.log(listing);
+    };
+    console.log(data);
     return(
         <div className={"container"}>
             <div className={"row p-3 h-50"} style={{backgroundColor:"#f9d976", overflowY:"hidden", borderRadius:"2px"}}>
-                {[1,2,1,1,1,3].map(_=><CardItem addToCart={props.addToCart}/>)}
+                {data.listings.map(datum=><CardItem key={datum.id} {...datum} book={book}/>)}
             </div>
 
         </div>

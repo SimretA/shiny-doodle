@@ -35,6 +35,7 @@ function App(props) {
         console.log(cart);
     };
 
+
     return (
         <ApolloProvider client={client}>
             <div className="App">
@@ -52,7 +53,7 @@ function App(props) {
                                     <Route path={"/add-listing"} exact
                                            render={() => <AddListing {...props} cart={cart}/>}/>
                                     <Route path={"/explore"} exact
-                                           render={() => <Explore {...props} addToCart={addToCart}/>}/>
+                                           render={() => <Explore {...props} />}/>
                                     <Route path={"/login"} exact render={() => <Login/>}/>
                                     <Route path={"/signup"} exact render={() => <Signup/>}/>
                                 </Switch>
