@@ -6,6 +6,7 @@ import {Wrapper, Form} from "./signup.styled";
 import {useMutation} from '@apollo/react-hooks';
 import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
+import Loading from "../shared/Loading.component";
 
 
 export function Signup() {
@@ -28,6 +29,12 @@ export function Signup() {
     const [addUser, addedUser] = useMutation(ADD_USER);
 
 
+    React.useEffect(()=>{
+        console.log(addedUser);
+    },[addedUser]);
+
+    //TODO add language and is host
+
     const [account, setAccount] = useState({
         email: "",
         password: "",
@@ -35,17 +42,23 @@ export function Signup() {
         lastName: "",
         street: "",
         country: "",
-        phoneNumber: "",
+        phone: "",
         language: "",
         ishost: false
     });
     const handleSignup = (evt) => {
         evt.preventDefault();
 
-        addUser({ variables: { newUser: account } });
+        addUser({variables: {newUser: account}});
 
 
     };
+    if(addedUser.loading){
+        return<Loading/>
+    }
+    if(addedUser.data){
+        return<Success message={`Welcome ${addedUser.data.registerUsers.firstName}`}/>
+    }
 
     return (
         <Wrapper className={"m-auto pl-5"}>
@@ -71,15 +84,15 @@ export function Signup() {
                                }}/>
                     </div>
                     <div className="form-group mr-3">
-                        <label htmlFor="inputName">Name</label>
-                        <input type="text" className="form-control" id="inputName" placeholder="Name"
+                        <label htmlFor="inputName">FirstName</label>
+                        <input type="text" className="form-control" id="inputName" placeholder="FirstName"
                                onChange={evt => {
                                    setAccount({...account, firstName: evt.target.value})
                                }}/>
                     </div>
                     <div className="form-group mr-3">
-                        <label htmlFor="inputName">Name</label>
-                        <input type="text" className="form-control" id="inputName" placeholder="Name"
+                        <label htmlFor="inputName">LastName</label>
+                        <input type="text" className="form-control" id="inputName" placeholder="LastName"
                                onChange={evt => {
                                    setAccount({...account, lastName: evt.target.value})
                                }}/>
@@ -103,17 +116,17 @@ export function Signup() {
                         <input type="telephone" className="form-control" id="inputPhoneNumber"
                                placeholder="Phone Number"
                                onChange={evt => {
-                                   setAccount({...account, phoneNumber: evt.target.value})
+                                   setAccount({...account, phone: evt.target.value})
                                }}/>
                     </div>
-                    {//TODO add language and is host}
 
-                        <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit"
-                                onClick={evt => handleSignup(evt)}>Sign up</button>
+                    <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit"
+                            onClick={evt => handleSignup(evt)}>Sign up
+                    </button>
 
-                        < /Form>
-                        </FormContainer>
-                        </Wrapper>
-                        );
-                    }
+                    </Form>
+            </FormContainer>
+        </Wrapper>
+);
+}
 
