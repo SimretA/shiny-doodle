@@ -9,9 +9,9 @@ function Map() {
     const [viewport, setViewport] = useState({
         width: 400,
         height: 400,
-        latitude: 37.7577,
-        longitude: -122.4376,
-        zoom: 8
+        latitude: 	9.005401,
+        longitude: 38.763611,
+        zoom: 10
     });
 
     return (
