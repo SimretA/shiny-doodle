@@ -9,11 +9,7 @@ import {Fade} from "react-reveal";
 
 export function Explore(props) {
 
-    const [visible, setVisible] = React.useState(false);
 
-    const handleClick = () =>{
-
-    };
 
     const getUsers = gql`
     {
@@ -46,6 +42,20 @@ export function Explore(props) {
         }
     }
 `;
+
+    const [visible, setVisible] = React.useState(false);
+    const [selectedListing, setSelectedListing] = React.useState({});
+
+    const handleClick = (data) =>{
+
+        setVisible(true);
+        setSelectedListing(data);
+
+    };
+    const closeModal = () =>{
+        setVisible(false);
+    };
+
     const {loading, error, data} = useQuery(getUsers);
 
     if (loading) {
@@ -66,11 +76,12 @@ export function Explore(props) {
     return (
 
             <div className={"container"}>
+
+                <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
                 <div className={"row p-3 h-50"}
                      style={{backgroundColor: "#f9d976", overflowY: "hidden", borderRadius: "2px"}}>
-                    {data.listings.map(datum => <Fade left><CardItem key={datum.id} {...datum} book={book}/></Fade>)}
+                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum} book={book}/></Fade>)}
                 </div>
-                <ListDetail showModal={visible}/>
             </div>
     );
 }
