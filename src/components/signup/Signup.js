@@ -7,6 +7,7 @@ import {useMutation} from '@apollo/react-hooks';
 import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
 import Loading from "../shared/Loading.component";
+import {Fade} from "react-reveal";
 
 
 export function Signup() {
@@ -29,9 +30,9 @@ export function Signup() {
     const [addUser, addedUser] = useMutation(ADD_USER);
 
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         console.log(addedUser);
-    },[addedUser]);
+    }, [addedUser]);
 
     //TODO add language and is host
 
@@ -53,11 +54,15 @@ export function Signup() {
 
 
     };
-    if(addedUser.loading){
-        return<Loading/>
+    if (addedUser.loading) {
+        return (
+            <Fade left>
+                <Loading/>
+            </Fade>
+        );
     }
-    if(addedUser.data){
-        return<Success message={`Welcome ${addedUser.data.registerUsers.firstName}`}/>
+    if (addedUser.data) {
+        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName}`}/>
     }
 
     return (
@@ -124,9 +129,9 @@ export function Signup() {
                             onClick={evt => handleSignup(evt)}>Sign up
                     </button>
 
-                    </Form>
+                </Form>
             </FormContainer>
         </Wrapper>
-);
+    );
 }
 
