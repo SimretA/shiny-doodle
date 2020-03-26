@@ -1,16 +1,16 @@
 import  React from 'react';
 
 export function CardItem(props) {
+    const value = props.id;
     return(
-        <div className={"col-sm-4"}>
-            <div className="card" style={{width: 300}}>
-                <img className="card-img-top" src="https://picsum.photos/seed/picsum/200/300" alt="Card image cap"
-                     style={{width: 300, height:300 }} />
+        <div className={"col-sm-4 my-3"}>
+            <div className="card p-3" style={{width: 300, backgroundColor:"transparent"}}>
+                <img className="card-img-top" src={props.images||"https://picsum.photos/seed/picsum/200/300"} alt="Card image cap"
+                     style={{width: 250, height:250 }} />
                     <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some
-                            of the card's content.</p>
-                        <button value={"apple"} onClick={evt=>props.addToCart(evt)} href="#" className="btn btn-outline-info">Add to Cart</button>
+                        <h5 className="card-title">{props.name}</h5>
+                        <p className="card-text">{props.city}</p>
+                        <button value={value} onClick={evt=>props.book(evt.target.value)} href="#" className="btn btn-outline-info">{props.price}</button>
                     </div>
             </div>
         </div>

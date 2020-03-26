@@ -1,7 +1,26 @@
-import React, {useState} from 'react';
-import {} from "./search.styled";
+import React, {useEffect, useState} from 'react';
+import {useQuery} from "@apollo/react-hooks";
+import{gql} from "apollo-boost";
 
 export default function  Search() {
+    const getUsers= gql`
+    {
+        users{
+        id
+        firstName
+        }
+    }
+`;
+
+
+    const { loading, error, data } = useQuery(getUsers);
+    useEffect(
+        () => {
+
+            console.log("yoo");
+            console.log(data);
+        }, [data]
+    );
 
     function handleSearch(evt) {
 
@@ -18,7 +37,7 @@ export default function  Search() {
                 <div className={"row mt-3"}>
                     <div className="col">
                         <p>Where?</p>
-                        <input type="text" className="form-control" placeholder="First name" />
+                        <input type="text" className="form-control" placeholder="Pick a Place" />
                     </div>
                 </div>
                 <div className="row mt-3">
