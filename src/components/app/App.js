@@ -8,9 +8,9 @@ import {Signup} from "../signup/Signup";
 import {AddListing} from "../add-listing/Add-listing";
 import Profile from "../profile/Profile";
 import {
-BrowserRouter as Router,
-Switch,
-Route
+    BrowserRouter as Router,
+    Switch,
+    Route
 } from "react-router-dom";
 
 //APOLLO
