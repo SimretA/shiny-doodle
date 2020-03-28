@@ -10,7 +10,7 @@ export function Login() {
                     fill="#FFF70022"/>
             </SVG>
             <FormContainer >
-                <form  >
+                <form>
                     <Second>Login</Second>
                     <div className="form-group row py-2 mx-auto">
                         <label htmlFor="exampleInputEmail1" className={"col-sm-2 col-form-label "}>Email</label>

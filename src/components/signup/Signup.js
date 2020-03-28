@@ -42,7 +42,7 @@ export function Signup() {
     const handleSignup = (evt) => {
         evt.preventDefault();
 
-        addUser({ variables: { newUser: account } });
+        addUser({variables: {newUser: account}});
 
 
     };
@@ -106,14 +106,16 @@ export function Signup() {
                                    setAccount({...account, phoneNumber: evt.target.value})
                                }}/>
                     </div>
-                    {//TODO add language and is host}
-
-                        <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit"
-                                onClick={evt => handleSignup(evt)}>Sign up</button>
-
-                        < /Form>
-                        </FormContainer>
-                        </Wrapper>
-                        );
+                    {//TODO add language and is host
                     }
+
+                    <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit"
+                            onClick={evt => handleSignup(evt)}>Sign up
+                    </button>
+
+                    </Form>
+            </FormContainer>
+        </Wrapper>
+);
+}
 
