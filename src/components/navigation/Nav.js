@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {Link} from "react-router-dom";
 import "./Nav.css";
-import {AuthContext} from "../../AuthContext";
+import {AuthContext} from "../../context/AuthContext";
 
 export function Nav() {
 
@@ -34,6 +34,11 @@ export function Nav() {
                             <Link to={"/profile"}><p className={"nav-link text-light font-weight-bold"}>{
                                 `Hello ${auth.account.firstName}`
                             }</p></Link>
+                        </li>
+                        <li className={"nav-item mx-2"}>
+                            <Link to={"/login"}><p className={"nav-link text-light font-weight-bold"}>
+                                Logout
+                            </p></Link>
                         </li>
                     </> : <>
                         <li className="nav-item mx-2">

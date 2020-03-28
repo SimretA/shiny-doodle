@@ -6,7 +6,7 @@ export const AuthProvider= (props) =>{
 
 
     const[auth, setAuth] = useState({
-        isAuthed: true,
+        isAuthed: false,
         account: {
             "id": "75de1f68-cf9c-4dd0-82bd-535643faf0eb",
             "firstName": "aymenjj",

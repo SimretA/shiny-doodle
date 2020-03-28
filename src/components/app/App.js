@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import './App.css';
 import {Nav} from './../navigation/Nav';
 import {Home} from './../home/Home';
@@ -16,8 +16,8 @@ Route
 //APOLLO
 import ApolloClient from "apollo-boost";
 import {ApolloProvider} from "@apollo/react-hooks";
-import {useQuery} from '@apollo/react-hooks';
-import {AuthProvider} from "../../AuthContext";
+import {AuthProvider, AuthContext} from "../../context/AuthContext";
+
 
 const client = new ApolloClient({
     uri: 'https://alama-airbnb.herokuapp.com/graphql'
@@ -26,15 +26,7 @@ const client = new ApolloClient({
 
 function App(props) {
 
-    const [cart, setCart] = useState([]);
-
-
-    const addToCart = (evt) => {
-
-
-        setCart([...cart, evt.target.value]);
-        console.log(cart);
-    };
+    // const [auth, setAuth] = useContext(AuthContext);
 
 
     return (
@@ -53,12 +45,15 @@ function App(props) {
                                     <Switch>
                                         <Route path={"/"} exact component={Home}/>
                                         <Route path={"/add-listing"} exact
-                                               render={() => <AddListing {...props} cart={cart}/>}/>
+                                               render={() => <AddListing {...props} />}/>
                                         <Route path={"/explore"} exact
                                                render={() => <Explore {...props} />}/>
                                         <Route path={"/login"} exact render={() => <Login/>}/>
                                         <Route path={"/signup"} exact render={() => <Signup/>}/>
-                                        <Route path={"/profile"} exact render={() => <Profile/>}/>
+
+                                        <Route path={"/profile"} exact render={() => <Profile/>}>
+                                            {/*{auth.isAuthed?<Redirect to="/profile" /> : <PublicHomePage />}*/}
+                                        </Route>
                                     </Switch>
                                 </div>
                             </div>
