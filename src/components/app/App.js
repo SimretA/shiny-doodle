@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
 import './App.css';
+import {AuthContext} from "../../context/AuthContext";
 import {Nav} from './../navigation/Nav';
 import {Home} from './../home/Home';
 import {Explore} from "../explore/Explore";
@@ -8,15 +9,14 @@ import {Signup} from "../signup/Signup";
 import {AddListing} from "../add-listing/Add-listing";
 import Profile from "../profile/Profile";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route
+BrowserRouter as Router,
+Switch,
+Route, Redirect
 } from "react-router-dom";
 
 //APOLLO
 import ApolloClient from "apollo-boost";
 import {ApolloProvider} from "@apollo/react-hooks";
-import {AuthProvider, AuthContext} from "../../context/AuthContext";
 
 
 const client = new ApolloClient({
@@ -26,42 +26,61 @@ const client = new ApolloClient({
 
 function App(props) {
 
-    // const [auth, setAuth] = useContext(AuthContext);
+    const [auth, setAuth] = useContext(AuthContext);
 
-
+    function PrivateRoute({ children, ...rest }) {
+        return (
+            <Route
+                {...rest}
+                render={({ location }) =>
+                    auth.isAuthed ? (
+                        children
+                    ) : (
+                        <Redirect
+                            to={{
+                                pathname: "/login",
+                                state: { from: location }
+                            }}
+                        />
+                    )
+                }
+            />
+        );
+    }
     return (
-        <AuthProvider>
-            <ApolloProvider client={client}>
-                <div className="App">
-                    <Router>
 
-                        <Nav/>
+        <ApolloProvider client={client}>
+            <div className="App">
+                <Router>
+
+                    <Route component={Nav}/>
 
 
-                        <div className={"container-fluid  w-100 h-100 d-inline-block "}>
-                            <div className={"row gradient"}>
-                                <div className={"col-12 mx-auto  my-3 p-5"}>
+                    <div className={"container-fluid  w-100 h-100 d-inline-block "}>
+                        <div className={"row gradient"}>
+                            <div className={"col-12 mx-auto  my-3 p-5"}>
 
-                                    <Switch>
-                                        <Route path={"/"} exact component={Home}/>
-                                        <Route path={"/add-listing"} exact
-                                               render={() => <AddListing {...props} />}/>
-                                        <Route path={"/explore"} exact
-                                               render={() => <Explore {...props} />}/>
-                                        <Route path={"/login"} exact render={() => <Login/>}/>
-                                        <Route path={"/signup"} exact render={() => <Signup/>}/>
+                                <Switch>
+                                    <Route path={"/"} exact component={Home}/>
+                                    <PrivateRoute path={"/add-listing"} exact
+                                    >
+                                        <AddListing/>
+                                    </PrivateRoute>
+                                    <Route path={"/explore"} exact
+                                           render={() => <Explore {...props} />}/>
+                                    <Route path={"/login"} exact component={Login}/>
+                                    <Route path={"/signup"} exact render={() => <Signup/>}/>
 
-                                        <Route path={"/profile"} exact render={() => <Profile/>}>
-                                            {/*{auth.isAuthed?<Redirect to="/profile" /> : <PublicHomePage />}*/}
-                                        </Route>
-                                    </Switch>
-                                </div>
+                                    <PrivateRoute path={"/profile"} exact >
+                                        <Profile/>
+                                    </PrivateRoute>
+                                </Switch>
                             </div>
                         </div>
-                    </Router>
-                </div>
-            </ApolloProvider>
-        </AuthProvider>
+                    </div>
+                </Router>
+            </div>
+        </ApolloProvider>
     );
 }
 

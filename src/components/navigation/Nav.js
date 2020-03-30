@@ -2,8 +2,9 @@ import React, {useState, useContext} from 'react';
 import {Link} from "react-router-dom";
 import "./Nav.css";
 import {AuthContext} from "../../context/AuthContext";
+import {logout} from "../../control/auth";
 
-export function Nav() {
+export function Nav(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
 
@@ -36,9 +37,13 @@ export function Nav() {
                             }</p></Link>
                         </li>
                         <li className={"nav-item mx-2"}>
-                            <Link to={"/login"}><p className={"nav-link text-light font-weight-bold"}>
+                            <div onClick={() => {
+                                setAuth({...auth, isAuthed: false});
+                                logout(props.history)
+                            }
+                            }><p className={"nav-link text-light font-weight-bold"}>
                                 Logout
-                            </p></Link>
+                            </p></div>
                         </li>
                     </> : <>
                         <li className="nav-item mx-2">

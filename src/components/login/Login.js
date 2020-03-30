@@ -1,13 +1,21 @@
 import React, {useContext} from 'react';
 import {Wrapper, Second, Button, SVG, FormContainer} from "./login.styled";
+import{login} from "../../control/auth";
 import {AuthContext} from "../../context/AuthContext";
+import {useHistory, useLocation} from "react-router-dom";
 
-export function Login() {
+export function Login(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
+    let history = useHistory();
+    let location = useLocation();
+
     const handleLogin = (evt) => {
         evt.preventDefault();
+        //Login query goes here
         setAuth({...auth, isAuthed: true});
+        login(history, location);
+
     };
     return (
         <Wrapper className={"mx-auto my-5"}>
