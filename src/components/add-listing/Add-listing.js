@@ -6,8 +6,11 @@ import {Listing} from "./../../types/listing";
 import { useMutation } from '@apollo/react-hooks';
 import{gql} from "apollo-boost";
 import Success from "../shared/Success.component";
+import * as filestack from 'filestack-js';
 
 export function AddListing(props) {
+
+
 
     const ADD_LISTING = gql`
   mutation addNewListing($newListing: NewListingInput!) {
@@ -22,6 +25,15 @@ export function AddListing(props) {
     
   }
 `;
+    const client = filestack.init('AkTKUy8PSQOeuJgw6XCqaz');
+
+    function handleUpload(evt) {
+
+        evt.preventDefault();
+        client.picker().open();
+
+
+    }
 
     const [addListing, addedListing] = useMutation(ADD_LISTING);
 
@@ -29,7 +41,7 @@ export function AddListing(props) {
         console.log("added");
         console.log(addedListing);
     },[addedListing]);
-    const [stage, setStage] = useState(1);
+    const [stage, setStage] = useState(3);
     const [loading, setLoading] = useState(false);
     const [newListing, setNewListing] = useState(
             { name:"",
@@ -116,6 +128,8 @@ export function AddListing(props) {
             <Map/>
         </div>
     </div>;
+
+
     const stage3 = <div>
         <div className="form-check">
             <label htmlFor="bedrooms" className={"col-sm-2 col-form-label "}>Anemities</label>
@@ -137,6 +151,11 @@ export function AddListing(props) {
                     WiFi
                 </label>
             </div>
+        </div>
+        <div>
+            <button onClick={evt => handleUpload(evt)}>Upload</button>
+
+
         </div>
 
     </div>;
