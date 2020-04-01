@@ -4,7 +4,7 @@ export function CardItem(props) {
     const value = props.id;
     console.log(props);
     return(
-        <div className={"col-sm-4 my-3"} onClick={()=>{props.handleClick(props)}}>
+        <div className={"col-sm-4 my-3"}  onClick={()=>{props.handleClick(props)}}>
             <div className="card p-3" style={{width: 300, backgroundColor:"transparent"}}>
                 <img className="card-img-top" src={props.images||"https://picsum.photos/seed/picsum/200/300"} alt="Card image cap"
                      style={{width: 250, height:250 }} />

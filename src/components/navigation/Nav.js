@@ -10,7 +10,7 @@ export function Nav(props) {
 
 
     return (
-        <nav className="navbar navbar-expand-lg navigation"
+        <nav className="navbar bg-warning navbar-expand-lg navigation"
              style={{backgroundColor: window.scrollY > 1 ? "white" : "transparent"}}>
             <p className="navbar-brand text-light font-weight-bold" href="#">NAME GOES HERE</p>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
