@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Loading from "../shared/Loading.component";
 import {Button, FormContainer} from "../login/login.styled";
 import Map from "../shared/Location-picker.component";
-import {Listing} from "./../../types/listing";
+import {Listing} from "../../query/listing";
 import { useMutation } from '@apollo/react-hooks';
 import{gql} from "apollo-boost";
 import Success from "../shared/Success.component";

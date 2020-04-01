@@ -1,5 +1,7 @@
 import React, {useContext} from 'react';
 import {AuthContext} from "../../context/AuthContext";
+import Avatar from 'react-avatar';
+import {InlineWrapper, ProfileWrapper, Caption, Text, Wrapper, ListingsWrapper, CenterWrapper} from "./profile.styled";
 
 export default function Profile(props) {
 
@@ -18,14 +20,40 @@ export default function Profile(props) {
     } = auth.account;
 
     return (
-        <div>
-            <h3>{`${firstName} ${lastName}`}</h3>
-            <h3>{email}</h3>
-            <h3>{country}</h3>
-            <h3>{street}</h3>
-            <h3>{phone}</h3>
-            <h3>{language}</h3>
-            <h3>{new Date(joinedDate).toDateString()}</h3>
-        </div>
+        <Wrapper>
+            <ProfileWrapper>
+                <CenterWrapper>
+                    <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true}
+                            name={`${firstName} ${lastName}`}/>
+                    <Text>{`${firstName} ${lastName}`}</Text>
+
+                </CenterWrapper>
+                <InlineWrapper>
+                    <Caption> email </Caption>
+                    <Text style={{textTransform: "none"}}>{email}</Text>
+                </InlineWrapper>
+                <InlineWrapper>
+                    <Caption>Phone</Caption>
+                    <Text>{phone}</Text>
+                </InlineWrapper>
+                <InlineWrapper>
+                    <Caption>language</Caption>
+                    <Text>{language}</Text>
+                </InlineWrapper>
+                <InlineWrapper>
+                    <Caption>Joined in</Caption>
+                    <Text>{new Date(joinedDate).getFullYear()}</Text>
+                </InlineWrapper>
+                <InlineWrapper>
+                    <Text>{street}</Text>
+                    <Text>{country}</Text>
+
+                </InlineWrapper>
+
+            </ProfileWrapper>
+            <ListingsWrapper>
+                <h1>Your listings go here</h1>
+            </ListingsWrapper>
+        </Wrapper>
     )
 }
