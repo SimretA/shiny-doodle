@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import "./loading.style.scss";
 
 export default function Loading(props) {
 
@@ -22,9 +23,20 @@ export default function Loading(props) {
     
     `;
 
+    const Dot = Styled.div`
+        
+    
+    `;
+
+    // return (
+    //     <LoadingContainer>
+    //         <h1>Loading<span>...</span></h1>
+    //     </LoadingContainer>
+    // );
     return (
-        <LoadingContainer>
-            <h1>Loading<span>...</span></h1>
-        </LoadingContainer>
+        <div className="dots">
+            <div className="dot"></div>
+            <div className="dot"></div>
+        </div>
     );
 }

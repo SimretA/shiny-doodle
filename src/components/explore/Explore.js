@@ -1,13 +1,17 @@
-import  React from 'react';
+import React from 'react';
 import {CardItem} from "../card-item/Card-item";
-
+import ListDetail from "../listing-details/Listing-detail.component";
 import {useQuery} from "@apollo/react-hooks";
-import{gql} from "apollo-boost";
+import {gql} from "apollo-boost";
 import Loading from "../shared/Loading.component";
+import {Fade} from "react-reveal";
 
 
 export function Explore(props) {
-    const getUsers= gql`
+
+
+
+    const getUsers = gql`
     {
         listings{
             id
@@ -38,25 +42,46 @@ export function Explore(props) {
         }
     }
 `;
-    const { loading, error, data } = useQuery(getUsers);
 
-    if(loading){
-        return<Loading/>;
+    const [visible, setVisible] = React.useState(false);
+    const [selectedListing, setSelectedListing] = React.useState({});
+
+    const handleClick = (data) =>{
+
+        setVisible(true);
+        setSelectedListing(data);
+
+    };
+    const closeModal = () =>{
+        setVisible(false);
+    };
+
+    const {loading, error, data} = useQuery(getUsers);
+
+    if (loading) {
+
+        return (
+            <Fade left>
+                <Loading/>
+            </Fade>
+        );
     }
-    if (error){
+    if (error) {
         console.log(error);
     }
-    const book=(listing)=>{
+    const book = (listing) => {
         console.log(listing);
     };
     console.log(data);
-    return(
-        <div className={"container"}>
-            <div className={"row p-3 h-50"} style={{backgroundColor:"#f9d976", overflowY:"hidden", borderRadius:"2px"}}>
-                {data.listings.map(datum=><CardItem key={datum.id} {...datum} book={book}/>)}
+    return (
+
+            <div className={"container"}>
+
+                <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
+                <div className={"row p-3 h-50"}
+                     style={{backgroundColor: "#f9d976", overflowY: "hidden", borderRadius: "2px"}}>
+                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum} book={book}/></Fade>)}
+                </div>
             </div>
-
-        </div>
-
-);
+    );
 }
