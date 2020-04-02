@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
 import './App.css';
 import {AuthContext} from "../../context/AuthContext";
-import {Nav} from './../navigation/Nav';
+import Nav from './../navigation/AppNav';
+// import {Nav} from './../navigation/Nav';
 import {Home} from './../home/Home';
 import {Explore} from "../explore/Explore";
 import {Login} from "../login/Login";
