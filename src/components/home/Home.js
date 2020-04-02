@@ -2,15 +2,19 @@ import  React from 'react';
 import "./home.css";
 import Search from "./../search/Search";
 import Loading from "../shared/Loading.component";
+import {Container, SearchContainer, RightSideBar} from "./home.styled";
 
 export function Home() {
     return(
-        <div>
+        <Container>
 
 
             {/*<Loading/>*/}
-            <div className={"search"}><Search /></div>
+            <SearchContainer><Search /></SearchContainer>
+            <RightSideBar>
+                Whatever goes here goes here.
+            </RightSideBar>
 
-        </div>
+        </Container>
     );
 }
