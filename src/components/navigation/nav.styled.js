@@ -13,7 +13,8 @@ export const NavWrapper=Styled.div`
 `;
 
 export const NavLink=Styled.li`
-    padding: 10px;
+    margin-left: 30px;
+    padding-top: 30px;
     list-style: none;
     :hover{
         border-radius:5px;
@@ -22,7 +23,6 @@ export const NavLink=Styled.li`
         text-decoration: none;
     }
     cursor: pointer;
-    margin-left: 10px;
     color: #FFFFFF !important;
     
 

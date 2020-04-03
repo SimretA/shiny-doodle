@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "../shared/Loading.component";
-import {Button, FormContainer} from "../login/login.styled";
+import { FormContainer} from "../login/login.styled";
+import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {Listing} from "../../query/listing";
 import { useMutation } from '@apollo/react-hooks';
