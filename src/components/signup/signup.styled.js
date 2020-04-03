@@ -6,6 +6,7 @@ export const Wrapper = Styled.div`
     flex-direction: column;
     justify-content: center;
 
+
 `;
 
 export const InputContainer= Styled.div`
@@ -33,4 +34,5 @@ export const FormContainer = Styled.form`
     @media screen and (min-width: 640px){
         flex-direction: row;
     } 
+    
 `;

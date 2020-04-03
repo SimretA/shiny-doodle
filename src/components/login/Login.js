@@ -20,11 +20,11 @@ export function Login(props) {
     };
     return (
         <Wrapper>
-            <SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>
-                <path
-                    d="M 0 50 L 500 500 L 0 500 z"
-                    fill="#FFF70022"/>
-            </SVG>
+            {/*<SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>*/}
+                {/*<path*/}
+                    {/*d="M 0 50 L 500 500 L 0 500 z"*/}
+                    {/*fill="#FFF70022"/>*/}
+            {/*</SVG>*/}
             <FormContainer>
 
                 <Second>Login</Second>
