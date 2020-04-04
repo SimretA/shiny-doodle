@@ -79,7 +79,7 @@ export function Explore(props) {
 
                 <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
                 <div className={"row p-3 h-50"}
-                     style={{backgroundColor: "#f9d976", overflowY: "hidden", borderRadius: "2px"}}>
+                     style={{overflowY: "hidden", borderRadius: "2px"}}>
                     {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum} book={book}/></Fade>)}
                 </div>
             </div>

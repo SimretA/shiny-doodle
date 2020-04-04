@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
 import './App.css';
 import {AuthContext} from "../../context/AuthContext";
-import {Nav} from './../navigation/Nav';
+import Nav from './../navigation/AppNav';
+// import {Nav} from './../navigation/Nav';
 import {Home} from './../home/Home';
 import {Explore} from "../explore/Explore";
 import {Login} from "../login/Login";
@@ -56,9 +57,7 @@ function App(props) {
                     <Route component={Nav}/>
 
 
-                    <div className={"container-fluid  w-100 h-100 d-inline-block "}>
-                        <div className={"row gradient"}>
-                            <div className={"col-12 mx-auto  my-3 p-5"}>
+                            <div style={{marginRight:"20px",marginLeft:"20px",marginTop:"30px"}}>
 
                                 <Switch>
                                     <Route path={"/"} exact component={Home}/>
@@ -76,8 +75,7 @@ function App(props) {
                                     </PrivateRoute>
                                 </Switch>
                             </div>
-                        </div>
-                    </div>
+
                 </Router>
             </div>
         </ApolloProvider>

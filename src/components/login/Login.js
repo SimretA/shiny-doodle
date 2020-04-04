@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
-import {Wrapper, Second, Button, SVG, FormContainer} from "./login.styled";
-import{login} from "../../control/auth";
+import {Wrapper, Second, SVG, FormContainer, InputContainer} from "./login.styled";
+import {login} from "../../control/auth";
 import {AuthContext} from "../../context/AuthContext";
 import {useHistory, useLocation} from "react-router-dom";
+import {TextInput, Button, Label} from "../shared/FormComponents";
 
 export function Login(props) {
 
@@ -18,29 +19,29 @@ export function Login(props) {
 
     };
     return (
-        <Wrapper className={"mx-auto my-5"}>
-            <SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>
-                <path
-                    d="M 0 50 L 500 500 L 0 500 z"
-                    fill="#FFF70022"/>
-            </SVG>
+        <Wrapper>
+            {/*<SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>*/}
+                {/*<path*/}
+                    {/*d="M 0 50 L 500 500 L 0 500 z"*/}
+                    {/*fill="#FFF70022"/>*/}
+            {/*</SVG>*/}
             <FormContainer>
-                <form>
-                    <Second>Login</Second>
-                    <div className="form-group row py-2 mx-auto">
-                        <label htmlFor="exampleInputEmail1" className={"col-sm-2 col-form-label "}>Email</label>
-                        <input type="email" className="form-control col-sm-8" id="exampleInputEmail1"
+
+                <Second>Login</Second>
+                <InputContainer>
+                    <Label htmlFor="email">Email</Label>
+                    <TextInput required type="email" id="email"
                                aria-describedby="emailHelp"
                                placeholder="Enter email"/>
 
-                    </div>
-                    <div className="form-group row py-3 mx-auto">
-                        <label htmlFor="exampleInputPassword1" className={"col-sm-2 col-form-label"}>Password</label>
-                        <input type="password" className="form-control col-sm-8" id="exampleInputPassword1"
+                </InputContainer>
+                <InputContainer>
+                    <Label htmlFor="exampleTextInputPassword1">Password</Label>
+                    <TextInput required type="password" id="exampleTextInputPassword1"
                                placeholder="Password"/>
-                    </div>
-                    <Button className={"px-4 py-1 btn"} type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
-                </form>
+                </InputContainer>
+                <Button type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
+
             </FormContainer>
         </Wrapper>
     );

@@ -1,6 +1,11 @@
 import styled from "styled-components";
 export const Wrapper = styled.div`
-    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @media screen and (min-width: 640px){
+        flex-direction: row;
+    } 
 `;
 
 export const Second = styled.p`
@@ -10,13 +15,13 @@ export const Second = styled.p`
 `;
 
 
-export const Button = styled.button`
-  background-color: #FFF700 !important;
-  border-radius: 3px;
-  color: #424000;
-  box-shadow: none;
-  margin-left: 30%;
-
+export const InputContainer= styled.div`
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 640px){
+        flex-direction: row;
+    } 
+    margin-top: calc(0.375rem + 2px);
 `;
 
 export const SVG = styled.svg`
@@ -29,10 +34,13 @@ export const SVG = styled.svg`
     
 `;
 
-export const FormContainer = styled.div`
-    position:relative;
+export const FormContainer = styled.form`
+    width: 100%;
     background-color: #f9d976ae  !important;
-    padding: 3%;
     box-shadow: 3px 5px #e2cd8d86 ;
     border-radius: 10px;
+    padding: calc(0.375rem + 3px);
+    @media screen and (min-width: 640px){
+        width: 50%;
+    } 
 `;

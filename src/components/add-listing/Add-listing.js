@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "../shared/Loading.component";
-import {Button, FormContainer} from "../login/login.styled";
 import Map from "../shared/Location-picker.component";
-import {Listing} from "./../../types/listing";
-import { useMutation } from '@apollo/react-hooks';
-import{gql} from "apollo-boost";
+import {useMutation} from '@apollo/react-hooks';
+import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
+import * as filestack from 'filestack-js';
+import {Button, Label, TextInput, DropDown} from "../shared/FormComponents";
+import {Wrapper, Second,  FormContainer, InputContainer} from "./../login/login.styled";
 
 export function AddListing(props) {
+
 
     const ADD_LISTING = gql`
   mutation addNewListing($newListing: NewListingInput!) {
@@ -22,168 +24,205 @@ export function AddListing(props) {
     
   }
 `;
+    const client = filestack.init('AkTKUy8PSQOeuJgw6XCqaz');
+
+    function handleUpload(evt) {
+
+        evt.preventDefault();
+        client.picker().open();
+
+
+    }
 
     const [addListing, addedListing] = useMutation(ADD_LISTING);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("added");
         console.log(addedListing);
-    },[addedListing]);
-    const [stage, setStage] = useState(1);
+    }, [addedListing]);
+    const [stage, setStage] = useState(2);
     const [loading, setLoading] = useState(false);
     const [newListing, setNewListing] = useState(
-            { name:"",
-                price:90.0,
-                street:"yo street",
-                city:"yo city",
-                country: "yo country",
-                bedrooms:1,
-                bathrooms:1,
-                personCapacity:1,
-                houseType: "vila",
-                rating:0.0,}
-            );
+        {
+            name: "",
+            price: 90.0,
+            street: "yo street",
+            city: "yo city",
+            country: "yo country",
+            bedrooms: 1,
+            bathrooms: 1,
+            personCapacity: 1,
+            houseType: "vila",
+            rating: 0.0,
+        }
+    );
 
-    const stage1 = (<div>
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="title" className={"col-sm-2 col-form-label "}>Title</label>
-            <input type="text" className="form-control col-sm-8" id="title"
-                   placeholder="What is the listing's title?" onChange={evt => {
-                setNewListing({...newListing, name: evt.target.value})
-            }}/>
+    const stage1 = (
+        <>
+            <InputContainer>
+                <Label htmlFor="title">Title</Label>
+                <TextInput type="text" id="title"
+                           placeholder="What is the listing's title?" onChange={evt => {
+                    setNewListing({...newListing, name: evt.target.value})
+                }}/>
 
-        </div>
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="price" className={"col-sm-2 col-form-label "}>Price</label>
-            <input type="number" className="form-control col-sm-2" id="price"
-                   placeholder="price per night" onChange={evt => {
-                setNewListing({...newListing, price: parseFloat(evt.target.value)})
-            }}/>
-            <label htmlFor="street" className={"col-sm-2 col-form-label "}>Street</label>
-            <input type="text" className="form-control col-sm-4" id="street"
-                   placeholder="Street name" onChange={evt => {
-                setNewListing({...newListing, street: evt.target.value})
-            }}/>
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="price">Price</Label>
+                <TextInput type="number" id="price"
+                           placeholder="price per night" onChange={evt => {
+                    setNewListing({...newListing, price: parseFloat(evt.target.value)})
+                }}/>
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="street">Street</Label>
+                <TextInput type="text" id="street"
+                           placeholder="Street name" onChange={evt => {
+                    setNewListing({...newListing, street: evt.target.value})
+                }}/>
 
-        </div>
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="city" className={"col-sm-2 col-form-label "}>City</label>
-            <input type="text" className="form-control col-sm-3" id="price"
-                   placeholder="City" onChange={evt => {
-                setNewListing({...newListing, city: evt.target.value})
-            }}/>
-            <label htmlFor="country" className={"col-sm-2 col-form-label "}>Country</label>
-            <input type="text" className="form-control col-sm-3" id="country"
-                   placeholder="Country" onChange={evt => {
-                setNewListing({...newListing, country: evt.target.value})
-            }}/>
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="city">City</Label>
+                <TextInput type="text" id="price"
+                           placeholder="City" onChange={evt => {
+                    setNewListing({...newListing, city: evt.target.value})
+                }}/>
+            </InputContainer>
+            <InputContainer>
+                <Label htmlFor="country">Country</Label>
+                <TextInput type="text" id="country"
+                           placeholder="Country" onChange={evt => {
+                    setNewListing({...newListing, country: evt.target.value})
+                }}/>
 
-        </div>
-    </div>);
-    const stage2 = <div>
+            </InputContainer></>);
+    const stage2 = <>
 
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="bedrooms" className={"col-sm-2 col-form-label "}>BedRooms</label>
-            <input type="number" value={1} className="form-control col-sm-3" id="bedrooms"
-                   onChange={evt => {
-                       setNewListing({...newListing, bedrooms: parseInt(evt.target.value)})
-                   }}/>
-            <label htmlFor="bathrooms" className={"col-sm-2 col-form-label "}>BathRooms</label>
-            <input type="text" className="form-control col-sm-3" id="bathrooms"
-                   value={1} onChange={evt => {
+        <InputContainer>
+            <Label htmlFor="bedrooms">BedRooms</Label>
+            <TextInput type="number" value={1} id="bedrooms"
+                       onChange={evt => {
+                           setNewListing({...newListing, bedrooms: parseInt(evt.target.value)})
+                       }}/>
+        </InputContainer>
+        <InputContainer>
+            <Label htmlFor="bathrooms">BathRooms</Label>
+            <TextInput type="text" id="bathrooms"
+                       value={1} onChange={evt => {
                 setNewListing({...newListing, bathrooms: parseInt(evt.target.value)})
             }}/>
 
-        </div>
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="personcapacity" className={"col-sm-2 col-form-label "}>Capacity</label>
-            <input type="number" className="form-control col-sm-3" id="personcapacity"
-                   value={1} onChange={evt => {
+        </InputContainer>
+        <InputContainer>
+            <Label htmlFor="personcapacity">Capacity</Label>
+            <TextInput type="number" id="personcapacity"
+                       value={1} onChange={evt => {
                 setNewListing({...newListing, personCapacity: parseInt(evt.target.value)})
             }}/>
-            <label htmlFor="country" className={"col-sm-2 col-form-label "}>House Type</label>
-            <select className="custom-select col-sm-3" id="inputGroupSelect04" onChange={evt => {
-                setNewListing({...newListing, houseType: evt.target.value })
+        </InputContainer>
+        <InputContainer>
+            <Label htmlFor="country">House Type</Label>
+            <DropDown id="inputGroupSelect04" onChange={evt => {
+                setNewListing({...newListing, houseType: evt.target.value})
             }}>
                 <option value="1">Apartment</option>
                 <option value="2">House</option>
                 <option value="3">Three</option>
-            </select>
+            </DropDown>
 
-        </div>
-        <div className="form-group row py-2 mx-auto">
-            <label htmlFor="location" className={"col-sm-2 col-form-label "}>Pick your location</label>
+        </InputContainer>
+        <InputContainer>
+            <Label htmlFor="location">Pick your location</Label>
             <Map/>
-        </div>
-    </div>;
-    const stage3 = <div>
-        <div className="form-check">
-            <label htmlFor="bedrooms" className={"col-sm-2 col-form-label "}>Anemities</label>
-            <div>
-                {/*<input className="form-check-input" type="checkbox" value="WiFi" id="wificheck" onChange={(evt)=>alert(evt.target.value)}/>*/}
-                <label className="form-check-label" htmlFor="wificheck">
-                    WiFi
-                </label>
-            </div>
-            <div>
-                <input className="form-check-input" type="checkbox" value="WiFi" id="wificheck"/>
-                <label className="form-check-label" htmlFor="wificheck">
-                    WiFi
-                </label>
-            </div>
-            <div>
-                <input className="form-check-input" type="checkbox" value="WiFi" id="wificheck"/>
-                <label className="form-check-label" htmlFor="wificheck">
-                    WiFi
-                </label>
-            </div>
-        </div>
+        </InputContainer>
+    </>;
 
-    </div>;
+
+    const stage3 = <>
+        <InputContainer>
+            <Label htmlFor="bedrooms">Anemities</Label>
+
+            <>
+                <TextInput type="checkbox" value="WiFi" id="wificheck"/>
+                <Label htmlFor="wificheck">
+                    WiFi
+                </Label>
+            </>
+            <>
+                <TextInput type="checkbox" value="WiFi" id="wificheck"/>
+                <Label htmlFor="wificheck">
+                    WiFi
+                </Label>
+            </>
+        </InputContainer>
+        <InputContainer>
+            <Label>Pictures</Label>
+            <Button onClick={evt => handleUpload(evt)}>Upload</Button>
+        </InputContainer>
+    </>;
 
     useEffect(() => {
         console.log(newListing)
     }, [newListing]);
 
-    const handleAdd=(event)=>{
+    const handleAdd = (event) => {
         event.preventDefault();
         if (stage < 3)
             setStage(stage + 1);
-        else{
+        else {
 
 
             console.log("submitting");
-            addListing({ variables: { newListing: newListing } });
+            addListing({variables: {newListing: newListing}});
         }
     };
+
+    function handleBack(event) {
+        event.preventDefault();
+        setStage(stage - 1);
+    }
+
     const content = (isLoading) => {
         if (isLoading) {
             return <Loading/>
         }
-        if(addedListing.data){
-            return<Success message={"Listing has been added."}/>
+        if (addedListing.data) {
+            return <Success message={"Listing has been added."}/>
         }
         else {
             const cont = stage === 1 ? stage1 : stage === 2 ? stage2 : stage3;
             return (
-                <FormContainer>
-                    <h1>Stage {stage}</h1>
-                    <form>
+                <>
+
+                    <FormContainer>
+                        <Second>Stage {stage}</Second>
                         {cont}
-                        <Button className={"px-4 py-1 btn"} onClick={event => {
-                            handleAdd(event)
-                        }}>{stage<3?"Next":"Add"}
-                        </Button>
-                    </form>
-                </FormContainer>
+                        <InputContainer>
+                            {
+                                stage > 1 ? <Button onClick={event => {
+                                    handleBack(event)
+                                }}>
+                                    Back
+                                </Button> : <></>
+                            }
+
+                            <Button onClick={event => {
+                                handleAdd(event)
+                            }}>{stage < 3 ? "Next" : "Add"}
+                            </Button>
+                        </InputContainer>
+
+                    </FormContainer>
+                </>
             );
         }
     };
     return (
-        <div className={"w-75 m-auto"}>
+        <Wrapper>
 
             {content(addedListing.loading)}
 
-        </div>
+        </Wrapper>
     );
 }

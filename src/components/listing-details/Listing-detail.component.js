@@ -1,6 +1,6 @@
 import React from 'react';
 import {Wrapper, Data, MiniWrapper} from "./List-detail.styled";
-import {Button} from "../login/login.styled";
+import {Button} from "../shared/FormComponents";
 import {Fade} from "react-reveal";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

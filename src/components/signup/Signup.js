@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Second, Button, SVG, FormContainer} from "../login/login.styled";
-import {Wrapper, Form} from "./signup.styled";
+import {FormContainer, Column, Wrapper, InputContainer} from "./signup.styled";
 
 
 import {useMutation} from '@apollo/react-hooks';
@@ -8,6 +7,8 @@ import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
 import Loading from "../shared/Loading.component";
 import {Fade} from "react-reveal";
+import {Button, Label, TextInput} from "../shared/FormComponents";
+import {Second} from "../login/login.styled";
 
 
 export function Signup() {
@@ -66,70 +67,75 @@ export function Signup() {
     }
 
     return (
-        <Wrapper className={"m-auto pl-5"}>
-
+        <Wrapper>
+            <Second>Sign up</Second>
             <FormContainer>
-                <Second>Sign up</Second>
-                <Form>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputEmail1">Email address</label>
-                        <input type="email" className="form-control" id="inputEmail1" aria-describedby="emailHelp"
-                               placeholder="Enter email"
+                <Column>
+                    <InputContainer>
+                        <Label htmlFor="inputEmail1">Email</Label>
+                        <TextInput type="email"  id="inputEmail1" aria-describedby="emailHelp"
+                               placeholder="example@somewhere.com"
                                onChange={evt => {
                                    setAccount({...account, email: evt.target.value})
                                }}/>
-                        <small id="emailHelp" className="form-text text-muted">example@somewhere.com
-                        </small>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputPassword1">Password</label>
-                        <input type="password" className="form-control" id="inputPassword1" placeholder="Password"
+
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="inputPassword1">Password</Label>
+                        <TextInput type="password"  id="inputPassword1" placeholder="Password"
                                onChange={evt => {
                                    setAccount({...account, password: evt.target.value})
                                }}/>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputName">FirstName</label>
-                        <input type="text" className="form-control" id="inputName" placeholder="FirstName"
-                               onChange={evt => {
-                                   setAccount({...account, firstName: evt.target.value})
-                               }}/>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputName">LastName</label>
-                        <input type="text" className="form-control" id="inputName" placeholder="LastName"
-                               onChange={evt => {
-                                   setAccount({...account, lastName: evt.target.value})
-                               }}/>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputAddress">Street</label>
-                        <input type="text" className="form-control" id="inputAddress" placeholder="Address"
+                    </InputContainer>
+
+                    <InputContainer >
+                        <Label htmlFor="inputAddress">Street</Label>
+                        <TextInput type="text" id="inputAddress" placeholder="Address"
                                onChange={evt => {
                                    setAccount({...account, street: evt.target.value})
                                }}/>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputCountry">Country</label>
-                        <input type="text" className="form-control" id="inputCountry" placeholder="Country"
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="inputCountry">Country</Label>
+                        <TextInput type="text" id="inputCountry" placeholder="Country"
                                onChange={evt => {
                                    setAccount({...account, country: evt.target.value})
                                }}/>
-                    </div>
-                    <div className="form-group mr-3">
-                        <label htmlFor="inputPhoneNumber">Phone Number</label>
-                        <input type="telephone" className="form-control" id="inputPhoneNumber"
+                    </InputContainer>
+                </Column>
+                <Column>
+                    <InputContainer>
+                        <Label htmlFor="inputName">FirstName</Label>
+                        <TextInput type="text" id="inputName" placeholder="FirstName"
+                               onChange={evt => {
+                                   setAccount({...account, firstName: evt.target.value})
+                               }}/>
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="inputName">LastName</Label>
+                        <TextInput type="text"  id="inputName" placeholder="LastName"
+                               onChange={evt => {
+                                   setAccount({...account, lastName: evt.target.value})
+                               }}/>
+                    </InputContainer>
+
+                    <InputContainer>
+                        <Label htmlFor="inputPhoneNumber">Phone Number</Label>
+                        <TextInput type="telephone"  id="inputPhoneNumber"
                                placeholder="Phone Number"
                                onChange={evt => {
                                    setAccount({...account, phone: evt.target.value})
                                }}/>
-                    </div>
+                    </InputContainer>
 
-                    <button className={"px-4 py-1 btn mr-3 btn-warning  p-3"} type="submit"
+                    {//TODO add language and is host
+                    }
+                    <Button type="submit"
                             onClick={evt => handleSignup(evt)}>Sign up
-                    </button>
+                    </Button>
+                </Column>
 
-                </Form>
+
             </FormContainer>
         </Wrapper>
     );
