@@ -14,9 +14,9 @@ export default function AppNav(props) {
             <Link style={{textDecoration: "none"}} to={"/explore"}><NavLink>Explore</NavLink></Link>
             <Link style={{textDecoration: "none"}} to={"/add-listing"}><NavLink>Add Listing</NavLink></Link>
             {auth.isAuthed ? <>
-                    <Link style={{textDecoration: "none"}} to={"/profile"}><NavLink>{
-                        `Hello ${auth.account.firstName}`
-                    }</NavLink></Link>
+                    <Link style={{textDecoration: "none"}} to={"/profile"}><NavLink>
+                        My Account
+                    </NavLink></Link>
 
                     <NavLink onClick={() => {
                         setAuth({...auth, isAuthed: false});
