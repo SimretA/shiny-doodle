@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ReactMapGL from 'react-map-gl';
-import { geolocated } from "react-geolocated";
+import Map, {Marker} from 'react-map-gl';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHome, faMapPin, faMoneyBill, faPeopleCarry} from '@fortawesome/free-solid-svg-icons'
 
-
-function Map() {
+function CustomMap({loc, handleMark}) {
     const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2ltcmV0YXJheWEiLCJhIjoiY2s3d2hrNWEyMDIzYTNlbXAwb3YyZTQ2NyJ9.xF2PkDYzuGTk2vwka4Cerw';
 
     const [viewport, setViewport] = useState({
@@ -14,12 +14,29 @@ function Map() {
         zoom: 10
     });
 
+
+
     return (
-        <ReactMapGL
+        <Map
             {...viewport}
             onViewportChange={setViewport}
+            onClick={handleMark}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-        />
+        >
+            {loc[0].lat && loc[0].long &&
+            <Marker
+                latitude={loc[0].lat}
+                longitude={loc[0].long}
+            >
+                <FontAwesomeIcon icon={faMapPin}
+                                 style={{
+                                     fontSize: 25,
+                                     marginRight: 5,
+                                     color:"yellow"
+                                 }}/>
+            </Marker>}
+
+        </Map>
     );
 }
-export default Map;
+export default CustomMap;

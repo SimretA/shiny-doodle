@@ -75,7 +75,7 @@ export function Explore(props) {
     console.log(data);
     return (
 
-            <div className={"container"}>
+            <div>
 
                 <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
                 <div className={"row p-3 h-50"}

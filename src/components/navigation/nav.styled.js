@@ -16,14 +16,14 @@ export const NavLink=Styled.li`
     margin-left: 30px;
     padding-top: 30px;
     list-style: none;
+    color: #FFFFFF !important;
     :hover{
         border-radius:5px;
         border-bottom: solid 5px #fff; 
-        font-size: 17px;
+        color: #000000 !important   ; 
         text-decoration: none;
     }
     cursor: pointer;
-    color: #FFFFFF !important;
     
 
     
