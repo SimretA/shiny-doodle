@@ -1,14 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Loading from "../shared/Loading.component";
 import Map from "../shared/Location-picker.component";
 import {useMutation} from '@apollo/react-hooks';
 import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
-import * as filestack from 'filestack-js';
+import ReactFilestack from 'filestack-react';
+// import * as filestack from 'filestack-js';
 import {Button, Label, TextInput, DropDown} from "../shared/FormComponents";
 import {Wrapper, Second,  FormContainer, InputContainer} from "./../login/login.styled";
+import {AuthContext} from "../../context/AuthContext";
+import {Tag} from "../shared/Tag";
 
 export function AddListing(props) {
+
+    const [auth, setAuth] = useContext(AuthContext);
 
 
     const ADD_LISTING = gql`
@@ -20,19 +25,26 @@ export function AddListing(props) {
             name
             city
             country
+            
         }
     
   }
 `;
-    const client = filestack.init('AkTKUy8PSQOeuJgw6XCqaz');
 
-    function handleUpload(evt) {
+    function handleUpload(res) {
 
-        evt.preventDefault();
-        client.picker().open();
+        if(res.filesUploaded.length>0){
+            setNewListing({...newListing, images: [...newListing.images, {url:res.filesUploaded[0].url}]})
+        }
 
 
     }
+
+    const _onClickMap = (evt) =>{
+        setNewListing({...newListing, geolocations:[{long: evt.lngLat[0], lat: evt.lngLat[1]}]});
+
+
+    };
 
     const [addListing, addedListing] = useMutation(ADD_LISTING);
 
@@ -40,21 +52,34 @@ export function AddListing(props) {
         console.log("added");
         console.log(addedListing);
     }, [addedListing]);
-    const [stage, setStage] = useState(2);
-    const [loading, setLoading] = useState(false);
+    const [stage, setStage] = useState(1);
     const [newListing, setNewListing] = useState(
         {
             name: "",
-            price: 90.0,
-            street: "yo street",
-            city: "yo city",
-            country: "yo country",
+            price: 0.0,
+            street: "",
+            city: "",
+            country: "",
             bedrooms: 1,
             bathrooms: 1,
             personCapacity: 1,
-            houseType: "vila",
+            houseType: "apartment",
             rating: 0.0,
+            geolocations: [{
+                lat: null,
+                long: null
+            }],
+            user:{
+                id: auth.account.id
+            },
+            anemitys:[],
+            images:[]
         }
+    );
+    React.useEffect(
+        ()=>{
+            console.log(newListing);
+        }, [newListing]
     );
 
     const stage1 = (
@@ -126,40 +151,62 @@ export function AddListing(props) {
             <DropDown id="inputGroupSelect04" onChange={evt => {
                 setNewListing({...newListing, houseType: evt.target.value})
             }}>
-                <option value="1">Apartment</option>
-                <option value="2">House</option>
-                <option value="3">Three</option>
+                <option value="apartment">Apartment</option>
+                <option value="house">House</option>
+                <option value="villa">Villa</option>
             </DropDown>
 
         </InputContainer>
         <InputContainer>
             <Label htmlFor="location">Pick your location</Label>
-            <Map/>
+            <Map loc={newListing.geolocations} handleMark={_onClickMap}/>
         </InputContainer>
     </>;
 
 
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            event.preventDefault();
+            setNewListing({...newListing, anemitys: [...newListing.anemitys, {name: event.target.value}]});
+            event.target.value = "";
+        }
+    };
+    const removeAnemity = (i) =>{
+        let array = newListing.anemitys;
+        array.splice(i,1);
+        setNewListing({...newListing, anemitys: array});
+
+
+    };
     const stage3 = <>
         <InputContainer>
-            <Label htmlFor="bedrooms">Anemities</Label>
+            <Label htmlFor="anemities">Amenities</Label>
 
-            <>
-                <TextInput type="checkbox" value="WiFi" id="wificheck"/>
-                <Label htmlFor="wificheck">
-                    WiFi
-                </Label>
-            </>
-            <>
-                <TextInput type="checkbox" value="WiFi" id="wificheck"/>
-                <Label htmlFor="wificheck">
-                    WiFi
-                </Label>
-            </>
+            <TextInput id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"} onKeyPress={handleKeyPress}/>
+
         </InputContainer>
-        <InputContainer>
-            <Label>Pictures</Label>
-            <Button onClick={evt => handleUpload(evt)}>Upload</Button>
+        <InputContainer style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>
+                {newListing.anemitys.map((anemity, i)=><Tag text={anemity.name} key={i} index={i} removeAnemity={()=>removeAnemity(i)}/>)}
+                {/*{newListing.anemitys.forEach((anemity, i)=><Tag text={anemity} index={i}/>)}*/}
+
         </InputContainer>
+        <InputContainer style={{justifyContent:"center", flexWrap:"wrap"}}>
+
+            {/*<Button style={{flex:2}} onClick={evt => handleUpload(evt)}>Upload</Button>*/}
+            <ReactFilestack
+                customRender={({ onPick }) => (
+                    <div>
+                        <Label>Pictures</Label>
+                        <Button onClick={onPick}>Pick</Button>
+                    </div>
+                )}
+                apikey={'AkTKUy8PSQOeuJgw6XCqaz'}
+                onSuccess={(res) => handleUpload(res)}
+            />
+
+        </InputContainer>
+        <InputContainer  style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>{newListing.images.map(img=><img style={{maxWidth:200, maxHeight:200  }} src={img.url} />)}</InputContainer>
+
     </>;
 
     useEffect(() => {
@@ -183,11 +230,14 @@ export function AddListing(props) {
         setStage(stage - 1);
     }
 
-    const content = (isLoading) => {
-        if (isLoading) {
+    const content = (addedListing) => {
+        if (addedListing.loading) {
             return <Loading/>
         }
-        if (addedListing.data) {
+        else if(addedListing.error){
+            return <h4>Something went wrong. try again please</h4>;
+        }
+        else if (addedListing.data) {
             return <Success message={"Listing has been added."}/>
         }
         else {
@@ -221,7 +271,8 @@ export function AddListing(props) {
     return (
         <Wrapper>
 
-            {content(addedListing.loading)}
+
+            {content(addedListing)}
 
         </Wrapper>
     );
