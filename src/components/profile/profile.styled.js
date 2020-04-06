@@ -19,7 +19,8 @@ export const ProfileWrapper = Styled.div`
     flex:1;
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 10px;
+    border-radius: 10px;
      
   
 
@@ -34,24 +35,21 @@ export const ListingsWrapper = Styled.div`
 export const InlineWrapper = Styled.div`
     display: flex;
     flex-direction: row;
-    margin: 1%;
-    justify-content: space-between;
+    justify-content: start;
 `;
 export const CenterWrapper = Styled.div`
-    display: flex;
+    
     flex-direction: column;
-    margin: 1%;
     justify-content: center ;
 `;
 export const Caption = Styled.p`
     text-transform: capitalize;
     font-weight: 600;
-    flex:1;
-    color: #808080
+    color: #808080;
+    margin-left: .77rem;
 `;
-export const Text = Styled.h5`
-    flex:1;
-    font-size:18px;
+export const Text = Styled.p`
+    margin-left: .57rem;
     text-transform: capitalize
 `;
 

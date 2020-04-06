@@ -22,12 +22,12 @@ export default function Profile(props) {
     return (
         <Wrapper>
             <ProfileWrapper>
-                <CenterWrapper>
-                    <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true}
+                <InlineWrapper>
+                    <Avatar  color={"#FFFF00"} round={true}
                             name={`${firstName} ${lastName}`}/>
-                    <Text>{`${firstName} ${lastName}`}</Text>
+                    <Text style={{marginTop:"auto"}} >{`${firstName} ${lastName}`}</Text>
 
-                </CenterWrapper>
+                </InlineWrapper>
                 <InlineWrapper>
                     <Caption> email </Caption>
                     <Text style={{textTransform: "none"}}>{email}</Text>
