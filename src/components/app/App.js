@@ -10,9 +10,9 @@ import {Signup} from "../signup/Signup";
 import {AddListing} from "../add-listing/Add-listing";
 import Profile from "../profile/Profile";
 import {
-BrowserRouter as Router,
-Switch,
-Route, Redirect
+    BrowserRouter as Router,
+    Switch,
+    Route, Redirect
 } from "react-router-dom";
 
 //APOLLO
@@ -21,7 +21,15 @@ import {ApolloProvider} from "@apollo/react-hooks";
 
 
 const client = new ApolloClient({
-    uri: 'https://alama-airbnb.herokuapp.com/graphql'
+    uri: 'https://alama-airbnb.herokuapp.com/graphql',
+    request: (operation) => {
+        const token = localStorage.getItem("token");
+        operation.setContext({
+            headers: {
+                authorization: token ? `Bearer ${token}` : ''
+            }
+        })
+    }
 });
 
 
@@ -29,18 +37,18 @@ function App(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
 
-    function PrivateRoute({ children, ...rest }) {
+    function PrivateRoute({children, ...rest}) {
         return (
             <Route
                 {...rest}
-                render={({ location }) =>
+                render={({location}) =>
                     auth.isAuthed ? (
                         children
                     ) : (
                         <Redirect
                             to={{
                                 pathname: "/login",
-                                state: { from: location }
+                                state: {from: location}
                             }}
                         />
                     )
@@ -48,6 +56,7 @@ function App(props) {
             />
         );
     }
+
     return (
 
         <ApolloProvider client={client}>
@@ -57,24 +66,24 @@ function App(props) {
                     <Route component={Nav}/>
 
 
-                            <div style={{marginRight:"20px",marginLeft:"20px",marginTop:"30px"}}>
+                    <div style={{marginRight: "20px", marginLeft: "20px", marginTop: "30px"}}>
 
-                                <Switch>
-                                    <Route path={"/"} exact component={Home}/>
-                                    <PrivateRoute path={"/add-listing"} exact
-                                    >
-                                        <AddListing/>
-                                    </PrivateRoute>
-                                    <Route path={"/explore"} exact
-                                           render={() => <Explore {...props} />}/>
-                                    <Route path={"/login"} exact component={Login}/>
-                                    <Route path={"/signup"} exact render={() => <Signup/>}/>
+                        <Switch>
+                            <Route path={"/"} exact component={Home}/>
+                            <PrivateRoute path={"/add-listing"} exact
+                            >
+                                <AddListing/>
+                            </PrivateRoute>
+                            <Route path={"/explore"} exact
+                                   render={() => <Explore {...props} />}/>
+                            <Route path={"/login"} exact component={Login}/>
+                            <Route path={"/signup"} exact render={() => <Signup/>}/>
 
-                                    <PrivateRoute path={"/profile"} exact >
-                                        <Profile/>
-                                    </PrivateRoute>
-                                </Switch>
-                            </div>
+                            <PrivateRoute path={"/profile"} exact>
+                                <Profile/>
+                            </PrivateRoute>
+                        </Switch>
+                    </div>
 
                 </Router>
             </div>
