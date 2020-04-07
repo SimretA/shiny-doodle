@@ -9,10 +9,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 export default function ListDetail(props) {
-    const show = props.showModal ? 'block' : 'none';
+    const show = props.showModal ? 'flex' : 'none';
     return (
 
-        <Wrapper style={{display: show, zIndex: 10}} onClick={props.closeModal}>
+        <Wrapper style={{display: show}} onClick={props.closeModal}>
             <Fade right>
                 <Button onClick={props.closeModal}> Close</Button>
 

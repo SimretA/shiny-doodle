@@ -1,18 +1,13 @@
 import styled from "styled-components";
 export const Wrapper = styled.div`
-  display: flex;
-  width: 40%;
-  height:100vh;
- background-color: #f9d976;
- padding: 2%;
- position: fixed;
- right:0;
- top:0;
- color: #000;
-border:2px solid;
- border-radius: 10px;
- overflow-y:scroll;
- overflow-x:hidden;
+      width: 95%;
+      height: 75vh;
+      background-color: #00000050;
+      border-radius: 10px;
+      padding: 10px;
+      color: #000;
+      overflow-y:scroll;
+      overflow-x:hidden;
  `;
 export const Data = styled.p`
     text-transform:capitalize;
