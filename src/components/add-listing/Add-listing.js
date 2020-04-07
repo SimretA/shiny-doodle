@@ -2,51 +2,37 @@ import React, {useContext, useEffect, useState} from 'react';
 import Loading from "../shared/Loading.component";
 import Map from "../shared/Location-picker.component";
 import {useMutation} from '@apollo/react-hooks';
-import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
 import ReactFilestack from 'filestack-react';
 // import * as filestack from 'filestack-js';
 import {Button, Label, TextInput, DropDown} from "../shared/FormComponents";
-import {Wrapper, Second,  FormContainer, InputContainer} from "./../login/login.styled";
+import {Wrapper, Second, FormContainer, InputContainer} from "./../login/login.styled";
 import {AuthContext} from "../../context/AuthContext";
 import {Tag} from "../shared/Tag";
-
+import {ADD_LISTING_2} from "./../../query/listing";
 export function AddListing(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
 
 
-    const ADD_LISTING = gql`
-  mutation addNewListing($newListing: NewListingInput!) {
-    addNewListing(
-        input: $newListing
-        ){
-            id
-            name
-            city
-            country
-            
-        }
-    
-  }
-`;
+
 
     function handleUpload(res) {
 
-        if(res.filesUploaded.length>0){
-            setNewListing({...newListing, images: [...newListing.images, {url:res.filesUploaded[0].url}]})
+        if (res.filesUploaded.length > 0) {
+            setNewListing({...newListing, images: [...newListing.images, {url: res.filesUploaded[0].url}]})
         }
 
 
     }
 
-    const _onClickMap = (evt) =>{
-        setNewListing({...newListing, geolocations:[{long: evt.lngLat[0], lat: evt.lngLat[1]}]});
+    const _onClickMap = (evt) => {
+        setNewListing({...newListing, geolocations: [{long: evt.lngLat[0], lat: evt.lngLat[1]}]});
 
 
     };
 
-    const [addListing, addedListing] = useMutation(ADD_LISTING);
+    const [addListing, addedListing] = useMutation(ADD_LISTING_2);
 
     useEffect(() => {
         console.log("added");
@@ -69,15 +55,15 @@ export function AddListing(props) {
                 lat: null,
                 long: null
             }],
-            user:{
+            user: {
                 id: auth.account.id
             },
-            anemitys:[],
-            images:[]
+            anemitys: [],
+            images: []
         }
     );
     React.useEffect(
-        ()=>{
+        () => {
             console.log(newListing);
         }, [newListing]
     );
@@ -165,15 +151,15 @@ export function AddListing(props) {
 
 
     const handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             event.preventDefault();
             setNewListing({...newListing, anemitys: [...newListing.anemitys, {name: event.target.value}]});
             event.target.value = "";
         }
     };
-    const removeAnemity = (i) =>{
+    const removeAnemity = (i) => {
         let array = newListing.anemitys;
-        array.splice(i,1);
+        array.splice(i, 1);
         setNewListing({...newListing, anemitys: array});
 
 
@@ -185,16 +171,17 @@ export function AddListing(props) {
             <TextInput id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"} onKeyPress={handleKeyPress}/>
 
         </InputContainer>
-        <InputContainer style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>
-                {newListing.anemitys.map((anemity, i)=><Tag text={anemity.name} key={i} index={i} removeAnemity={()=>removeAnemity(i)}/>)}
-                {/*{newListing.anemitys.forEach((anemity, i)=><Tag text={anemity} index={i}/>)}*/}
+        <InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>
+            {newListing.anemitys.map((anemity, i) => <Tag text={anemity.name} key={i} index={i}
+                                                          removeAnemity={() => removeAnemity(i)}/>)}
+            {/*{newListing.anemitys.forEach((anemity, i)=><Tag text={anemity} index={i}/>)}*/}
 
         </InputContainer>
-        <InputContainer style={{justifyContent:"center", flexWrap:"wrap"}}>
+        <InputContainer style={{justifyContent: "center", flexWrap: "wrap"}}>
 
             {/*<Button style={{flex:2}} onClick={evt => handleUpload(evt)}>Upload</Button>*/}
             <ReactFilestack
-                customRender={({ onPick }) => (
+                customRender={({onPick}) => (
                     <div>
                         <Label>Pictures</Label>
                         <Button onClick={onPick}>Pick</Button>
@@ -205,7 +192,8 @@ export function AddListing(props) {
             />
 
         </InputContainer>
-        <InputContainer  style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>{newListing.images.map(img=><img style={{maxWidth:200, maxHeight:200  }} src={img.url} />)}</InputContainer>
+        <InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>{newListing.images.map(img => <img
+            style={{maxWidth: 200, maxHeight: 200}} src={img.url}/>)}</InputContainer>
 
     </>;
 
@@ -221,7 +209,14 @@ export function AddListing(props) {
 
 
             console.log("submitting");
-            addListing({variables: {newListing: newListing}});
+            addListing({
+                variables: {
+
+                    ...newListing,
+                    name: newListing.name,
+
+            }});
+
         }
     };
 
@@ -234,7 +229,7 @@ export function AddListing(props) {
         if (addedListing.loading) {
             return <Loading/>
         }
-        else if(addedListing.error){
+        else if (addedListing.error) {
             return <h4>Something went wrong. try again please</h4>;
         }
         else if (addedListing.data) {
