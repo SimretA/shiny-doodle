@@ -2,61 +2,28 @@ import React from 'react';
 import {CardItem} from "../card-item/Card-item";
 import ListDetail from "../listing-details/Listing-detail.component";
 import {useQuery} from "@apollo/react-hooks";
-import {gql} from "apollo-boost";
+import {GET_LISTINGS} from "../../query/listing";
 import Loading from "../shared/Loading.component";
 import {Fade} from "react-reveal";
-
+import {Wrapper} from "./explore.styled";
 
 export function Explore(props) {
 
 
-
-    const getUsers = gql`
-    {
-        listings{
-            id
-            name
-            city
-            country
-            price
-            createdAt
-            geolocations{
-              lat
-              long
-            }
-            personCapacity
-            houseType
-            bedrooms
-            bedrooms
-            rating
-            reviews{
-              id
-              content
-            }
-            images{
-              url
-            }
-            anemitys{
-              name
-            }
-        }
-    }
-`;
-
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
 
-    const handleClick = (data) =>{
+    const handleClick = (data) => {
 
         setVisible(true);
         setSelectedListing(data);
 
     };
-    const closeModal = () =>{
+    const closeModal = () => {
         setVisible(false);
     };
 
-    const {loading, error, data} = useQuery(getUsers);
+    const {loading, error, data} = useQuery(GET_LISTINGS);
 
     if (loading) {
 
@@ -68,20 +35,22 @@ export function Explore(props) {
     }
     if (error) {
         console.log(error);
+        return <div>ERROR</div>
     }
     const book = (listing) => {
         console.log(listing);
     };
-    console.log(data);
+    // console.log(data);
     return (
 
-            <div>
+        <>
+            <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
+            {!visible?
+                <Wrapper>
+                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
+                                                                     book={book}/></Fade>)}
+                </Wrapper>:<></>}
 
-                <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
-                <div className={"row p-3 h-50"}
-                     style={{overflowY: "hidden", borderRadius: "2px"}}>
-                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum} book={book}/></Fade>)}
-                </div>
-            </div>
+        </>
     );
 }

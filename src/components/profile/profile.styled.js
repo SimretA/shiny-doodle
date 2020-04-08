@@ -33,10 +33,11 @@ export const ListingsWrapper = Styled.div`
 
 `;
 export const InlineWrapper = Styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-`;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+    `;
+
 export const CenterWrapper = Styled.div`
     
     flex-direction: column;
