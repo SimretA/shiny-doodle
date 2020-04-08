@@ -36,6 +36,7 @@ export const ListingsWrapper = Styled.div`
 
 `;
 export const InlineWrapper = Styled.div`
+<<<<<<< HEAD
     display: flex;
     flex-direction: row;
     justify-content: start;
