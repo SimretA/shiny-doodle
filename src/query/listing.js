@@ -100,6 +100,18 @@ export const GET_LISTINGS = gql`
                 startBookDate
                 endBookDate
             }
+            reviews{
+                  id
+                  content
+                  user{
+                    id
+                    firstName
+                    lastName
+                  }
+                  createdAt
+                  lastUpdatedAt
+                  
+                }
         }
     }
 `;
