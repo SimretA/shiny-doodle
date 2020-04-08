@@ -35,5 +35,34 @@ export const GET_USER_BY_ID = gql`
         }
         
       }
-}
+}`;
+
+export const ADD_USER = gql`
+  mutation registerUsers($newUser: NewUserInput!) {
+    registerUsers(
+        input: $newUser
+        ){
+            id
+            firstName
+            lastName
+            email
+            country
+        }
+    
+  }
+`;
+
+export const EDIT_USER = gql`
+  mutation updateUser($newUser: UpdateUserInput) {
+    updateUser(
+        input: $newUser
+        ){
+            id
+            firstName
+            lastName
+            email
+            country
+        }
+    
+  }
 `;
