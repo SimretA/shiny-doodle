@@ -3,30 +3,16 @@ import {FormContainer, Column, Wrapper, InputContainer} from "./signup.styled";
 
 
 import {useMutation} from '@apollo/react-hooks';
-import {gql} from "apollo-boost";
 import Success from "../shared/Success.component";
 import Loading from "../shared/Loading.component";
 import {Fade} from "react-reveal";
 import {Button, Label, TextInput} from "../shared/FormComponents";
 import {Second} from "../login/login.styled";
-
+import {ADD_USER} from "../../query/auth";
 
 export function Signup() {
 
-    const ADD_USER = gql`
-  mutation registerUsers($newUser: NewUserInput!) {
-    registerUsers(
-        input: $newUser
-        ){
-            id
-            firstName
-            lastName
-            email
-            country
-        }
-    
-  }
-`;
+
 
     const [addUser, addedUser] = useMutation(ADD_USER);
 
