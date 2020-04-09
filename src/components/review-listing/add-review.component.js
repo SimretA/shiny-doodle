@@ -41,7 +41,7 @@ export default function AddReview(props) {
     }
     if (addedReview.data) {
         console.log(addedReview.data);
-        return <ReviewStrip data={addedReview.data}/>
+        return <ReviewStrip data={addedReview.data.addReview}/>
     }
     return <div>
         {auth.isAuthed ?
