@@ -8,6 +8,7 @@ import {faHome, faCalendar, faMoneyBill, faPeopleCarry} from '@fortawesome/free-
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Review from './../review-listing/review-listing';
+import AddBooking from './add-booking.component';
 
 export default function ListDetail(props) {
     const show = props.showModal ? 'flex' : 'none';
@@ -53,33 +54,14 @@ export default function ListDetail(props) {
 
                 </Column>
                 <MapContainer>
-
-                    {/*<InlineWrapper style={{flexWrap: 'wrap'}}>*/}
-                        {/*/!*<Map loc={props.data.geolocations} handleMark={()=>{}}/>*!/*/}
-                    {/*</InlineWrapper>*/}
                     <Map loc={props.data.geolocations} handleMark={()=>{}}/>
-
-
                 </MapContainer>
                 <StickyColumn>
-                    <InlineWrapper>
-                        <Data><FontAwesomeIcon icon={faCalendar}
-                                               style={{fontSize: 25, marginRight: 5}}/></Data>
-
-                        <TextInput type={"date"}/>
-                    </InlineWrapper>
-                    <InlineWrapper>
-                        <TextInput type={"date"}/>
-
-                        <Button>Book</Button>
-                    </InlineWrapper>
-                    <Button
-                            onClick={props.closeModal}> Cancel </Button>
+                    <AddBooking listingId={props.data.id} />
                 </StickyColumn>
             </Wrapper>
             <hr style={{width: "100%", color: "yellow"}}/>
             <Wrapper style={{display: show, flexDirection: 'column', width: "70%", marginLeft: "13%"}}>
-                {/*{props.data.reviews &&  props.data.reviews.length>0? "YOOO" : 'No Reviews Yet'}*/}
                 <Review listingId={props.data.id}/>
             </Wrapper>
         </div>
