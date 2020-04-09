@@ -28,15 +28,19 @@ export const ProfileWrapper = Styled.div`
 export const ListingsWrapper = Styled.div`
     flex:2;
     display: flex;
-    flex-direction: column;
-    padding: 40px
+    flex-direction: row;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    
 
 `;
 export const InlineWrapper = Styled.div`
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
-    `;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin: 0 10px;
+`;
 
 export const CenterWrapper = Styled.div`
     

@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {FormContainer, Column, Wrapper, InputContainer} from "./signup.styled";
-
-
 import {useMutation} from '@apollo/react-hooks';
 import Success from "../shared/Success.component";
 import Loading from "../shared/Loading.component";
