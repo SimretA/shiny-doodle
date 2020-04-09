@@ -23,7 +23,7 @@ function CustomMap({loc, handleMark}) {
             onClick={handleMark}
             mapboxApiAccessToken={MAPBOX_TOKEN}
         >
-            {loc[0].lat && loc[0].long &&
+            {loc && loc.length>0 && loc[0].lat && loc[0].long &&
             <Marker
                 latitude={loc[0].lat}
                 longitude={loc[0].long}
