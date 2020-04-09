@@ -15,6 +15,21 @@ export const LOG_IN = gql`
     }
 `;
 
+export const ADD_USER = gql`
+  mutation registerUsers($newUser: NewUserInput!) {
+    registerUsers(
+        input: $newUser
+        ){
+            id
+            firstName
+            lastName
+            email
+            country
+        }
+    
+  }
+`;
+
 export const GET_USER_BY_ID = gql`
     query GetUser($id: String){
       user(id: $id){

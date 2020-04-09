@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHome, faMapPin, faMoneyBill, faPeopleCarry} from '@fortawesome/free-solid-svg-icons'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import Review from './../review-listing/review-listing';
 
 export default function ListDetail(props) {
     const show = props.showModal ? 'flex' : 'none';
@@ -50,7 +51,7 @@ export default function ListDetail(props) {
                     <InlineWrapper>
                         <Data><FontAwesomeIcon icon={faMoneyBill}
                                                style={{fontSize: 25, marginRight: 5}}/></Data>
-                        <Data>{props.data.price} ETB
+                        <Data>${props.data.price}
                         </Data>
                     </InlineWrapper>
                     <InlineWrapper>
@@ -68,9 +69,10 @@ export default function ListDetail(props) {
                     <Button>Book</Button>
                 </Column>
             </Wrapper>
-            <hr style={{height:"20px",width:"100%", color:"yellow"}}/>
-            <Wrapper style={{display:show, flexDirection:'column'}}>
-                {props.data.reviews &&  props.data.reviews.length>0? "YOOO" : 'No Reviews Yet'}
+            <hr style={{width:"100%", color:"yellow"}}/>
+            <Wrapper style={{display:show, flexDirection:'column', width:"70%", marginLeft:"13%"}}>
+                {/*{props.data.reviews &&  props.data.reviews.length>0? "YOOO" : 'No Reviews Yet'}*/}
+                <Review listingId={props.data.id}/>
             </Wrapper>
         </div>
 
