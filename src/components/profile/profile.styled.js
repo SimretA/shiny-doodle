@@ -19,7 +19,8 @@ export const ProfileWrapper = Styled.div`
     flex:1;
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 10px;
+    border-radius: 10px;
      
   
 
@@ -27,31 +28,33 @@ export const ProfileWrapper = Styled.div`
 export const ListingsWrapper = Styled.div`
     flex:2;
     display: flex;
-    flex-direction: column;
-    padding: 40px
+    flex-direction: row;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    
 
 `;
 export const InlineWrapper = Styled.div`
     display: flex;
     flex-direction: row;
-    margin: 1%;
-    justify-content: space-between;
+    justify-content: start;
+    margin: 0 10px;
 `;
+
 export const CenterWrapper = Styled.div`
-    display: flex;
+    
     flex-direction: column;
-    margin: 1%;
     justify-content: center ;
 `;
 export const Caption = Styled.p`
     text-transform: capitalize;
     font-weight: 600;
-    flex:1;
-    color: #808080
+    color: #808080;
+    margin-left: .77rem;
 `;
-export const Text = Styled.h5`
-    flex:1;
-    font-size:18px;
+export const Text = Styled.p`
+    margin-left: .57rem;
     text-transform: capitalize
 `;
 
