@@ -53,6 +53,7 @@ export function AddListing(props) {
         console.log(addedListing);
     }, [addedListing]);
     const [stage, setStage] = useState(1);
+    const [warn, setWarn] = useState(false);
     const [newListing, setNewListing] = useState(
         {
             name: "",
@@ -87,21 +88,21 @@ export function AddListing(props) {
             <InputContainer>
                 <Label htmlFor="title">Title</Label>
                 <TextInput type="text" id="title"
-                           placeholder="What is the listing's title?" onChange={evt => {
+                           placeholder="What is the listing's title?" value={newListing.name} onChange={evt => {
                     setNewListing({...newListing, name: evt.target.value})
                 }}/>
 
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="price">Price</Label>
-                <TextInput type="number" id="price"
+                <TextInput type="number" id="price" value={newListing.price}
                            placeholder="price per night" onChange={evt => {
                     setNewListing({...newListing, price: parseFloat(evt.target.value)})
                 }}/>
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="street">Street</Label>
-                <TextInput type="text" id="street"
+                <TextInput type="text" id="street" value={newListing.street}
                            placeholder="Street name" onChange={evt => {
                     setNewListing({...newListing, street: evt.target.value})
                 }}/>
@@ -109,14 +110,14 @@ export function AddListing(props) {
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="city">City</Label>
-                <TextInput type="text" id="price"
+                <TextInput type="text" id="price" value={newListing.city}
                            placeholder="City" onChange={evt => {
                     setNewListing({...newListing, city: evt.target.value})
                 }}/>
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="country">Country</Label>
-                <TextInput type="text" id="country"
+                <TextInput type="text" id="country" value={newListing.country}
                            placeholder="Country" onChange={evt => {
                     setNewListing({...newListing, country: evt.target.value})
                 }}/>
@@ -126,7 +127,7 @@ export function AddListing(props) {
 
         <InputContainer>
             <Label htmlFor="bedrooms">BedRooms</Label>
-            <TextInput type="number" value={1} id="bedrooms"
+            <TextInput type="number" value={newListing.bedrooms} id="bedrooms"
                        onChange={evt => {
                            setNewListing({...newListing, bedrooms: parseInt(evt.target.value)})
                        }}/>
@@ -134,7 +135,7 @@ export function AddListing(props) {
         <InputContainer>
             <Label htmlFor="bathrooms">BathRooms</Label>
             <TextInput type="text" id="bathrooms"
-                       value={1} onChange={evt => {
+                       value={newListing.bathrooms} onChange={evt => {
                 setNewListing({...newListing, bathrooms: parseInt(evt.target.value)})
             }}/>
 
@@ -142,13 +143,13 @@ export function AddListing(props) {
         <InputContainer>
             <Label htmlFor="personcapacity">Capacity</Label>
             <TextInput type="number" id="personcapacity"
-                       value={1} onChange={evt => {
+                       value={newListing.personCapacity} onChange={evt => {
                 setNewListing({...newListing, personCapacity: parseInt(evt.target.value)})
             }}/>
         </InputContainer>
         <InputContainer>
             <Label htmlFor="country">House Type</Label>
-            <DropDown id="inputGroupSelect04" onChange={evt => {
+            <DropDown id="inputGroupSelect04" value={newListing.houseType} onChange={evt => {
                 setNewListing({...newListing, houseType: evt.target.value})
             }}>
                 <option value="apartment">Apartment</option>
@@ -171,23 +172,16 @@ export function AddListing(props) {
             event.target.value = "";
         }
     };
-    const removeAnemity = (i) =>{
-        let array = newListing.anemitys;
-        array.splice(i,1);
-        setNewListing({...newListing, anemitys: array});
-
-
-    };
     const stage3 = <>
         <InputContainer>
             <Label htmlFor="anemities">Amenities</Label>
 
-            <TextInput id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"} onKeyPress={handleKeyPress}/>
+            <TextInput defaultValue={""} type={"text"} id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"} onKeyPress={handleKeyPress}/>
 
         </InputContainer>
         <InputContainer style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>
-                {newListing.anemitys.map((anemity, i)=><Tag text={anemity.name} key={i} index={i} removeAnemity={()=>removeAnemity(i)}/>)}
-                {/*{newListing.anemitys.forEach((anemity, i)=><Tag text={anemity} index={i}/>)}*/}
+            {newListing.anemitys.map((anemity, i)=><Tag text={anemity.name} key={i} index={i} removeAnemity={()=>removeAnemity(i)}/>)}
+            {/*{newListing.anemitys.forEach((anemity, i)=><Tag text={anemity} index={i}/>)}*/}
 
         </InputContainer>
         <InputContainer style={{justifyContent:"center", flexWrap:"wrap"}}>
@@ -208,6 +202,13 @@ export function AddListing(props) {
         <InputContainer  style={{justifyContent:"space-evenly", flexWrap:"wrap"}}>{newListing.images.map(img=><img style={{maxWidth:200, maxHeight:200  }} src={img.url} />)}</InputContainer>
 
     </>;
+    const removeAnemity = (i) =>{
+        let array = newListing.anemitys;
+        array.splice(i,1);
+
+
+        setNewListing({...newListing, anemitys: array});
+    };
 
     useEffect(() => {
         console.log(newListing)
@@ -215,13 +216,35 @@ export function AddListing(props) {
 
     const handleAdd = (event) => {
         event.preventDefault();
-        if (stage < 3)
-            setStage(stage + 1);
+        if (stage === 1) {
+            if(newListing.name.trim()==="" || newListing.street.trim()==="" ||
+                newListing.city.trim()===""|| newListing.country.trim()===""||Math.floor(newListing.price)<=0){
+                setWarn(true);
+            }
+            else {
+                setWarn(false);
+                setStage(stage + 1);
+            }
+        }
+        else if(stage===2){
+            if(newListing.geolocations[0].lat===null || newListing.geolocations[0].long===null){
+                setWarn(true);
+            }
+            else {
+                setStage(stage + 1);
+                setWarn(false);
+            }
+        }
         else {
+            if(newListing.images.length===0){
+                setWarn(true);
+            }
 
-
-            console.log("submitting");
-            addListing({variables: {newListing: newListing}});
+            else {
+                console.log("submitting");
+                setWarn(false);
+                addListing({variables: {newListing: newListing}});
+            }
         }
     };
 
@@ -247,6 +270,7 @@ export function AddListing(props) {
 
                     <FormContainer>
                         <Second>Stage {stage}</Second>
+                        {warn?<p style={{color:"red"}}>All Fields Are Required</p>:<></>}
                         {cont}
                         <InputContainer>
                             {
