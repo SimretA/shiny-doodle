@@ -52,20 +52,6 @@ export const GET_USER_BY_ID = gql`
       }
 }`;
 
-export const ADD_USER = gql`
-  mutation registerUsers($newUser: NewUserInput!) {
-    registerUsers(
-        input: $newUser
-        ){
-            id
-            firstName
-            lastName
-            email
-            country
-        }
-    
-  }
-`;
 
 export const EDIT_USER = gql`
   mutation updateUser($newUser: UpdateUserInput) {
@@ -73,47 +59,14 @@ export const EDIT_USER = gql`
         input: $newUser
         ){
             id
-            name
-            city
+            firstName
+            lastName
+            email
             country
-            price
-            createdAt
-            geolocations{
-              lat
-              long
-            }
-            personCapacity
-            houseType
-            bedrooms
-            bedrooms
-            rating
-            reviews{
-              id
-              content
-            }
-            images{
-              url
-            }
-            anemitys{
-              name
-            }
-            bookings{
-                id
-                startBookDate
-                endBookDate
-            }
-            reviews{
-                  id
-                  content
-                  user{
-                    id
-                    firstName
-                    lastName
-                  }
-                  createdAt
-                  lastUpdatedAt
-                  
-                }
+            street
+            phone
+            language
+            joinedDate
         }
     
   }

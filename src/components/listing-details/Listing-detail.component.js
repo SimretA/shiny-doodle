@@ -54,7 +54,7 @@ export default function ListDetail(props) {
 
                 </Column>
                 <MapContainer>
-                    <Map loc={props.data.geolocations} handleMark={()=>{}}/>
+                    {/*<Map loc={props.data.geolocations} handleMark={()=>{}}/>*/}
                 </MapContainer>
                 <StickyColumn>
                     <AddBooking listingId={props.data.id} />

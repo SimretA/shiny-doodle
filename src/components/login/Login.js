@@ -36,6 +36,7 @@ export function Login(props) {
     if (data && data.login) {
         console.log(data.login);
         localStorage.setItem("token", data.login.token);
+        localStorage.setItem("userId", data.login.userId);
         // console.log("Token is " + localStorage.getItem("token"));
         setAuth({...auth, isAuthed: true, token: data.login.token, account: { id: data.login.userId, email: formInput.email}});
         login(history, location);

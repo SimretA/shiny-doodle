@@ -20,6 +20,8 @@ export default function AppNav(props) {
 
                     <NavLink onClick={() => {
                         setAuth({...auth, isAuthed: false});
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("userId");
                         logout(props.history)
                     }
                     }>
