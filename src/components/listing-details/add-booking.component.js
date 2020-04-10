@@ -9,6 +9,7 @@ import {useMutation} from "@apollo/react-hooks";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
 import ReviewStrip from "../review-listing/review-strip.component";
+import moment from "moment";
 
 export default function AddBooking(props) {
 
@@ -17,6 +18,7 @@ export default function AddBooking(props) {
     const [addBooking, addedBooking] = useMutation(ADD_BOOKING);
 
 
+    const [error, setError] = React.useState("");
     const [booking, setBooking] = React.useState({
         startBookDate: null,
         endBookDate: null
@@ -25,21 +27,32 @@ export default function AddBooking(props) {
 
     const handleAdd = (event) => {
         event.preventDefault();
+        const formattedStartDate = moment(booking.startBookDate).format( 'MM-DD-YYYY');
+        const formattedEndDate = moment(booking.endBookDate).format( 'MM-DD-YYYY');
+
         if(booking.startBookDate && booking.endBookDate) {
             addBooking(
                 {
                     variables: {
                         newBooking: {
-                            ...booking,
+                            startBookDate: formattedStartDate,
+                            endBookDate: formattedEndDate,
                             user: {id: auth.account.id},
                             listing: {id: props.listingId}
                         }
                     }
                 }
             )
+                .catch(e=>{
+                    console.log(e);
+                    if(e.graphQLErrors) {
+                        setError(e.graphQLErrors[0].message);
+                    }
+                })
         }
 
     };
+    React.useEffect(()=>{console.log(addedBooking)},[addedBooking]);
     if (addedBooking.loading) {
         return (
                 <Loading/>
@@ -53,12 +66,15 @@ export default function AddBooking(props) {
     return <>
         {auth.isAuthed ?
             <>
+                <p style={{color:'red'}}>{error}</p>
                 <InlineWrapper>
                     <Data><FontAwesomeIcon icon={faCalendar}
                                            style={{fontSize: 25, marginRight: 5}}/></Data>
 
                     <TextInput type={"date"}
-                               onChange={(event) => setBooking({...booking, startBookDate: event.target.value})}/>
+                               onChange={(event) => {
+                                   console.log(event.target.value);
+                                   setBooking({...booking, startBookDate: event.target.value});}}/>
                 </InlineWrapper>
                 <InlineWrapper>
                     <TextInput type={"date"}
