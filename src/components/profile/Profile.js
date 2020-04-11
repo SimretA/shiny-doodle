@@ -25,7 +25,6 @@ export default function Profile(props) {
         return<div>Something went wrong</div>
     }
     if (data) {
-        console.log(data);
         const {
             firstName,
             lastName,
