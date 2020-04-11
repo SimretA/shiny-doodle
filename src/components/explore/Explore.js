@@ -2,45 +2,13 @@ import React from 'react';
 import {CardItem} from "../card-item/Card-item";
 import ListDetail from "../listing-details/Listing-detail.component";
 import {useQuery} from "@apollo/react-hooks";
-import {gql} from "apollo-boost";
+import {GET_LISTINGS} from "../../query/listing";
 import Loading from "../shared/Loading.component";
 import {Fade} from "react-reveal";
-
+import {Wrapper} from "./explore.styled";
 
 export function Explore(props) {
 
-
-    const getUsers = gql`
-    {
-        listings{
-            id
-            name
-            city
-            country
-            price
-            createdAt
-            geolocations{
-              lat
-              long
-            }
-            personCapacity
-            houseType
-            bedrooms
-            bedrooms
-            rating
-            reviews{
-              id
-              content
-            }
-            images{
-              url
-            }
-            anemitys{
-              name
-            }
-        }
-    }
-`;
 
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
@@ -55,7 +23,7 @@ export function Explore(props) {
         setVisible(false);
     };
 
-    let {loading, error, data} = useQuery(getUsers);
+    const {loading, error, data} = useQuery(GET_LISTINGS);
 
     if (loading) {
 
@@ -67,30 +35,22 @@ export function Explore(props) {
     }
     if (error) {
         console.log(error);
+        return <div>ERROR</div>
     }
     const book = (listing) => {
         console.log(listing);
     };
-    console.log(data);
-    if (error) {
-        return <div>
-            <h1>Something went wrong</h1>
-            <button onClick={()=>{
-            }
-            }>Refresh</button>
-        </div>;
-
-    }
+    // console.log(data);
     return (
 
-        <div className={"container"}>
-
+        <>
             <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
-            <div className={"row p-3 h-50"}
-                 style={{backgroundColor: "#f9d976", overflowY: "hidden", borderRadius: "2px"}}>
-                {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
-                                                                 book={book}/></Fade>)}
-            </div>
-        </div>
+            {!visible?
+                <Wrapper>
+                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
+                                                                     book={book}/></Fade>)}
+                </Wrapper>:<></>}
+
+        </>
     );
 }

@@ -1,46 +1,75 @@
-import React, {useContext} from 'react';
-import {Wrapper, Second, Button, SVG, FormContainer} from "./login.styled";
-import{login} from "../../control/auth";
+import React, {useContext, useState} from 'react';
+import {Wrapper, Second, SVG, FormContainer, InputContainer} from "./login.styled";
+import {login} from "../../control/auth";
 import {AuthContext} from "../../context/AuthContext";
 import {useHistory, useLocation} from "react-router-dom";
+import {TextInput, Button, Label} from "../shared/FormComponents";
+import {LOG_IN, GET_USER_BY_ID} from "../../query/auth";
+import {useLazyQuery} from "@apollo/react-hooks";
+import Loading from "../shared/Loading.component";
 
 export function Login(props) {
 
-    const [auth, setAuth] = useContext(AuthContext);
+    const [formInput, setFormInput] = useState({
+        email: "",
+        password: ""
+    });
+        const [auth, setAuth] = useContext(AuthContext);
     let history = useHistory();
     let location = useLocation();
+    const [getUser, {data, loading}] = useLazyQuery(LOG_IN);
+
 
     const handleLogin = (evt) => {
         evt.preventDefault();
+
+
+        getUser({variables: {email: formInput.email, password: formInput.password}});
+
         //Login query goes here
-        setAuth({...auth, isAuthed: true});
-        login(history, location);
+
 
     };
-    return (
-        <Wrapper className={"mx-auto my-5"}>
-            <SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>
-                <path
-                    d="M 0 50 L 500 500 L 0 500 z"
-                    fill="#FFF70022"/>
-            </SVG>
-            <FormContainer>
-                <form>
-                    <Second>Login</Second>
-                    <div className="form-group row py-2 mx-auto">
-                        <label htmlFor="exampleInputEmail1" className={"col-sm-2 col-form-label "}>Email</label>
-                        <input type="email" className="form-control col-sm-8" id="exampleInputEmail1"
-                               aria-describedby="emailHelp"
-                               placeholder="Enter email"/>
+    if (loading) {
+        return <Loading/>
+    }
+    if (data && data.login) {
+        console.log(data.login);
+        localStorage.setItem("token", data.login.token);
+        localStorage.setItem("userId", data.login.userId);
+        // console.log("Token is " + localStorage.getItem("token"));
+        setAuth({...auth, isAuthed: true, token: data.login.token, account: { id: data.login.userId, email: formInput.email}});
+        login(history, location);
+    }
 
-                    </div>
-                    <div className="form-group row py-3 mx-auto">
-                        <label htmlFor="exampleInputPassword1" className={"col-sm-2 col-form-label"}>Password</label>
-                        <input type="password" className="form-control col-sm-8" id="exampleInputPassword1"
-                               placeholder="Password"/>
-                    </div>
-                    <Button className={"px-4 py-1 btn"} type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
-                </form>
+
+    return (
+        <Wrapper>
+            {/*<SVG viewBox={"0 0 500 500"} preserveAspectRatio={"none"}>*/}
+            {/*<path*/}
+            {/*d="M 0 50 L 500 500 L 0 500 z"*/}
+            {/*fill="#FFF70022"/>*/}
+            {/*</SVG>*/}
+            <FormContainer>
+
+                <Second>Login</Second>
+                <InputContainer>
+                    <Label htmlFor="email">Email</Label>
+                    <TextInput required type="email" id="email"
+                               aria-describedby="emailHelp"
+                               placeholder="Enter email"
+                               onChange={(evt) => setFormInput({...formInput, email: evt.target.value})}/>
+
+                </InputContainer>
+                <InputContainer>
+                    <Label htmlFor="exampleTextInputPassword1">Password</Label>
+                    <TextInput required type="password" id="exampleTextInputPassword1"
+                               placeholder="Password"
+                               onChange={(evt) => setFormInput({...formInput, password: evt.target.value})}/>
+
+                </InputContainer>
+                <Button type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
+
             </FormContainer>
         </Wrapper>
     );
