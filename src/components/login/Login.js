@@ -14,7 +14,7 @@ export function Login(props) {
         email: "",
         password: ""
     });
-    const [auth, setAuth] = useContext(AuthContext);
+        const [auth, setAuth] = useContext(AuthContext);
     let history = useHistory();
     let location = useLocation();
     const [getUser, {data, loading}] = useLazyQuery(LOG_IN);

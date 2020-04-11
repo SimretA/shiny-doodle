@@ -18,6 +18,7 @@ import {
 //APOLLO
 import ApolloClient from "apollo-boost";
 import {ApolloProvider} from "@apollo/react-hooks";
+import {BookingList} from "../booking-list/booking-list";
 
 
 const client = new ApolloClient({
@@ -71,6 +72,8 @@ const client = new ApolloClient({
 
 function App(props) {
 
+    const [auth, setAuth] = useContext(AuthContext);
+
     React.useEffect(()=>{
         if(localStorage.getItem("token") && localStorage.getItem("userId")){
             setAuth({...auth, isAuthed: true,
@@ -82,7 +85,6 @@ function App(props) {
 
     },[]);
 
-    const [auth, setAuth] = useContext(AuthContext);
 
     function PrivateRoute({children, ...rest}) {
         return (
@@ -128,6 +130,10 @@ function App(props) {
 
                             <PrivateRoute path={"/profile"} exact>
                                 <Profile/>
+                            </PrivateRoute>
+
+                            <PrivateRoute path={"/bookings"} exact>
+                                <BookingList />
                             </PrivateRoute>
                         </Switch>
                     </div>
