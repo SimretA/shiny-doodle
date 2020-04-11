@@ -20,8 +20,8 @@ export function CardItem(props) {
                     <h5>{props.name}</h5>
                     <p>{props.city}, {props.country}</p>
                     <p>{props.reviews?`${props.reviews.length} Reviews`:""} STARS GO HERE</p>
-                    <Button value={value} onClick={evt => props.book(evt.target.value)} href="#"
-                            className="btn btn-outline-info">${props.price} </Button>
+                    <Button> ${props.price} </Button>
+
 
                 </div>
             </div>

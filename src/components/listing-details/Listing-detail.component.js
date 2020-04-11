@@ -4,7 +4,7 @@ import {Button, Label, TextInput} from "../shared/FormComponents";
 import {Fade} from "react-reveal";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faCalendar, faMoneyBill, faPeopleCarry} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faCalendar, faMoneyBill, faChevronCircleLeft, faEdit} from '@fortawesome/free-solid-svg-icons'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Review from './../review-listing/review-listing';
@@ -18,10 +18,21 @@ export default function ListDetail(props) {
             imageSrc = props.data.images[0].url;
         }
     }
-    console.log(props.data);
+    props.data.bookings&&console.log(props.data.bookings.length);
     return (
 
         <div style={{display: show, flexDirection: 'column'}}>
+            <FontAwesomeIcon icon={faChevronCircleLeft}
+                             style={{
+                                 fontSize: 25,
+                                 color: "yellow",
+                                 position: 'relative',
+                                 top:"0px",
+                                 right:"10px"
+
+                             }}
+                             onClick={props.closeModal}
+            />
 
 
 
@@ -56,8 +67,14 @@ export default function ListDetail(props) {
                 <MapContainer>
                     {/*<Map loc={props.data.geolocations} handleMark={()=>{}}/>*/}
                 </MapContainer>
+
                 <StickyColumn>
-                    <AddBooking listingId={props.data.id} />
+                    {props.owner?
+                        props.data.bookings&&props.data.bookings.length>0?
+                                <>This listing is already booked and can't be deleted</>
+                            :<><Button style={{backgroundColor:"red", color:"white"}}>Delete Listing</Button></>
+                        :<AddBooking listingId={props.data.id} />}
+
                 </StickyColumn>
             </Wrapper>
             <hr style={{width: "100%", color: "yellow"}}/>

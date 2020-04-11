@@ -8,8 +8,7 @@ import Loading from "../shared/Loading.component";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import EditProfile from "./Edit-profile.component";
-import {Fade} from "react-reveal";
-import {CardItem} from "../card-item/Card-item";
+import ListingList from "./listing-list.component";
 
 export default function Profile(props) {
 
@@ -23,6 +22,7 @@ export default function Profile(props) {
     }
     if (error) {
         console.log(error);
+        return<div>Something went wrong</div>
     }
     if (data) {
         console.log(data);
@@ -86,8 +86,7 @@ export default function Profile(props) {
 
                 </ProfileWrapper>
                 <ListingsWrapper>
-                    {listings.length===0?<h1>Add a Listing To Become a Host</h1>:<></>}
-                    {listings.map(datum => <Fade left><CardItem  handleClick={()=>{}} key={datum.id} {...datum} /></Fade>)}
+                    <ListingList userId={auth.account.id}/>
 
                 </ListingsWrapper>
             </Wrapper>
