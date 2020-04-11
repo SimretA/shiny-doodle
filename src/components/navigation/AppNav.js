@@ -16,6 +16,9 @@ export default function AppNav(props) {
             {auth.isAuthed ? <>
                     <Link style={{textDecoration: "none"}} to={"/profile"}><NavLink>
                         My Account
+                    </NavLink>
+                    </Link><Link style={{textDecoration: "none"}} to={"/bookings"}><NavLink>
+                        My Bookings
                     </NavLink></Link>
 
                     <NavLink onClick={() => {
