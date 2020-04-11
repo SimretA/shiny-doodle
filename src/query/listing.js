@@ -164,3 +164,51 @@ export const GET_LISTING_BY_ID = gql`
         }
     }
 `;
+export const GET_LISTING_BY_USER = gql`
+    query listingByUser($id: String){
+        listingByUser(id: $id){
+            id
+            name
+            city
+            country
+            price
+            createdAt
+            geolocations{
+              lat
+              long
+            }
+            personCapacity
+            houseType
+            bedrooms
+            bedrooms
+            rating
+            reviews{
+              id
+              content
+            }
+            images{
+              url
+            }
+            anemitys{
+              name
+            }
+            bookings{
+                id
+                startBookDate
+                endBookDate
+            }
+            reviews{
+                  id
+                  content
+                  user{
+                    id
+                    firstName
+                    lastName
+                  }
+                  createdAt
+                  lastUpdatedAt
+                  
+                }
+        }
+    }
+`;

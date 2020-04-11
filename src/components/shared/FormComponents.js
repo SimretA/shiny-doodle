@@ -61,7 +61,7 @@ export const DropDown = Styled.select`
 `;
 
 export const Button = Styled.button`
-  background-color: #ffc107 !important;
+  background-color: #ffc107;
   border-radius: 3px;
   color: #424000;
   border: 1px solid transparent;

@@ -9,6 +9,7 @@ import Success from "../shared/Success.component";
 
 export default function EditProfile(props) {
 
+    let edited = false;
 
     const  {
         id,
@@ -49,12 +50,13 @@ export default function EditProfile(props) {
     }
     if (editedUser.data) {
         console.log(editedUser.data);
-        return <Success message={`Done`}/>
+        edited = true;
+
     }
 
 
     return <>
-        <Text>Edit Profile</Text>
+        <Text>{!edited?`Edit Profile`:`Your profile has been updated`}</Text>
         <InlineWrapper>
             <TextInput style={{margin: 5}} value={account.firstName}
                        onChange={(event) => setAccount({...account, firstName: event.target.value})}/>
