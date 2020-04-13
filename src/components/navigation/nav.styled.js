@@ -1,7 +1,7 @@
 import Styled from "styled-components";
 
 export const NavWrapper=Styled.div`
-    background-color: #ffc107;
+        background-color: #ffc107;
     width:100%;
     display: flex;
     flex-direction: column;

@@ -1,58 +1,45 @@
 import React, {useEffect, useState} from 'react';
-import {useQuery} from "@apollo/react-hooks";
-import {gql} from "apollo-boost";
-import {SearchContainer, InputContainer} from "./search.styled";
+import {useLazyQuery, useQuery} from "@apollo/react-hooks";
+import {SearchContainer, GridContainer, InputContainer, GridItem} from "./search.styled";
 import {TextInput, Label, Button} from "../shared/FormComponents";
+import {SEARCH_LISTING} from "../../query/listing";
+import Loading from "../shared/Loading.component";
+import {Modal} from "../shared/custom-modal";
 
-export default function Search() {
-    const getUsers = gql`
-    {
-        users{
-        id
-        firstName
-        }
-    }
-`;
+export default function Search({searchInput, setSearchInput,handleSearch}) {
+
+    // const[searchInput, setSearchInput] = React.useState({});
 
 
-    const {loading, error, data} = useQuery(getUsers);
-    useEffect(
-        () => {
-
-            console.log("yoo");
-            console.log(data);
-        }, [data]
-    );
-
-    function handleSearch(evt) {
-
-        evt.preventDefault();
-        alert("clicked");
-
-    }
-
-    return (<SearchContainer>
+    return (<>
+        <SearchContainer>
             <h4 style={{fontStyle:"italic"}}>Where to next?</h4>
             <InputContainer>
-                <Label>Where?</Label>
-                <TextInput type="text"  placeholder="Pick a Place" />
-            </InputContainer>
-            <InputContainer>
-                <Label>From:</Label>
-                <TextInput type={"date"}/>
-            </InputContainer>
-            <InputContainer>
-                <Label>Until:</Label>
-                <TextInput type={"date"}/>
+                <TextInput type="text"  placeholder="City" value={searchInput.city||""}
+                           onChange={(event)=>setSearchInput({...searchInput, city:event.target.value})}/>
+                <TextInput type="text"  placeholder="Country" value={searchInput.country||""}
+                           onChange={(event)=>setSearchInput({...searchInput, country:event.target.value})}/>
             </InputContainer>
             <InputContainer>
                 <Label>Guests</Label>
-                <TextInput type={"number"} value={1}/>
+                <TextInput type={"number"} value={searchInput.personCapacity||""}
+                           onChange={(event)=>setSearchInput({...searchInput, personCapacity:parseInt(event.target.value)})}/>
+            </InputContainer>
+            <InputContainer>
+                <Label>Price</Label>
+                <TextInput type={"number"} value={searchInput.price||""}
+                           onChange={(event)=>setSearchInput({...searchInput, price:parseFloat(event.target.value)})}/>
             </InputContainer>
             <Button onClick={(evt)=>handleSearch(evt)}>
                 Search
             </Button>
+
         </SearchContainer>
+        <GridContainer>
+            {[0,1,2,3,4,5,6,7,8,9].map(()=><GridItem/>)}
+        </GridContainer>
+        </>
+
 
     );
 

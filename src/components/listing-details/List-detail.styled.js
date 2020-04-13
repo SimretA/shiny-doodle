@@ -57,6 +57,7 @@ export const StickyColumn = styled.div`
         padding: 20px;
         background-color: #FFFFFFae;
         border-radius:10px;
+        z-index: 10;
 `;
 
 

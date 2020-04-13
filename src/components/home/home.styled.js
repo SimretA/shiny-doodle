@@ -2,18 +2,29 @@ import Styled from "styled-components";
 
 export const Container = Styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y:hidden;
+   
 
 `;
 export const SearchContainer = Styled.div`
-    flex:2;
-    border-radius: 10px;
-    background-color: #f9d976ae  !important;
-    height: 70vh;
+    flex:1;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 640px){
+        flex-direction: row;
+    } 
+    
 
 
 `;
 export const RightSideBar = Styled.div`
-    flex:3;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+
 `;
