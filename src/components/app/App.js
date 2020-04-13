@@ -115,7 +115,7 @@ function App(props) {
                     <Route component={Nav}/>
 
 
-                    <div style={{marginRight: "20px", marginLeft: "20px", marginTop: "30px"}}>
+                    <div>
 
                         <Switch>
                             <Route path={"/"} exact component={Home}/>
