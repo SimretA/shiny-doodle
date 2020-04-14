@@ -9,7 +9,7 @@ export default function AppNav(props) {
 
 
     return (<NavWrapper>
-            <AppName>Name Goes Here</AppName>
+            <AppName>Addis B'n'B</AppName>
             <Link style={{textDecoration: "none"}} to={"/"}><NavLink>Home</NavLink></Link>
             <Link style={{textDecoration: "none"}} to={"/explore"}><NavLink>Explore</NavLink></Link>
             <Link style={{textDecoration: "none"}} to={"/add-listing"}><NavLink>Add Listing</NavLink></Link>
