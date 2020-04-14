@@ -261,3 +261,56 @@ export const SEARCH_LISTING = gql`
         }
     }
 `;
+
+export const EDIT_LISTING = gql`
+  mutation updateListing($updatedListing: UpdateListingInput) {
+    updateListing(
+        input: $updatedListing
+        ){
+             id
+            name
+            city
+            country
+            price
+            createdAt
+            geolocations{
+              lat
+              long
+            }
+            personCapacity
+            houseType
+            bedrooms
+            bedrooms
+            rating
+            reviews{
+              id
+              content
+            }
+            images{
+              url
+            }
+            anemitys{
+              name
+            }
+            bookings{
+                id
+                startBookDate
+                endBookDate
+            }
+            reviews{
+                  id
+                  content
+                  user{
+                    id
+                    firstName
+                    lastName
+                  }
+                  createdAt
+                  lastUpdatedAt
+                  
+                }
+        
+        }
+    
+  }
+`;
