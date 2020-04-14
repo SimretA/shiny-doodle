@@ -18,6 +18,7 @@ const Content = Styled.div`
       background-color: #fefefe;
       margin: auto;
       padding: 20px;
+      padding-bottom: 50px;
       border: 1px solid #888;
       width: 80%;
 `;

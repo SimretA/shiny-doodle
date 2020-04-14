@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const MapContainer = styled.div`
         flex: 3;
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
+        height: 100vh;
+        
 `;
 
 export const Wrapper = styled.div`
+      display: flex;
       width: 95%;
       background-color: #00000000;
       border-radius: 10px;
@@ -46,10 +46,7 @@ export const Column = styled.div`
 `;
 
 export const StickyColumn = styled.div`
-        flex:1;
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
+        
         position: fixed;
         top: 120px;
         right:0;

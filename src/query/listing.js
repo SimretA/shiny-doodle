@@ -69,7 +69,7 @@ export const ADD_LISTING_2 = gql`
 
 export const GET_LISTINGS = gql`
     {
-        listings{
+        allListings{
             id
             name
             city
