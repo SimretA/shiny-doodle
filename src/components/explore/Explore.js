@@ -6,6 +6,7 @@ import {GET_LISTINGS} from "../../query/listing";
 import Loading from "../shared/Loading.component";
 import {Fade} from "react-reveal";
 import {Wrapper} from "./explore.styled";
+import {Modal} from "../shared/custom-modal";
 
 export function Explore(props) {
 
@@ -13,10 +14,13 @@ export function Explore(props) {
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
 
+    const[showModal, setShowModal] = React.useState(false);
+
     const handleClick = (data) => {
 
         setVisible(true);
         setSelectedListing(data);
+        setShowModal(true);
 
     };
     const closeModal = () => {
@@ -37,19 +41,20 @@ export function Explore(props) {
         console.log(error);
         return <div>ERROR</div>
     }
-    const book = (listing) => {
-        console.log(listing);
-    };
-    // console.log(data);
+
     return (
 
         <>
-            <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
-            {!visible?
+            <Modal close={()=>setShowModal(false)} show={showModal}>
+                <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
+            </Modal>
+            {/*<ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>*/}
+            {/*{!visible?*/}
                 <Wrapper>
-                    {data.listings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
-                                                                     book={book}/></Fade>)}
-                </Wrapper>:<></>}
+                    {data.allListings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
+                                                                     /></Fade>)}
+                </Wrapper>
+            {/*:<></>}*/}
 
         </>
     );

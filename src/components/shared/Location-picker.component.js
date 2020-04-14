@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Map, {Marker} from 'react-map-gl';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faMapPin, faMoneyBill, faPeopleCarry} from '@fortawesome/free-solid-svg-icons'
+import {faMapPin } from '@fortawesome/free-solid-svg-icons'
 
 function CustomMap({loc, handleMark, width, height}) {
     const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2ltcmV0YXJheWEiLCJhIjoiY2s3d2hrNWEyMDIzYTNlbXAwb3YyZTQ2NyJ9.xF2PkDYzuGTk2vwka4Cerw';
@@ -20,6 +20,8 @@ function CustomMap({loc, handleMark, width, height}) {
     return (
         <Map
             {...viewport}
+            width={width||400}
+            height={height||200}
             onViewportChange={setViewport}
             onClick={handleMark}
             mapboxApiAccessToken={MAPBOX_TOKEN}
