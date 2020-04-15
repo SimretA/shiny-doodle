@@ -33,7 +33,7 @@ export default function ({userId}) {
                 </Modal>
 
                 {data.listingByUser.length === 0 ? <h1>Add a Listing To Become a Host</h1> : <></>}
-                {data.listingByUser.map(datum => <Fade left><CardItem handleClick={(data) => {
+                {data.listingByUser.map(datum => <Fade left><CardItem editable={true} handleClick={(data) => {
                     setShowModal(true);
                     setSelectedListing(data);
                 }} key={datum.id} {...datum} /></Fade>)}

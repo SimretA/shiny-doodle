@@ -51,7 +51,7 @@ export function Explore(props) {
             {/*<ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>*/}
             {/*{!visible?*/}
                 <Wrapper>
-                    {data.allListings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
+                    {data.activeListings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
                                                                      /></Fade>)}
                 </Wrapper>
             {/*:<></>}*/}

@@ -5,7 +5,9 @@ export const Wrapper = styled.div`
     justify-content: center;
     @media screen and (min-width: 640px){
         flex-direction: row;
+        margin:100px;
     } 
+    
 `;
 
 export const Second = styled.p`
@@ -35,7 +37,6 @@ export const SVG = styled.svg`
 `;
 
 export const FormContainer = styled.form`
-    width: 100%;
     background-color: #f9d976ae  !important;
     box-shadow: 3px 5px #e2cd8d86 ;
     border-radius: 10px;

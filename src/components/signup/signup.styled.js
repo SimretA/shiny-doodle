@@ -1,11 +1,13 @@
 import Styled from "styled-components";
 
 export const Wrapper = Styled.div`
-    background-color: #f9d976ae  !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+    @media screen and (min-width: 640px){
+            margin:50px;
+        } 
 
 `;
 
@@ -21,16 +23,17 @@ export const InputContainer= Styled.div`
 
 export const Column = Styled.div`
     flex: 1;
-    padding: calc(0.375rem + 3px);
+    padding: calc(0.375rem + 2px);
     
 `;
 
 export const FormContainer = Styled.form`
-    box-shadow: 3px 5px #e2cd8d86 ;
+    background-color: #f9d976ae  !important;
     display: flex;
     border-radius: 10px;
     padding: calc(0.375rem + 3px);
     flex-direction: column;
+    justify-content: center;
     @media screen and (min-width: 640px){
         flex-direction: row;
     } 
