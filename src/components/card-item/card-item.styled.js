@@ -14,3 +14,18 @@ export const Wrapper = Styled.div`
 
    }
 `;
+
+
+export const StatusTag = Styled.div`
+    position: relative;
+    left: 10px;
+    top: 20px;
+    height: 30px;
+    padding: 5px 0px;
+    width: 100px;
+    transform: rotate(90deg);
+    background-color: yellow;
+
+    
+    
+`;
