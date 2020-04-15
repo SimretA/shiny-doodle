@@ -275,6 +275,7 @@ export const EDIT_LISTING = gql`
             country
             price
             createdAt
+            status
             geolocations{
               lat
               long

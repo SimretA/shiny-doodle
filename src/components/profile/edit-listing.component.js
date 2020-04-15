@@ -63,22 +63,22 @@ export function EditListing(props) {
 
     const [editListing, editedListing] = useMutation(EDIT_LISTING);
 
-    const handleSnooze = () =>{
+    const handleSnooze = () => {
 
-        let stat = listing.status==="active"?"snoozed":"active";
-        setListing({...listing, status:stat});
+        let stat = listing.status === "active" ? "snoozed" : "active";
+        setListing({...listing, status: stat});
         handleSave();
 
     };
     let history = useHistory();
 
-    const handleDelete=()=>{
+    const handleDelete = () => {
 
 
     };
-    const handleSave=()=>{
+    const handleSave = () => {
 
-        editListing({variables: {updatedListing: listing}}).catch(e=>{
+        editListing({variables: {updatedListing: listing}}).catch(e => {
             // history.push("/login");
 
             console.log(e);
@@ -101,7 +101,7 @@ export function EditListing(props) {
     return <>{listing ?
         <Wrapper>
 
-            <Button onClick={handleSnooze}>{listing.status==="active"?"Snooze":"Activate"}</Button>
+            <Button onClick={handleSnooze}>{listing.status === "active" ? "Snooze" : "Activate"}</Button>
             <Column>
                 <InlineContainer>
                     <TextInput value={listing.name}
@@ -129,9 +129,9 @@ export function EditListing(props) {
                     <TextInput value={listing.country}
                                onChange={(event) => setListing({...listing, country: event.target.value})}/>
                 </InlineContainer>
-                <InlineContainer style={{justifyContent:"space-evenly"}}>
+                <InlineContainer style={{justifyContent: "space-evenly"}}>
                     <Button onClick={handleSave}>Save</Button>
-                    <Button onClick={handleDelete} style={{backgroundColor:"red", color:"white"}}>Delete</Button>
+                    <Button onClick={handleDelete} style={{backgroundColor: "red", color: "white"}}>Delete</Button>
                 </InlineContainer>
 
             </Column>
