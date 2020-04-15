@@ -69,7 +69,7 @@ export const ADD_LISTING_2 = gql`
 
 export const GET_LISTINGS = gql`
     {
-        allListings{
+        activeListings{
             id
             name
             city
@@ -125,6 +125,7 @@ export const GET_LISTING_BY_ID = gql`
             country
             price
             createdAt
+            status
             geolocations{
               lat
               long
@@ -173,6 +174,7 @@ export const GET_LISTING_BY_USER = gql`
             country
             price
             createdAt
+            status
             geolocations{
               lat
               long
