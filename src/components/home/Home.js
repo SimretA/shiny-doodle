@@ -5,7 +5,6 @@ import {Container, SearchContainer, RightSideBar} from "./home.styled";
 import {useLazyQuery} from "@apollo/react-hooks";
 import {SEARCH_LISTING} from "../../query/listing";
 import {CardItem} from "../card-item/Card-item";
-import {Fade} from "react-reveal";
 import ListDetail from "../listing-details/Listing-detail.component";
 import {Modal} from "../shared/custom-modal";
 
@@ -55,8 +54,8 @@ export function Home() {
                 {data && data.searchListing?<>
 
 
-                    {data.searchListing.map((datum)=><Fade left><CardItem handleClick={(data) =>{handleClick(data);setShowModal(true);}} key={datum.id} {...datum}
-                                                                                   /></Fade>)}
+                    {data.searchListing.map((datum)=><CardItem handleClick={(data) =>{handleClick(data);setShowModal(true);}} key={datum.id} {...datum}
+                                                                                   />)}
                 </>:<></>}
             </RightSideBar>
 

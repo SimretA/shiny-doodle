@@ -5,7 +5,6 @@ import {useMutation} from "@apollo/react-hooks";
 import {AuthContext} from "../../context/AuthContext";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
-import Success from "../shared/Success.component";
 import ReviewStrip from "./review-strip.component";
 
 export default function AddReview(props) {

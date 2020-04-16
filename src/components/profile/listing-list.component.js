@@ -4,7 +4,6 @@ import {CardItem} from "../card-item/Card-item";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_LISTING_BY_USER} from "../../query/listing";
 import Loading from "../shared/Loading.component";
-import ListDetail from "../listing-details/Listing-detail.component";
 import {Modal} from "../shared/custom-modal";
 import {EditListing} from "./edit-listing.component";
 
