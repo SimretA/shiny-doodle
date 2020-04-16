@@ -4,8 +4,9 @@ import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHome, faMoneyBill} from '@fortawesome/free-solid-svg-icons'
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import {Calendar} from "../shared/Calendar.component";
 import Review from './../review-listing/review-listing';
 import AddBooking from './add-booking.component';
 import 'react-calendar/dist/Calendar.css';
@@ -56,14 +57,16 @@ export default function ListDetail(props) {
                             </p>
                         </InlineWrapper>
                         <InlineWrapper>
-                            <Calendar
+                            {/*<Calendar*/}
 
-                                activeStartDate={new Date()}
-                                tileContent={({activeStartDate, date, view}) => view === 'month' && date.getDay() === 0 ?
-                                    <p>Sunday!</p> : null
-                                }
-                                 value={[new Date(), new Date(2020, 3, 3)]}
-                            />
+                                {/*activeStartDate={new Date()}*/}
+                                {/*tileContent={({activeStartDate, date, view}) => view === 'month' && date.getDay() === 0 ?*/}
+                                    {/*<p>Sunday!</p> : null*/}
+                                {/*}*/}
+                                 {/*value={[new Date(), new Date(2020, 3, 3)]}*/}
+                            {/*/>*/}
+
+                            <Calendar/>
                         </InlineWrapper>
 
                     </Column>
