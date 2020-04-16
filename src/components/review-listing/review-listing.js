@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewStrip from './review-strip.component';
 import AddReview from './add-review.component';
 import {REVIEW_BY_LISTING} from "../../query/review";
-import {useLazyQuery, useQuery} from "@apollo/react-hooks";
+import { useQuery} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
 
 export default function Review(props) {

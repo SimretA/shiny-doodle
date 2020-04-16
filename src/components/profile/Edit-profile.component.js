@@ -5,7 +5,6 @@ import {useMutation} from "@apollo/react-hooks";
 import {EDIT_USER} from "../../query/auth";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
-import Success from "../shared/Success.component";
 
 export default function EditProfile(props) {
 

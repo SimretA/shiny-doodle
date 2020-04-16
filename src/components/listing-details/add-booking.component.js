@@ -1,14 +1,12 @@
 import React, {useContext} from 'react';
-import {Data, InlineWrapper, StickyColumn} from "./List-detail.styled";
+import {Data, InlineWrapper} from "./List-detail.styled";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar} from "@fortawesome/free-solid-svg-icons";
 import {Button, TextInput} from "../shared/FormComponents";
 import {AuthContext} from "../../context/AuthContext";
 import {ADD_BOOKING} from "../../query/booking";
 import {useMutation} from "@apollo/react-hooks";
-import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
-import ReviewStrip from "../review-listing/review-strip.component";
 import moment from "moment";
 
 export default function AddBooking(props) {

@@ -14,7 +14,7 @@ export function Explore(props) {
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
 
-    const[showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = React.useState(false);
 
     const handleClick = (data) => {
 
@@ -32,9 +32,8 @@ export function Explore(props) {
     if (loading) {
 
         return (
-            <Fade left>
                 <Loading/>
-            </Fade>
+
         );
     }
     if (error) {
@@ -45,16 +44,14 @@ export function Explore(props) {
     return (
 
         <>
-            <Modal close={()=>setShowModal(false)} show={showModal}>
+            <Modal close={() => setShowModal(false)} show={showModal}>
                 <ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>
             </Modal>
-            {/*<ListDetail closeModal={closeModal} showModal={visible} data={selectedListing}/>*/}
-            {/*{!visible?*/}
-                <Wrapper>
-                    {data.activeListings.map(datum => <Fade left><CardItem handleClick={handleClick} key={datum.id} {...datum}
-                                                                     /></Fade>)}
-                </Wrapper>
-            {/*:<></>}*/}
+            <Wrapper>
+                {data.activeListings.map(datum => <Fade left><CardItem handleClick={handleClick}
+                                                                       key={datum.id} {...datum}
+                /></Fade>)}
+            </Wrapper>
 
         </>
     );

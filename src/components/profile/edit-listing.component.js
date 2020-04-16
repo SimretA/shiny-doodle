@@ -6,7 +6,6 @@ import {EDIT_LISTING} from "../../query/listing";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
 import {useHistory} from "react-router-dom";
-import {Modal} from "../shared/custom-modal";
 import {logout} from "../../control/auth";
 
 const Wrapper = Styled.div`
