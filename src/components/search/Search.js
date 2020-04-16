@@ -16,19 +16,31 @@ export default function Search({searchInput, setSearchInput,handleSearch}) {
             <h4 style={{fontStyle:"italic"}}>Where to next?</h4>
             <InputContainer>
                 <TextInput type="text"  placeholder="City" value={searchInput.city||""}
-                           onChange={(event)=>setSearchInput({...searchInput, city:event.target.value})}/>
+                           onChange={(event)=>{
+                               setSearchInput({...searchInput, city:event.target.value});
+                               handleSearch(event);
+                           }}/>
                 <TextInput type="text"  placeholder="Country" value={searchInput.country||""}
-                           onChange={(event)=>setSearchInput({...searchInput, country:event.target.value})}/>
+                           onChange={(event)=>{
+                               setSearchInput({...searchInput, country:event.target.value});
+                               handleSearch(event);
+                           }}/>
             </InputContainer>
             <InputContainer>
                 <Label>Guests</Label>
                 <TextInput type={"number"} value={searchInput.personCapacity||""}
-                           onChange={(event)=>setSearchInput({...searchInput, personCapacity:parseInt(event.target.value)})}/>
+                           onChange={(event)=>{
+                               setSearchInput({...searchInput, personCapacity:parseInt(event.target.value)});
+                               handleSearch(event);
+                           }}/>
             </InputContainer>
             <InputContainer>
                 <Label>Price</Label>
                 <TextInput type={"number"} value={searchInput.price||""}
-                           onChange={(event)=>setSearchInput({...searchInput, price:parseFloat(event.target.value)})}/>
+                           onChange={(event)=>{
+                               setSearchInput({...searchInput, price:parseFloat(event.target.value)});
+                               handleSearch(event);
+                           }}/>
             </InputContainer>
             <Button onClick={(evt)=>handleSearch(evt)}>
                 Search
