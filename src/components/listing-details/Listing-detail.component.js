@@ -66,7 +66,7 @@ export default function ListDetail(props) {
                                  {/*value={[new Date(), new Date(2020, 3, 3)]}*/}
                             {/*/>*/}
 
-                            <Calendar/>
+                            <Calendar bookings={props.data.bookings}/>
                         </InlineWrapper>
 
                     </Column>
