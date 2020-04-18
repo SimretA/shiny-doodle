@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Styled from 'styled-components';
 import {Button} from "./FormComponents";
+import {useHistory} from "react-router-dom";
 
 const TH = Styled.th`
     padding: 10px;
@@ -11,7 +12,7 @@ const TH = Styled.th`
 
 export function Calendar(props) {
 
-    console.log("from calendar", props);
+    let history = useHistory();
     const [_dateObject, setDateObject] = React.useState(moment());
     const [bookingThisMonth, setBookingThisMonth] = React.useState([24, 25]);
     const [bookings, setBookings] = React.useState([]);
@@ -133,6 +134,8 @@ export function Calendar(props) {
             }}>Next</Button>
         </>
     };
+
+
 
     return <div>
 
