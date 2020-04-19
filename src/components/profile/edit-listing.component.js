@@ -116,7 +116,7 @@ export function EditListing(props) {
     return <>{listing ?
         <Wrapper>
 
-            <Button onClick={handleSnooze}>{listing.status === "active" ? "Snooze" : "Activate"}</Button>
+            <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
             <Column>
                 <InlineContainer>
                     <Label>{listing.status}</Label>
