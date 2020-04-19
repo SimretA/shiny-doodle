@@ -1,7 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Avatar from "react-avatar";
-import {CenterWrapper} from "../profile/profile.styled";
 
 const Wrapper = Styled.div`
     display: flex;

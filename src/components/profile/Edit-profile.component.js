@@ -5,7 +5,6 @@ import {useMutation} from "@apollo/react-hooks";
 import {EDIT_USER} from "../../query/auth";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
-import Success from "../shared/Success.component";
 
 export default function EditProfile(props) {
 
@@ -51,6 +50,8 @@ export default function EditProfile(props) {
     if (editedUser.data) {
         console.log(editedUser.data);
         edited = true;
+        props.refetch && props.refetch();
+        props.closeEditable && props.closeEditable();
 
     }
 

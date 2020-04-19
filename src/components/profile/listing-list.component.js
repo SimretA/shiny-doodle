@@ -4,7 +4,6 @@ import {CardItem} from "../card-item/Card-item";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_LISTING_BY_USER} from "../../query/listing";
 import Loading from "../shared/Loading.component";
-import ListDetail from "../listing-details/Listing-detail.component";
 import {Modal} from "../shared/custom-modal";
 import {EditListing} from "./edit-listing.component";
 
@@ -14,7 +13,7 @@ export default function ({userId}) {
 
     const[showModal, setShowModal] = React.useState(false);
     const [selectedListing,setSelectedListing] = React.useState({});
-    const {data, loading, error} = useQuery(GET_LISTING_BY_USER, {variables: {id: userId}});
+    const {data, loading, error, refetch} = useQuery(GET_LISTING_BY_USER, {variables: {id: userId}});
 
 
     React.useEffect(()=>{console.log("seleceted lsting",selectedListing)},[selectedListing]);
@@ -28,7 +27,7 @@ export default function ({userId}) {
 
 
                 <Modal show={showModal} close={()=>setShowModal(false)}>
-                    <EditListing selectedListing={selectedListing}/>
+                    <EditListing refetch={refetch} close={()=>setShowModal(false)} selectedListing={selectedListing}/>
 
                 </Modal>
 
@@ -36,6 +35,7 @@ export default function ({userId}) {
                 {data.listingByUser.map(datum => <Fade left><CardItem editable={true} handleClick={(data) => {
                     setShowModal(true);
                     setSelectedListing(data);
+                    console.log("clicked");
                 }} key={datum.id} {...datum} /></Fade>)}
 
 

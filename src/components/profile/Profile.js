@@ -13,7 +13,7 @@ import ListingList from "./listing-list.component";
 export default function Profile(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
-    const {data, loading, error} = useQuery(GET_USER_BY_ID, {variables: {id: auth.account.id}});
+    const {data, loading, error, refetch} = useQuery(GET_USER_BY_ID, {variables: {id: auth.account.id}});
     const [editable, setEditable] = React.useState(false);
 
 
@@ -39,6 +39,7 @@ export default function Profile(props) {
 
         return (
             <Wrapper>
+
                 <ProfileWrapper>
                     {!editable?
                     <>
@@ -81,7 +82,7 @@ export default function Profile(props) {
 
                         </InlineWrapper>
                     </>:
-                        <EditProfile user={data.user} closeEditable={()=>setEditable(false)}/>}
+                        <EditProfile refetch={refetch} user={data.user} closeEditable={()=>setEditable(false)}/>}
 
                 </ProfileWrapper>
                 <ListingsWrapper>

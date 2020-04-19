@@ -5,8 +5,8 @@ import {useMutation} from "@apollo/react-hooks";
 import {AuthContext} from "../../context/AuthContext";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
-import Success from "../shared/Success.component";
 import ReviewStrip from "./review-strip.component";
+import Success from "../shared/Success.component";
 
 export default function AddReview(props) {
     const [review, setReview] = React.useState("");
@@ -41,7 +41,8 @@ export default function AddReview(props) {
     }
     if (addedReview.data) {
         console.log(addedReview.data);
-        return <ReviewStrip data={addedReview.data.addReview}/>
+        props.refetch && props.refetch();
+         return <Success message={'Thank you for the review'}/>
     }
     return <div>
         {auth.isAuthed ?
