@@ -7,7 +7,7 @@ import Loading from "../shared/Loading.component";
 
 export default function Review(props) {
 
-    const{loading, error, data} = useQuery(REVIEW_BY_LISTING,{
+    const{loading, error, data, refetch} = useQuery(REVIEW_BY_LISTING,{
         variables:{id:props.listingId}
     });
 
@@ -23,7 +23,7 @@ export default function Review(props) {
 
         return <>
 
-            <AddReview listingId={props.listingId}/>
+            <AddReview refetch={refetch} listingId={props.listingId}/>
 
             {data&&data.reviewByListing.map(_review => <ReviewStrip data={_review} />)}
         </>

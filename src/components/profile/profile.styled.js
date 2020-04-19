@@ -21,6 +21,7 @@ export const ProfileWrapper = Styled.div`
     flex-direction: column;
     padding: 10px;
     border-radius: 10px;
+    
      
   
 
@@ -32,6 +33,8 @@ export const ListingsWrapper = Styled.div`
     padding: 10px;
     flex-wrap: wrap;
     justify-content:space-evenly;
+    height: 80vh;
+    overflow-y: scroll;
     
 
 `;

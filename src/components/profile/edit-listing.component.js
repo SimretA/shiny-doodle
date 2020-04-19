@@ -7,6 +7,7 @@ import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
 import {useHistory} from "react-router-dom";
 import {logout} from "../../control/auth";
+import Success from "../shared/Success.component";
 
 const Wrapper = Styled.div`
     display:flex;
@@ -62,13 +63,8 @@ export function EditListing(props) {
 
     const [editListing, editedListing] = useMutation(EDIT_LISTING);
 
-    const handleSnooze = () => {
 
-        let stat = listing.status === "active" ? "snoozed" : "active";
-        setListing({...listing, status: stat});
-        handleSave();
-
-    };
+    React.useEffect(()=>{listing && console.log("stat ", listing.status=='active')},[listing]);
     let history = useHistory();
 
     const handleDelete = () => {
@@ -83,6 +79,24 @@ export function EditListing(props) {
             console.log(e);
             logout(history);
         });
+        props.refetch && props.refetch();
+        // props.close();
+
+    };
+    const handleSnooze = () => {
+
+        let stat;
+        if(listing.status == 'active'){
+            stat = 'snoozed';
+        }
+        else{
+            stat = 'active';
+        }
+
+        setListing({...listing, status: stat});
+
+
+        // setTimeout(handleSave, 1000);
 
     };
 
@@ -95,13 +109,18 @@ export function EditListing(props) {
     }
     if (editedListing.data) {
         console.log(editedListing.data);
+        // return <Success message={"Your Listing has been updated, all bookings will be notified"}/>
+
 
     }
     return <>{listing ?
         <Wrapper>
 
-            <Button onClick={handleSnooze}>{listing.status === "active" ? "Snooze" : "Activate"}</Button>
+            <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
             <Column>
+                <InlineContainer>
+                    <Label>{listing.status}</Label>
+                </InlineContainer>
                 <InlineContainer>
                     <TextInput value={listing.name}
                                onChange={(event) => setListing({...listing, name: event.target.value})}/>

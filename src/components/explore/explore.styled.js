@@ -8,6 +8,9 @@ export const Wrapper = Styled.div`
     flex-wrap:wrap;
     @media screen and (min-width: 640px){
         flex-direction: row;
+        height: 85vh;
+        overflow-y: scroll;
     } 
+    
     
 `;
