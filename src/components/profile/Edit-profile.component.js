@@ -48,7 +48,7 @@ export default function EditProfile(props) {
         );
     }
     if (editedUser.data) {
-        console.log(editedUser.data);
+        //console.log(editedUser.data);
         edited = true;
         props.refetch && props.refetch();
         props.closeEditable && props.closeEditable();

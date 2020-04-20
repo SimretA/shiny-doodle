@@ -35,7 +35,7 @@ export function BookingList(props) {
 
             <ListWrapper>
             {data.bookingByUser.map(_data=><BookingItem hoverOn={(loc)=>{setLoc(loc);}}
-                                                        hoverOff={()=>{console.log("done Hovering");setLoc(null)}}
+                                                        hoverOff={()=>{setLoc(null)}}
                                                         data={_data}/>)}
             </ListWrapper>
             <MapWrapper>
