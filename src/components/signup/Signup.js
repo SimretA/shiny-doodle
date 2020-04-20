@@ -14,6 +14,7 @@ export function Signup() {
 
     const [addUser, addedUser] = useMutation(ADD_USER);
 
+    const  [warn, setWarn] = useState("");
 
     React.useEffect(() => {
         console.log(addedUser);
@@ -35,7 +36,13 @@ export function Signup() {
     const handleSignup = (evt) => {
         evt.preventDefault();
 
-        addUser({variables: {newUser: account}});
+        addUser({variables: {newUser: account}})
+            .catch(e=>{
+                if(e.message=="GraphQL error: user already exists"){
+
+                    setWarn("Email is already in use");
+                }
+            });
 
 
     };
@@ -53,6 +60,7 @@ export function Signup() {
     return (
         <Wrapper>
             <Second>Sign up</Second>
+            <h5 style={{color:"red"}}>{warn}</h5>
             <FormContainer>
                 <Column>
                     <InputContainer>

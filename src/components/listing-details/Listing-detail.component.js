@@ -3,7 +3,7 @@ import {Wrapper, Data, InlineWrapper, Column, MapContainer, StickyColumn} from "
 import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faMoneyBill} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faMoneyBill, faPersonBooth} from '@fortawesome/free-solid-svg-icons'
 // import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {Calendar} from "../shared/Calendar.component";
@@ -51,20 +51,19 @@ export default function ListDetail(props) {
                             </Data>
                         </InlineWrapper>
                         <InlineWrapper>
+                            <Data><FontAwesomeIcon icon={faPersonBooth}
+                                                   style={{fontSize: 25, marginRight: 5}}/></Data>
+                            <p>By: {props.data.user && props.data.user.firstName} {props.data.user && props.data.user.lastName}
+                            </p>
+                        </InlineWrapper>
+                        <InlineWrapper>
                             <Data><FontAwesomeIcon icon={faMoneyBill}
                                                    style={{fontSize: 25, marginRight: 5}}/></Data>
                             <p>${props.data.price} with {props.data.personCapacity} people capacity
                             </p>
                         </InlineWrapper>
                         <InlineWrapper>
-                            {/*<Calendar*/}
 
-                                {/*activeStartDate={new Date()}*/}
-                                {/*tileContent={({activeStartDate, date, view}) => view === 'month' && date.getDay() === 0 ?*/}
-                                    {/*<p>Sunday!</p> : null*/}
-                                {/*}*/}
-                                 {/*value={[new Date(), new Date(2020, 3, 3)]}*/}
-                            {/*/>*/}
 
                             <Calendar bookings={props.data.bookings}/>
                         </InlineWrapper>
