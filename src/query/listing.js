@@ -112,6 +112,11 @@ export const GET_LISTINGS = gql`
                   lastUpdatedAt
                   
                 }
+                user{
+                    id
+                    firstName
+                    lastName
+                }
         }
     }
 `;

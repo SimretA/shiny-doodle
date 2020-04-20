@@ -41,3 +41,32 @@ export const GET_BOOKING_BY_USER = gql`
         
       }
 }`;
+
+export const GET_BOOKING_BY_LISTING = gql`
+    query bookingByListing($id: String){
+      bookingByListing(id: $id){
+        id
+        startBookDate
+        endBookDate
+        bookingDate
+        user{
+            firstName
+            lastName
+        }
+        
+        listing{
+            id
+            name
+            price
+            street
+            city
+            country
+            houseType
+            geolocations{
+                lat
+                long
+            }
+        }
+        
+      }
+}`;

@@ -10,12 +10,15 @@ import {Wrapper, Second, FormContainer, InputContainer} from "./../login/login.s
 import {AuthContext} from "../../context/AuthContext";
 import {Tag} from "../shared/Tag";
 import {ADD_LISTING_2} from "./../../query/listing";
+import {logout} from "../../control/auth";
+import {useHistory} from "react-router-dom";
 
 export function AddListing(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
 
 
+    let history = useHistory();
     function handleUpload(res) {
 
         if (res.filesUploaded.length > 0) {
@@ -61,11 +64,6 @@ export function AddListing(props) {
             anemitys: [],
             images: []
         }
-    );
-    React.useEffect(
-        () => {
-            console.log(newListing);
-        }, [newListing]
     );
 
     const stage1 = (
@@ -201,9 +199,7 @@ export function AddListing(props) {
 
     </>;
 
-    useEffect(() => {
-        console.log(newListing)
-    }, [newListing]);
+
 
     const handleAdd = (event) => {
         event.preventDefault();
@@ -234,7 +230,13 @@ export function AddListing(props) {
             else {
                 console.log("submitting");
                 setWarn(false);
-                addListing({variables: {...newListing}});
+                addListing({variables: {...newListing}})
+                    .catch(e=>{
+                            if(e.message=="GraphQL error: Unauthenticated!!"){
+                                logout(history);
+                            }
+                        }
+                    );
             }
 
         }
