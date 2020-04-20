@@ -8,6 +8,8 @@ import {ADD_BOOKING} from "../../query/booking";
 import {useMutation} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
 import moment from "moment";
+// import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti';
 
 export default function AddBooking(props) {
 
@@ -23,12 +25,14 @@ export default function AddBooking(props) {
         // listing:{id: props.listingId}
     });
 
+    // const { width, height } = useWindowSize();
+
     const handleAdd = (event) => {
         event.preventDefault();
-        const formattedStartDate = moment(booking.startBookDate).format( 'MM-DD-YYYY');
-        const formattedEndDate = moment(booking.endBookDate).format( 'MM-DD-YYYY');
+        const formattedStartDate = moment(booking.startBookDate).format('MM-DD-YYYY');
+        const formattedEndDate = moment(booking.endBookDate).format('MM-DD-YYYY');
 
-        if(booking.startBookDate && booking.endBookDate) {
+        if (booking.startBookDate && booking.endBookDate) {
             addBooking(
                 {
                     variables: {
@@ -41,30 +45,39 @@ export default function AddBooking(props) {
                     }
                 }
             )
-                .catch(e=>{
+                .catch(e => {
                     console.log(e);
-                    if(e.graphQLErrors) {
+                    if (e.graphQLErrors) {
                         setError(e.graphQLErrors[0].message);
                     }
                 })
         }
 
     };
-    React.useEffect(()=>{console.log(addedBooking)},[addedBooking]);
+    React.useEffect(() => {
+        console.log(addedBooking)
+    }, [addedBooking]);
     if (addedBooking.loading) {
         return (
-                <Loading/>
+            <Loading/>
 
         );
     }
     if (addedBooking.data) {
         console.log(addedBooking.data);
-        return <p>Enjoy</p>
+        return <>
+            <Confetti
+                width={500}
+                height={500}
+            />
+            <p>Enjoy</p>
+        </>
     }
     return <>
         {auth.isAuthed ?
             <>
-                <p style={{color:'red'}}>{error}</p>
+
+                <p style={{color: 'red'}}>{error}</p>
                 <InlineWrapper>
                     <Data><FontAwesomeIcon icon={faCalendar}
                                            style={{fontSize: 25, marginRight: 5}}/></Data>
@@ -72,7 +85,8 @@ export default function AddBooking(props) {
                     <TextInput type={"date"}
                                onChange={(event) => {
                                    console.log(event.target.value);
-                                   setBooking({...booking, startBookDate: event.target.value});}}/>
+                                   setBooking({...booking, startBookDate: event.target.value});
+                               }}/>
                 </InlineWrapper>
                 <InlineWrapper>
                     <TextInput type={"date"}
