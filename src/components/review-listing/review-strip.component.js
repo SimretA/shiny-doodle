@@ -32,9 +32,8 @@ export default function ReviewStrip(props) {
                 name={`${firstName} ${lastName}`} size="40"/>
             <p style={{paddingLeft:"5"}}>{firstName} {lastName}</p>
         </InlineWrapper>
+         <p style={{margin:0}}>{props.data.content} {new Date(props.data.createdAt).toDateString()}</p>
 
-            {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
-            <p>{props.data.content}</p>
 
 
     </Wrapper>;
