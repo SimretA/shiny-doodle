@@ -7,11 +7,12 @@ import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
 import ReviewStrip from "./review-strip.component";
 import Success from "../shared/Success.component";
+import {logout} from "../../control/auth";
+import {useHistory} from "react-router-dom";
 
 export default function AddReview(props) {
     const [review, setReview] = React.useState("");
-    const [auth, setAuth] = useContext(AuthContext);
-    const [addReview, addedReview] = useMutation(ADD_REVIEW);
+    let history = useHistory();
     const handleAdd = () => {
         if (review.trim() === "") {
             return;
@@ -29,9 +30,16 @@ export default function AddReview(props) {
                     }
                 }
             }
-        )
+        ).catch(e=>{
+            if(e.message=="GraphQL error: Unauthenticated!!"){
+                logout(history);
+            }
+        }
+    )
 
     };
+    const [auth, setAuth] = useContext(AuthContext);
+    const [addReview, addedReview] = useMutation(ADD_REVIEW);
     if (addedReview.loading) {
         return (
             <Fade left>

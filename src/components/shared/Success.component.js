@@ -5,7 +5,7 @@ export default function Success(props) {
 
     return(
         <div>
-            <h4>{props.message||"Successfully finished task"}</h4>
+            <h5>{props.message||"Successfully finished task"}</h5>
         </div>
     )
 

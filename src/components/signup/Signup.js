@@ -19,7 +19,7 @@ export function Signup() {
         console.log(addedUser);
     }, [addedUser]);
 
-    //TODO add language and is host
+
 
     const [account, setAccount] = useState({
         email: "",
@@ -47,7 +47,7 @@ export function Signup() {
         );
     }
     if (addedUser.data) {
-        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName}`}/>
+        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName} Please check your email for validation.` }/>
     }
 
     return (
@@ -112,8 +112,7 @@ export function Signup() {
                                }}/>
                     </InputContainer>
 
-                    {//TODO add language and is host
-                    }
+
                     <Button type="submit"
                             onClick={evt => handleSignup(evt)}>Sign up
                     </Button>
