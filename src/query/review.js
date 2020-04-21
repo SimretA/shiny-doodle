@@ -38,3 +38,36 @@ export const ADD_REVIEW = gql`
     
   }
 `;
+
+export const DELETE_REVIEW = gql`
+  mutation deleteReview($id: String) {
+    deleteReview(
+        input: $id
+        ){
+            deleted
+        }
+    
+  }
+`;
+export const UPDATE_REVIEW = gql`
+  mutation updateReview($updateReviewInput: UpdateReviewInput) {
+    updateReview(
+        input: $updateReviewInput
+        ){
+            id
+            content
+            user{
+                id
+                firstName
+                lastName
+               }
+            createdAt
+            lastUpdatedAt
+            listing{
+                id
+            }
+            
+        }
+    
+  }
+`;
