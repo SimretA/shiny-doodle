@@ -7,6 +7,8 @@ import {AuthContext} from "../../context/AuthContext";
 import {useMutation} from "@apollo/react-hooks";
 import {DELETE_REVIEW, UPDATE_REVIEW} from "../../query/review";
 import {Button, TextInput} from "../shared/FormComponents";
+import {logout} from "../../control/auth";
+import {useHistory} from "react-router-dom";
 
 
 const Wrapper = Styled.div`
@@ -46,6 +48,7 @@ export default function ReviewStrip(props) {
     const [edit, setEdit] = React.useState(false);
     const [content, setContent] = React.useState(props.data.content);
 
+    const history = useHistory();
     const [deleteReview, deletedReview] = useMutation(DELETE_REVIEW);
     const [updateReview, updatedReview] = useMutation(UPDATE_REVIEW);
 
@@ -54,6 +57,11 @@ export default function ReviewStrip(props) {
             {
                 variables: {
                     id: props.data.id
+                }
+            }
+        ).catch(e=>{
+                if(e.message=="GraphQL error: Unauthenticated!!"){
+                    logout(history);
                 }
             }
         );
@@ -71,6 +79,11 @@ export default function ReviewStrip(props) {
                             id: id,
                             content: content
                         }
+                    }
+                }
+            ).catch(e=>{
+                    if(e.message=="GraphQL error: Unauthenticated!!"){
+                        logout(history);
                     }
                 }
             )

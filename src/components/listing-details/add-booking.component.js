@@ -8,7 +8,6 @@ import {ADD_BOOKING} from "../../query/booking";
 import {useMutation} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
 import moment from "moment";
-// import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti';
 
 export default function AddBooking(props) {

@@ -73,12 +73,13 @@ export function EditListing(props) {
     };
     const handleSave = () => {
 
-        editListing({variables: {updatedListing: listing}}).catch(e => {
-            // history.push("/login");
+        editListing({variables: {updatedListing: listing}}).catch(e=>{
+                if(e.message=="GraphQL error: Unauthenticated!!"){
+                    logout(history);
+                }
+            }
+        );
 
-            console.log(e);
-            logout(history);
-        });
         props.refetch();
         // props.close();
 
