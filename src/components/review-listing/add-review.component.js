@@ -39,7 +39,7 @@ export default function AddReview(props) {
 
     };
     const [auth, setAuth] = useContext(AuthContext);
-    const [addReview, addedReview] = useMutation(ADD_REVIEW);
+        const [addReview, addedReview] = useMutation(ADD_REVIEW);
     if (addedReview.loading) {
         return (
             <Fade left>

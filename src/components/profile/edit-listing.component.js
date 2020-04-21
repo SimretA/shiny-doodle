@@ -73,13 +73,14 @@ export function EditListing(props) {
     };
     const handleSave = () => {
 
-        editListing({variables: {updatedListing: listing}}).catch(e => {
-            // history.push("/login");
+        editListing({variables: {updatedListing: listing}}).catch(e=>{
+                if(e.message=="GraphQL error: Unauthenticated!!"){
+                    logout(history);
+                }
+            }
+        );
 
-            console.log(e);
-            logout(history);
-        });
-        props.refetch && props.refetch();
+        props.refetch();
         // props.close();
 
     };
@@ -128,12 +129,12 @@ export function EditListing(props) {
                 <InlineContainer>
                     <Label>Price</Label>
                     <TextInput type={'number'} value={listing.price}
-                               onChange={(event) => setListing({...listing, price: event.target.value})}/>
+                               onChange={(event) => setListing({...listing, price: parseFloat(event.target.value)})}/>
                 </InlineContainer>
                 <InlineContainer>
                     <Label>Guests</Label>
                     <TextInput type={'number'} value={listing.personCapacity}
-                               onChange={(event) => setListing({...listing, personCapacity: event.target.value})}/>
+                               onChange={(event) => setListing({...listing, personCapacity:parseInt(event.target.value)})}/>
                 </InlineContainer>
 
             </Column>

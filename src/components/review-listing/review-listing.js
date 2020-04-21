@@ -1,9 +1,10 @@
 import React from 'react';
 import ReviewStrip from './review-strip.component';
 import AddReview from './add-review.component';
-import {REVIEW_BY_LISTING} from "../../query/review";
-import { useQuery} from "@apollo/react-hooks";
+import {DELETE_REVIEW, REVIEW_BY_LISTING} from "../../query/review";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
+import {Prompt} from "../shared/Prompt.component";
 
 export default function Review(props) {
 
@@ -25,7 +26,7 @@ export default function Review(props) {
 
             <AddReview refetch={refetch} listingId={props.listingId}/>
 
-            {data&&data.reviewByListing.map(_review => <ReviewStrip data={_review} />)}
+            {data&&data.reviewByListing.map(_review => <ReviewStrip refetch={refetch}   key={_review.id} data={_review} />)}
         </>
 
 }
