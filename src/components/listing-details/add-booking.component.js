@@ -22,10 +22,8 @@ export default function AddBooking(props) {
     const [booking, setBooking] = React.useState({
         startBookDate: null,
         endBookDate: null
-        // listing:{id: props.listingId}
     });
 
-    // const { width, height } = useWindowSize();
 
     const handleAdd = (event) => {
         event.preventDefault();
@@ -57,6 +55,12 @@ export default function AddBooking(props) {
     React.useEffect(() => {
         console.log(addedBooking)
     }, [addedBooking]);
+
+    React.useEffect(() => {
+        console.log(booking)
+    }, [booking]);
+
+
     if (addedBooking.loading) {
         return (
             <Loading/>
@@ -73,6 +77,44 @@ export default function AddBooking(props) {
             <p>Enjoy</p>
         </>
     }
+
+    const datePicker = (event, date) => {
+
+        if (date == "start") {
+            if (((new Date(event.target.value)).getTime() - (new Date()).getTime()) / (1000 * 3600 * 24) < 3) {
+                setError("Book at least three days ahead from today please.");
+
+            }
+
+            else if (booking.endBookDate && ((new Date(booking.endBookDate)).getTime() < (new Date(event.target.value)).getTime())) {
+                setError("Fix checkout day please...");
+
+
+            }
+
+            else {
+                setBooking({...booking, startBookDate: event.target.value});
+                setError("");
+            }
+        }
+        else {
+            if (booking.startBookDate && ((new Date(event.target.value)).getTime() < (new Date(booking.startBookDate)).getTime())) {
+                setError("Fix checkout day please...");
+
+            }
+            else if (((new Date(event.target.value)).getTime() - (new Date()).getTime()) / (1000 * 3600 * 24) < 4) {
+                setError("Checkout date can't be this early.");
+
+            }
+            else{
+
+                setError("");
+                setBooking({...booking, endBookDate: event.target.value});
+            }
+
+        }
+
+    };
     return <>
         {auth.isAuthed ?
             <>
@@ -85,12 +127,13 @@ export default function AddBooking(props) {
                     <TextInput type={"date"}
                                onChange={(event) => {
                                    console.log(event.target.value);
-                                   setBooking({...booking, startBookDate: event.target.value});
-                               }}/>
+                                   datePicker(event, "start");
+                               }}
+                    />
                 </InlineWrapper>
                 <InlineWrapper>
                     <TextInput type={"date"}
-                               onChange={(event) => setBooking({...booking, endBookDate: event.target.value})}/>
+                               onChange={(event) => datePicker(event, "end")}/>
 
                     <Button onClick={handleAdd}>Book</Button>
                 </InlineWrapper>
