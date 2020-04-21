@@ -1,6 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Styled from 'styled-components';
 import Avatar from "react-avatar";
+import {faArrowRight, faArrowLeft, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {AuthContext} from "../../context/AuthContext";
+import {useMutation} from "@apollo/react-hooks";
+import {DELETE_REVIEW, UPDATE_REVIEW} from "../../query/review";
+import {Button, TextInput} from "../shared/FormComponents";
+import {logout} from "../../control/auth";
+import {useHistory} from "react-router-dom";
+
 
 const Wrapper = Styled.div`
     display: flex;
@@ -21,20 +30,118 @@ const InlineWrapper = Styled.div`
     
 `;
 
+const Menu = Styled.p`
+    position: relative;
+    right: 0;
+    top: 0;
+    border-radius: 5px;
+    margin-y:auto;
+
+`;
 
 export default function ReviewStrip(props) {
 
-    const{firstName, lastName} = props.data.user;
+    const [auth, setAuth] = useContext(AuthContext);
 
-    return<Wrapper>
+    const {firstName, lastName, id} = props.data.user;
+    const [expand, setExpand] = React.useState(false);
+    const [edit, setEdit] = React.useState(false);
+    const [content, setContent] = React.useState(props.data.content);
+
+    const history = useHistory();
+    const [deleteReview, deletedReview] = useMutation(DELETE_REVIEW);
+    const [updateReview, updatedReview] = useMutation(UPDATE_REVIEW);
+
+    const handleDelete = () => {
+        deleteReview(
+            {
+                variables: {
+                    id: props.data.id
+                }
+            }
+        ).catch(e=>{
+                if(e.message=="GraphQL error: Unauthenticated!!"){
+                    logout(history);
+                }
+            }
+        );
+
+
+    };
+
+
+    const handleUpdate = () => {
+        if (content.trim() != "" ) {
+            updateReview(
+                {
+                    variables: {
+                        updateReviewInput: {
+                            id: id,
+                            content: content
+                        }
+                    }
+                }
+            ).catch(e=>{
+                    if(e.message=="GraphQL error: Unauthenticated!!"){
+                        logout(history);
+                    }
+                }
+            )
+        }
+
+    };
+
+    if(updatedReview){
+        props.refetch();
+    }
+    if (deletedReview) {
+        props.refetch();
+    }
+
+    return <Wrapper>
+
         <InlineWrapper>
-        <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true}
-                name={`${firstName} ${lastName}`} size="40"/>
-            <p style={{paddingLeft:"5"}}>{firstName} {lastName}</p>
-        </InlineWrapper>
 
-            {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
-            <p>{props.data.content}</p>
+            <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true}
+                    name={`${firstName} ${lastName}`} size="30"/>
+            <p style={{paddingLeft: "15"}}>{firstName} {lastName}</p>
+            {auth.account.id == id ?
+                <Menu>{expand ? <>
+                        <FontAwesomeIcon icon={faEdit} style={{
+                            fontSize: 16,
+                            paddingRight: "5",
+                            paddingLeft: "5",
+                            color: "yellow",
+                            marginRight: 5
+                        }} onClick={() => setEdit(true)}/>
+                        <FontAwesomeIcon icon={faTrash}
+                                         style={{fontSize: 16, paddingRight: "5", color: "red", marginRight: 5}}
+                                         onClick={() => handleDelete()}/>
+                        <FontAwesomeIcon icon={faArrowLeft}
+                                         style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
+                                         onClick={() => setExpand(false)}/>
+                    </>
+                    : <FontAwesomeIcon icon={faArrowRight}
+                                       style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
+                                       onClick={() => setExpand(true)}/>}</Menu>
+
+                : <></>}
+        </InlineWrapper>
+        {edit ? <>
+                <TextInput value={content} onChange={event => setContent(event.target.value)}/>
+                <div style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
+                    <Button onClick={() => setEdit(false)}
+                            style={{backgroundColor: "gray", width: "100px", color: "white"}}>Cancel</Button>
+                    <Button onClick={handleUpdate} style={{backgroundColor: "yellow", width: "100px"}}>Edit</Button>
+                </div>
+            </>
+            : <p style={{margin: 0}}>{content} </p>}
+
+        <p>
+            <small>{new Date(props.data.lastUpdatedAt).toDateString()}
+                <small>{props.data.lastUpdatedAt != props.data.createdAt ? "(edited)" : ""}</small>
+            </small>
+        </p>
 
 
     </Wrapper>;

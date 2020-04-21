@@ -30,7 +30,7 @@ export function BookingItem(props) {
         return<Loading />
     }
     if(data){
-        return <Wrapper onMouseEnter={()=>props.hoverOn(data.listing.geolocations)} >
+        return <Wrapper onMouseEnter={()=>props.hoverOn && props.hoverOn(data.listing.geolocations)} >
 
             <h4>{data.listing.name}</h4>
             <p>{data.listing.street}, {data.listing.city} {data.listing.country}</p>

@@ -12,12 +12,12 @@ const TH = Styled.th`
 
 export function Calendar(props) {
 
-    let history = useHistory();
     const [_dateObject, setDateObject] = React.useState(moment());
     const [bookingThisMonth, setBookingThisMonth] = React.useState([24, 25]);
     const [bookings, setBookings] = React.useState([]);
 
     React.useEffect(() => {
+        setBookings([]);
 
         props.bookings && props.bookings.map((booking) => {
             let start = moment(new Date(booking.startBookDate), "YYYY-MM-DD");
@@ -95,13 +95,13 @@ export function Calendar(props) {
 
     totalSlots.forEach((row, i) => {
         if (i % 7 !== 0) {
-            cells.push(row); // if index not equal 7 that means not go to next week
+            cells.push(row);
         } else {
-            rows.push(cells); // when reach next week we contain all td in last week to rows
-            cells = []; // empty container
-            cells.push(row); // in current loop we still push current row to new container
+            rows.push(cells);
+            cells = [];
+            cells.push(row);
         }
-        if (i === totalSlots.length - 1) { // when end loop we add remain date
+        if (i === totalSlots.length - 1) {
             rows.push(cells);
         }
     });

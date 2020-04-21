@@ -14,12 +14,13 @@ export function Signup() {
 
     const [addUser, addedUser] = useMutation(ADD_USER);
 
+    const  [warn, setWarn] = useState("");
 
     React.useEffect(() => {
         console.log(addedUser);
     }, [addedUser]);
 
-    //TODO add language and is host
+
 
     const [account, setAccount] = useState({
         email: "",
@@ -35,7 +36,13 @@ export function Signup() {
     const handleSignup = (evt) => {
         evt.preventDefault();
 
-        addUser({variables: {newUser: account}});
+        addUser({variables: {newUser: account}})
+            .catch(e=>{
+                if(e.message=="GraphQL error: user already exists"){
+
+                    setWarn("Email is already in use");
+                }
+            });
 
 
     };
@@ -47,12 +54,13 @@ export function Signup() {
         );
     }
     if (addedUser.data) {
-        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName}`}/>
+        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName} Please check your email for validation.` }/>
     }
 
     return (
         <Wrapper>
             <Second>Sign up</Second>
+            <h5 style={{color:"red"}}>{warn}</h5>
             <FormContainer>
                 <Column>
                     <InputContainer>
@@ -112,8 +120,7 @@ export function Signup() {
                                }}/>
                     </InputContainer>
 
-                    {//TODO add language and is host
-                    }
+
                     <Button type="submit"
                             onClick={evt => handleSignup(evt)}>Sign up
                     </Button>

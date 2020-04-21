@@ -14,10 +14,10 @@ export function Login(props) {
         email: "",
         password: ""
     });
-        const [auth, setAuth] = useContext(AuthContext);
+    const [auth, setAuth] = useContext(AuthContext);
     let history = useHistory();
     let location = useLocation();
-    const [getUser, {data, loading}] = useLazyQuery(LOG_IN);
+    const [getUser, {data, loading, error}] = useLazyQuery(LOG_IN);
 
 
     const handleLogin = (evt) => {
@@ -33,6 +33,35 @@ export function Login(props) {
     if (loading) {
         return <Loading/>
     }
+    if(error){
+        return (
+            <Wrapper>
+                <FormContainer>
+
+                    <Second>Login</Second>
+                    <h5 style={{color:"red"}}>Invalid email or password</h5>
+
+                    <InputContainer>
+                        <Label htmlFor="email">Email</Label>
+                        <TextInput required type="email" id="email"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter email"
+                                   onChange={(evt) => setFormInput({...formInput, email: evt.target.value})}/>
+
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="exampleTextInputPassword1">Password</Label>
+                        <TextInput required type="password" id="exampleTextInputPassword1"
+                                   placeholder="Password"
+                                   onChange={(evt) => setFormInput({...formInput, password: evt.target.value})}/>
+
+                    </InputContainer>
+                    <Button type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
+
+                </FormContainer>
+            </Wrapper>
+        );
+    }
     if (data && data.login) {
         localStorage.setItem("token", data.login.token);
         localStorage.setItem("userId", data.login.userId);
@@ -46,6 +75,7 @@ export function Login(props) {
             <FormContainer>
 
                 <Second>Login</Second>
+
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>
                     <TextInput required type="email" id="email"

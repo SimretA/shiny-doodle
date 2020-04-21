@@ -3,13 +3,14 @@ import {Wrapper, Data, InlineWrapper, Column, MapContainer, StickyColumn} from "
 import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faMoneyBill} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faMoneyBill, faPersonBooth} from '@fortawesome/free-solid-svg-icons'
 // import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {Calendar} from "../shared/Calendar.component";
 import Review from './../review-listing/review-listing';
 import AddBooking from './add-booking.component';
 import 'react-calendar/dist/Calendar.css';
+import {Fade} from "react-reveal";
 
 
 export default function ListDetail(props) {
@@ -39,35 +40,44 @@ export default function ListDetail(props) {
                 <Wrapper>
 
                     <Column>
-                        <InlineWrapper>
-                            <img
-                                src={imageSrc}
-                                alt="Card cap"
-                                style={{width: 250, height: 250}}/>
-                        </InlineWrapper>
-                        <InlineWrapper>
-                            <Data><FontAwesomeIcon icon={faHome} style={{fontSize: 25, marginRight: 5}}/></Data>
-                            <Data>{props.data.name}, {props.data.houseType} - {props.data.city}, {props.data.country}
-                            </Data>
-                        </InlineWrapper>
-                        <InlineWrapper>
-                            <Data><FontAwesomeIcon icon={faMoneyBill}
-                                                   style={{fontSize: 25, marginRight: 5}}/></Data>
-                            <p>${props.data.price} with {props.data.personCapacity} people capacity
-                            </p>
-                        </InlineWrapper>
-                        <InlineWrapper>
-                            {/*<Calendar*/}
+                        <Fade right>
+                            <InlineWrapper>
+                                <img
+                                    src={imageSrc}
+                                    alt="Card cap"
+                                    style={{width: 250, height: 250}}/>
+                            </InlineWrapper>
+                        </Fade>
+                        <Fade right>
+                            <InlineWrapper>
+                                <Data><FontAwesomeIcon icon={faHome} style={{fontSize: 25, marginRight: 5}}/></Data>
+                                <Data>{props.data.name}, {props.data.houseType} - {props.data.city}, {props.data.country}
+                                </Data>
+                            </InlineWrapper>
+                        </Fade>
+                        <Fade right>
+                            <InlineWrapper>
+                                <Data><FontAwesomeIcon icon={faPersonBooth}
+                                                       style={{fontSize: 25, marginRight: 5}}/></Data>
+                                <p>By: {props.data.user && props.data.user.firstName} {props.data.user && props.data.user.lastName}
+                                </p>
+                            </InlineWrapper>
+                        </Fade>
+                        <Fade right>
+                            <InlineWrapper>
+                                <Data><FontAwesomeIcon icon={faMoneyBill}
+                                                       style={{fontSize: 25, marginRight: 5}}/></Data>
+                                <p>${props.data.price} with {props.data.personCapacity} people capacity
+                                </p>
+                            </InlineWrapper>
+                        </Fade>
+                        <Fade right>
+                            <InlineWrapper>
 
-                                {/*activeStartDate={new Date()}*/}
-                                {/*tileContent={({activeStartDate, date, view}) => view === 'month' && date.getDay() === 0 ?*/}
-                                    {/*<p>Sunday!</p> : null*/}
-                                {/*}*/}
-                                 {/*value={[new Date(), new Date(2020, 3, 3)]}*/}
-                            {/*/>*/}
 
-                            <Calendar bookings={props.data.bookings}/>
-                        </InlineWrapper>
+                                <Calendar bookings={props.data.bookings}/>
+                            </InlineWrapper>
+                        </Fade>
 
                     </Column>
                     <MapContainer>
