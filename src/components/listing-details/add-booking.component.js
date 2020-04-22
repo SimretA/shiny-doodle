@@ -46,7 +46,21 @@ export default function AddBooking(props) {
                 .catch(e => {
                     console.log(e);
                     if (e.graphQLErrors) {
-                        setError(e.graphQLErrors[0].message);
+                        switch (e.graphQLErrors[0].message) {
+                            case "Users cant book their own listing":
+                                setError("You can't book your own listing");
+                                break;
+                            case "Booking existing for the listing at the start date":
+                                setError("The listing is not available at this time");
+                                break;
+                            case "Booking at start date exists for user":
+                                setError("You can't book different booking on the same date");
+                                break;
+                            default:
+                                setError("Something went wrong");
+                                break;
+                        }
+                        // setError(e.graphQLErrors[0].message);
                     }
                 })
         }

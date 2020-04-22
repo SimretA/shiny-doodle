@@ -64,6 +64,9 @@ export function Home() {
                     {data.searchListing.map((datum)=><CardItem handleClick={(data) =>{handleClick(data);setShowModal(true);}} key={datum.id} {...datum}
                                                                                    />)}
                 </>:<></>}
+                {
+                    data && data.searchListing && data.searchListing.length===0? "Opps, No listing found:(":""
+                }
             </RightSideBar>
 
         </Container>
