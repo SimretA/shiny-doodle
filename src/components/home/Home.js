@@ -13,6 +13,7 @@ export function Home() {
         city:"",
         country:""
     });
+    const [expand, setExpand] = React.useState(true);
     const [getListings, {data, loading}] = useLazyQuery(SEARCH_LISTING);
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
@@ -37,6 +38,12 @@ export function Home() {
     }
     const[showModal, setShowModal] = React.useState(false);
 
+    React.useEffect(()=>{
+        if(data && data.searchListing && data.searchListing.length>0){
+            setExpand(false);
+        }
+
+    },[data]);
 
     return(
         <Container>
@@ -47,7 +54,7 @@ export function Home() {
             </Modal>
 
 
-            <SearchContainer><Search searchInput={searchInput} setSearchInput={setSearchInput} handleSearch={handleSearch}/></SearchContainer>
+            <SearchContainer><Search expand={expand} setExpand={setExpand} searchInput={searchInput} setSearchInput={setSearchInput} handleSearch={handleSearch}/></SearchContainer>
             <RightSideBar>
 
                 {loading?<Loading/>:<></>}

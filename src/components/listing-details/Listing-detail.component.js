@@ -30,7 +30,7 @@ export default function ListDetail(props) {
                     props.data.bookings && props.data.bookings.length > 0 ?
                         <>This listing is already booked and can't be deleted</>
                         : <><Button style={{backgroundColor: "red", color: "white"}}>Delete Listing</Button></>
-                    : <AddBooking listingId={props.data.id}/>}
+                    : <AddBooking listingId={props.data.id} price={props.data.price}/>}
 
             </StickyColumn>
 

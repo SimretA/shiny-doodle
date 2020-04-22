@@ -9,6 +9,7 @@ import {DELETE_REVIEW, UPDATE_REVIEW} from "../../query/review";
 import {Button, TextInput} from "../shared/FormComponents";
 import {logout} from "../../control/auth";
 import {useHistory} from "react-router-dom";
+import {Fade} from "react-reveal";
 
 
 const Wrapper = Styled.div`
@@ -18,7 +19,10 @@ const Wrapper = Styled.div`
     padding:10px;
     justify-content: center;
     text-align:justify;
-    border-bottom: 1px solid gray;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
     
 `;
 
@@ -30,12 +34,9 @@ const InlineWrapper = Styled.div`
     
 `;
 
-const Menu = Styled.p`
-    position: relative;
-    right: 0;
-    top: 0;
-    border-radius: 5px;
-    margin-y:auto;
+const Menu = Styled.div`
+    display; flex;
+    flex-direction: row;
 
 `;
 
@@ -59,8 +60,8 @@ export default function ReviewStrip(props) {
                     id: props.data.id
                 }
             }
-        ).catch(e=>{
-                if(e.message=="GraphQL error: Unauthenticated!!"){
+        ).catch(e => {
+                if (e.message == "GraphQL error: Unauthenticated!!") {
                     logout(history);
                 }
             }
@@ -71,18 +72,20 @@ export default function ReviewStrip(props) {
 
 
     const handleUpdate = () => {
-        if (content.trim() != "" ) {
+        if (content.trim() != "") {
             updateReview(
                 {
                     variables: {
                         updateReviewInput: {
-                            id: id,
+                            id: props.data.id,
                             content: content
                         }
                     }
                 }
-            ).catch(e=>{
-                    if(e.message=="GraphQL error: Unauthenticated!!"){
+            ).then(data =>
+                setEdit(false)
+            ).catch(e => {
+                    if (e.message == "GraphQL error: Unauthenticated!!") {
                         logout(history);
                     }
                 }
@@ -91,7 +94,8 @@ export default function ReviewStrip(props) {
 
     };
 
-    if(updatedReview){
+    if (updatedReview) {
+        console.log("updated Review", updatedReview);
         props.refetch();
     }
     if (deletedReview) {
@@ -107,23 +111,31 @@ export default function ReviewStrip(props) {
             <p style={{paddingLeft: "15"}}>{firstName} {lastName}</p>
             {auth.account.id == id ?
                 <Menu>{expand ? <>
-                        <FontAwesomeIcon icon={faEdit} style={{
-                            fontSize: 16,
-                            paddingRight: "5",
-                            paddingLeft: "5",
-                            color: "yellow",
-                            marginRight: 5
-                        }} onClick={() => setEdit(true)}/>
-                        <FontAwesomeIcon icon={faTrash}
-                                         style={{fontSize: 16, paddingRight: "5", color: "red", marginRight: 5}}
-                                         onClick={() => handleDelete()}/>
-                        <FontAwesomeIcon icon={faArrowLeft}
-                                         style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
-                                         onClick={() => setExpand(false)}/>
+                        <Fade left>
+                            <FontAwesomeIcon icon={faEdit} style={{
+                                fontSize: 16,
+                                paddingRight: "5",
+                                paddingLeft: "5",
+                                color: "yellow",
+                                marginRight: 5
+                            }} onClick={() => setEdit(true)}/></Fade>
+                        <Fade left>
+                            <FontAwesomeIcon icon={faTrash}
+                                             style={{fontSize: 16, paddingRight: "5", color: "red", marginRight: 5}}
+                                             onClick={() => handleDelete()}/></Fade>
+                        <Fade left>
+                            <FontAwesomeIcon icon={faArrowLeft}
+                                             style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
+                                             onClick={() => setExpand(false)}/></Fade>
                     </>
-                    : <FontAwesomeIcon icon={faArrowRight}
-                                       style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
-                                       onClick={() => setExpand(true)}/>}</Menu>
+                    : <Fade right><FontAwesomeIcon icon={faArrowRight}
+                                                   style={{
+                                                       fontSize: 16,
+                                                       color: "gray",
+                                                       paddingRight: "5",
+                                                       marginRight: 5
+                                                   }}
+                                                   onClick={() => setExpand(true)}/></Fade>}</Menu>
 
                 : <></>}
         </InlineWrapper>

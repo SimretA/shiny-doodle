@@ -1,14 +1,17 @@
 import React from 'react';
 import {SearchContainer, GridContainer, InputContainer, GridItem} from "./search.styled";
 import {TextInput, Label, Button} from "../shared/FormComponents";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faCommentDots} from '@fortawesome/free-solid-svg-icons'
 
-export default function Search({searchInput, setSearchInput,handleSearch}) {
+export default function Search({searchInput, setSearchInput,handleSearch, expand, setExpand}) {
 
     // const[searchInput, setSearchInput] = React.useState({});
 
 
     return (<>
         <SearchContainer>
+            <FontAwesomeIcon icon={faCommentDots} style={{fontSize: 25, marginRight: 5}}/>
             <h4 style={{fontStyle:"italic"}}>Where to next?</h4>
             <InputContainer>
                 <TextInput type="text"  placeholder="City" value={searchInput.city||""}
