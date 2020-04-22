@@ -95,7 +95,7 @@ export default function ReviewStrip(props) {
     };
 
     if (updatedReview) {
-        console.log("updated Review", updatedReview);
+        // console.log("updated Review", updatedReview);
         props.refetch();
     }
     if (deletedReview) {

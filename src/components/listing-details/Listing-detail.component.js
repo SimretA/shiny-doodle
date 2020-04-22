@@ -3,8 +3,7 @@ import {Wrapper, Data, InlineWrapper, Column, MapContainer, StickyColumn} from "
 import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faMoneyBill, faPersonBooth} from '@fortawesome/free-solid-svg-icons'
-// import Calendar from 'react-calendar';
+import {faHome, faMoneyBill, faPersonBooth, faArrowCircleLeft, faArrowCircleRight} from '@fortawesome/free-solid-svg-icons'
 import 'react-calendar/dist/Calendar.css';
 import {Calendar} from "../shared/Calendar.component";
 import Review from './../review-listing/review-listing';
@@ -15,23 +14,68 @@ import {Fade} from "react-reveal";
 
 export default function ListDetail(props) {
 
-    console.log(props);
+    const{images} = props.data;
+    const [next, setNext] = React.useState(false);
+    const [back, setBack] = React.useState(false);
+    const [index, setindex] = React.useState(0);
+    const [imageSrc, setImageSrc] = React.useState("https://picsum.photos/id/870/200/300?grayscale&blur=2");
     const show = props.showModal ? 'flex' : 'none';
-    let imageSrc = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
-    if (props.data.images) {
-        if (props.data.images.length > 0) {
-            imageSrc = props.data.images[0].url;
+    // let imageSrc = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
+
+
+    React.useEffect(()=>{
+        setImageSrc("https://picsum.photos/id/870/200/300?grayscale&blur=2");
+        setindex(0);
+        if (images) {
+            if (images.length > 0) {
+
+                // imageSrc = props.data.images[index].url;
+                setImageSrc(props.data.images[index].url);
+            }
+            if(images.length > 1){
+                setNext(true);
+                setBack(false);
+            }
+            else{
+                setNext(false);
+                setBack(false);
+            }
         }
-    }
+
+    },[props]);
+
+    React.useEffect(()=>{
+        if(images && images.length> index){
+            setImageSrc(images[index].url)
+        }
+    },[index]);
+    const goToNext = () =>{
+        if(index===images.length-2){
+            setNext(false);
+        }
+        if(index<images.length){
+            setindex(index+1);
+            setBack(true);
+
+        }
+
+    };
+    const goBack = () =>{
+        if(index===1){
+            setBack(false);
+        }
+        if(index>0){
+            setindex(index-1);
+            setNext(true);
+        }
+
+
+    };
+
     return (
         <>
             <StickyColumn>
-                {props.owner ?
-                    props.data.bookings && props.data.bookings.length > 0 ?
-                        <>This listing is already booked and can't be deleted</>
-                        : <><Button style={{backgroundColor: "red", color: "white"}}>Delete Listing</Button></>
-                    : <AddBooking listingId={props.data.id} price={props.data.price}/>}
-
+                <AddBooking listingId={props.data.id} price={props.data.price}/>
             </StickyColumn>
 
             <div style={{display: show, flexDirection: 'column'}}>
@@ -42,10 +86,17 @@ export default function ListDetail(props) {
                     <Column>
                         <Fade right>
                             <InlineWrapper>
+                                {back?<FontAwesomeIcon icon={faArrowCircleLeft}
+                                                       onClick={goBack}
+                                                       style={{fontSize: 25, marginRight: 5}}/>:<></>}
                                 <img
                                     src={imageSrc}
                                     alt="Card cap"
                                     style={{width: 250, height: 250}}/>
+                                {next?
+                                    <FontAwesomeIcon icon={faArrowCircleRight}
+                                                     onClick={goToNext}
+                                                     style={{fontSize: 25, marginRight: 5}}/>:<></>}
                             </InlineWrapper>
                         </Fade>
                         <Fade right>
