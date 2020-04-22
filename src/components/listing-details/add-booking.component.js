@@ -15,6 +15,7 @@ export default function AddBooking(props) {
     const [auth, setAuth] = useContext(AuthContext);
 
     const [addBooking, addedBooking] = useMutation(ADD_BOOKING);
+    const[loading, setLoading] = React.useState(false);
 
 
     const [error, setError] = React.useState("");
@@ -45,7 +46,21 @@ export default function AddBooking(props) {
                 .catch(e => {
                     console.log(e);
                     if (e.graphQLErrors) {
-                        setError(e.graphQLErrors[0].message);
+                        switch (e.graphQLErrors[0].message) {
+                            case "Users cant book their own listing":
+                                setError("You can't book your own listing");
+                                break;
+                            case "Booking existing for the listing at the start date":
+                                setError("The listing is not available at this time");
+                                break;
+                            case "Booking at start date exists for user":
+                                setError("You can't book different booking on the same date");
+                                break;
+                            default:
+                                setError("Something went wrong");
+                                break;
+                        }
+                        // setError(e.graphQLErrors[0].message);
                     }
                 })
         }
@@ -60,22 +75,58 @@ export default function AddBooking(props) {
     }, [booking]);
 
 
+    if(loading){
+        return <Loading/>
+    }
     if (addedBooking.loading) {
         return (
             <Loading/>
 
         );
     }
+
+    const handlePay = (bookingId) =>{
+        //"44723526-0438-458d-bc94-151620c0b13a"
+
+        const opts = {
+            bookingId: bookingId
+
+        };
+        setLoading(true);
+        fetch('https://alama-airbnb.herokuapp.com/pay', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        }).then((response) => {
+            return response.text();
+        }).then((data) => {
+            console.log("From api post ",data);
+            window.location.replace(data);
+        });
+    };
     if (addedBooking.data) {
         console.log(addedBooking.data);
+        const bookingId = addedBooking.data.addBooking.id;
+
         return <>
             <Confetti
-                width={500}
+                width={100}
                 height={500}
             />
-            <p>Enjoy</p>
-        </>
+            <p style={{fontSize:"18"}}>Almost there!</p>
+            <InlineWrapper>
+
+                <p style={{fontSize:"18"}}><small> Booked from </small> {new Date(booking.startBookDate).toDateString()}
+                    <small> 'till </small> {new Date(booking.endBookDate).toDateString()}</p>
+            </InlineWrapper>
+            <p> Please confirm your booking and finish payment.</p>
+            <Button onClick={()=>handlePay(bookingId)}>Pay ${(((new Date(booking.endBookDate)).getTime() - (new Date(booking.startBookDate)).getTime()) / (1000 * 3600 * 24)) * parseFloat(props.price)}</Button>
+        </>;
     }
+
+
 
     const datePicker = (event, date) => {
 
@@ -114,6 +165,13 @@ export default function AddBooking(props) {
         }
 
     };
+
+
+
+
+
+
+
     return <>
         {auth.isAuthed ?
             <>

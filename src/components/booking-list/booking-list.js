@@ -28,7 +28,7 @@ export function BookingList(props) {
         return <Loading/>
     }
     else if (data){
-        console.log(data);
+        console.log("bookings are", data);
 
 
         return <Wrapper>

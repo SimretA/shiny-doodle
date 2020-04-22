@@ -22,6 +22,7 @@ export function Signup() {
 
 
 
+
     const [account, setAccount] = useState({
         email: "",
         password: "",
@@ -35,6 +36,12 @@ export function Signup() {
     });
     const handleSignup = (evt) => {
         evt.preventDefault();
+
+        if(account.email.trim()==="" || account.password.trim()==="" ||account.firstName.trim()==="" ||
+            account.lastName.trim()==="" || account.phone.trim()==="" || account.country.trim()==="" ){
+            setWarn("Please Fill All Required Fields");
+            return;
+        }
 
         addUser({variables: {newUser: account}})
             .catch(e=>{
