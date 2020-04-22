@@ -2,7 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import Styled from 'styled-components';
 import {Button} from "./FormComponents";
-import {useHistory} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLongArrowAltUp, faLongArrowAltDown} from '@fortawesome/free-solid-svg-icons';
 
 const TH = Styled.th`
     padding: 10px;
@@ -38,8 +39,8 @@ export function Calendar(props) {
             if (booking.date.format('M') === _dateObject.format('M') && booking.date.format('YYYY') === _dateObject.format('YYYY')) {
                 let arr = [];
                 let day = booking.date.date();
-                for (let i = 0; i < booking.duration; i++) {
-                    console.log("day", day + i);
+                for (let i = 0; i <= booking.duration; i++) {
+                    // console.log("Booking at", day +i);
                     arr.push(day + i);
                 }
                 setBookingThisMonth([...bookingThisMonth, ...arr]);
@@ -58,9 +59,7 @@ export function Calendar(props) {
 
     React.useEffect(() =>
         setDateBookings(), [bookings]);
-    const currentDay = () => {
-        return _dateObject.format("D");
-    };
+
 
     const firstDayOfMonth = () => {
         let dateObject = _dateObject;
@@ -119,19 +118,26 @@ export function Calendar(props) {
 
     const monthPicker = () => {
         return <>
-            <Button onClick={() => {
-                const newDate = _dateObject.add(-1, 'M');
-                // console.log("new Date", newDate);
-                setDateObject(moment(newDate));
+            <FontAwesomeIcon icon={faLongArrowAltDown}
+                             style={{fontSize: 25, marginRight: 5, color: "yellow"}}
+                             onClick={() => {
+                                 const newDate = _dateObject.add(-1, 'M');
+                                 // console.log("new Date", newDate);
+                                 setDateObject(moment(newDate));
 
-            }}>Back</Button>
+                             }}
+            />
+
             {_dateObject.format("MMMM")}
-            <Button onClick={() => {
-                const newDate = _dateObject.add(1, 'M');
-                // console.log("new Date", newDate);
-                setDateObject(moment(newDate));
+            <FontAwesomeIcon icon={faLongArrowAltUp}
+                             style={{fontSize: 25, marginRight: 5, color: "yellow"}}
+                             onClick={() => {
+                                 const newDate = _dateObject.add(1, 'M');
+                                 // console.log("new Date", newDate);
+                                 setDateObject(moment(newDate));
 
-            }}>Next</Button>
+                             }}
+            />
         </>
     };
 

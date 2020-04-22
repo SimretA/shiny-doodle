@@ -20,11 +20,21 @@ export function Login(props) {
     const [getUser, {data, loading, error}] = useLazyQuery(LOG_IN);
 
 
+    const[warn, setWarn] = React.useState("");
     const handleLogin = (evt) => {
         evt.preventDefault();
 
+        if(formInput.email.trim()===""||formInput.password.trim()===""){
+            setWarn("Please Fill All Fields");
 
-        getUser({variables: {email: formInput.email, password: formInput.password}});
+        }
+        else{
+
+            setWarn("");
+            getUser({variables: {email: formInput.email, password: formInput.password}});
+
+
+        }
 
         //Login query goes here
 
@@ -75,6 +85,7 @@ export function Login(props) {
             <FormContainer>
 
                 <Second>Login</Second>
+                <h5 style={{color:"red"}}>{warn}</h5>
 
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>

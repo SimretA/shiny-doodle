@@ -55,6 +55,8 @@ export const StickyColumn = styled.div`
         background-color: #FFFFFFae;
         border-radius:10px;
         z-index: 10;
+        min-height: 100px;
+        min-width:100px;
 `;
 
 

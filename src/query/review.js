@@ -56,16 +56,6 @@ export const UPDATE_REVIEW = gql`
         ){
             id
             content
-            user{
-                id
-                firstName
-                lastName
-               }
-            createdAt
-            lastUpdatedAt
-            listing{
-                id
-            }
             
         }
     
