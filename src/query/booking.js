@@ -23,7 +23,7 @@ export const GET_BOOKING_BY_USER = gql`
         bookingDate
         user{
             firstName
-            lastName
+            lastName            
         }
         listing{
             id
@@ -37,6 +37,15 @@ export const GET_BOOKING_BY_USER = gql`
                 lat
                 long
             }
+            user{
+                id
+                email
+                phone
+                firstName
+                lastName
+                
+            }
+            
         }
         
       }

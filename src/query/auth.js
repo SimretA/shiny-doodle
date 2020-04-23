@@ -52,6 +52,15 @@ export const GET_USER_BY_ID = gql`
       }
 }`;
 
+export const GET_USER_PAYPAL_ID = gql`
+    query GetUser($id: String){
+      user(id: $id){
+        id
+        paypalAccount
+        
+      }
+}`;
+
 
 export const EDIT_USER = gql`
   mutation updateUser($newUser: UpdateUserInput) {

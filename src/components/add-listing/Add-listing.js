@@ -12,13 +12,16 @@ import {Tag} from "../shared/Tag";
 import {ADD_LISTING_2} from "./../../query/listing";
 import {logout} from "../../control/auth";
 import {useHistory} from "react-router-dom";
+import {PaypalAccount} from "../shared/PaypalAccount.component";
 
 export function AddListing(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
+    const [show, setShow] = useState(false);
 
 
     let history = useHistory();
+
     function handleUpload(res) {
 
         if (res.filesUploaded.length > 0) {
@@ -93,7 +96,7 @@ export function AddListing(props) {
             </InputContainer>
             <InputContainer>
                 <Label htmlFor="city">City</Label>
-                <TextInput type="text" id="price" value={newListing.city}
+                <TextInput type="text" id="city" value={newListing.city}
                            placeholder="City" onChange={evt => {
                     setNewListing({...newListing, city: evt.target.value})
                 }}/>
@@ -180,7 +183,6 @@ export function AddListing(props) {
         </InputContainer>
         <InputContainer style={{justifyContent: "center", flexWrap: "wrap"}}>
 
-            {/*<Button style={{flex:2}} onClick={evt => handleUpload(evt)}>Upload</Button>*/}
             <ReactFilestack
                 customRender={({onPick}) => (
                     <div>
@@ -198,7 +200,6 @@ export function AddListing(props) {
 
 
     </>;
-
 
 
     const handleAdd = (event) => {
@@ -230,18 +231,24 @@ export function AddListing(props) {
             else {
                 console.log("submitting");
                 setWarn(false);
-                addListing({variables: {...newListing}})
-                    .catch(e=>{
-                            if(e.message=="GraphQL error: Unauthenticated!!"){
-                                logout(history);
-                            }
-                        }
-                    );
+                setShow(true);
+
+
             }
 
         }
     };
 
+    function save() {
+        addListing({variables: {...newListing}})
+            .catch(e => {
+                    if (e.message == "GraphQL error: Unauthenticated!!") {
+                        logout(history);
+                    }
+                }
+            );
+
+    }
     function handleBack(event) {
         event.preventDefault();
         setStage(stage - 1);
@@ -287,11 +294,17 @@ export function AddListing(props) {
         }
     };
     return (
-        <Wrapper>
+        <>
+            <PaypalAccount show={show} close={()=>{
+                setShow(false);
+                save();
+            }}/>
+            <Wrapper>
 
 
-            {content(addedListing)}
+                {content(addedListing)}
 
-        </Wrapper>
+            </Wrapper>
+        </>
     );
 }

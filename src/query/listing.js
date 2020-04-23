@@ -322,3 +322,15 @@ export const EDIT_LISTING = gql`
     
   }
 `;
+
+
+export const DELETE_LISTING = gql`
+  mutation deleteListing($id: String) {
+    deleteListing(
+        input: $id
+        ){
+            deleted
+        }
+    
+  }
+`;

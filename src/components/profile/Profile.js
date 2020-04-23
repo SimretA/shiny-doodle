@@ -10,6 +10,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import EditProfile from "./Edit-profile.component";
 import ListingList from "./listing-list.component";
 
+
 export default function Profile(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
@@ -22,7 +23,7 @@ export default function Profile(props) {
     }
     if (error) {
         console.log(error);
-        return<div>Something went wrong</div>
+        return<div style={{marginTop:"100px"}}>Something went wrong</div>
     }
     if (data) {
         const {

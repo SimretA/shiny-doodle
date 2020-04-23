@@ -2,12 +2,13 @@ import React from 'react';
 import Styled from 'styled-components';
 import {Button, Label, TextInput} from "../shared/FormComponents";
 import {useMutation} from "@apollo/react-hooks";
-import {EDIT_LISTING} from "../../query/listing";
+import {DELETE_LISTING, EDIT_LISTING} from "../../query/listing";
 import {Fade} from "react-reveal";
 import Loading from "../shared/Loading.component";
 import {useHistory} from "react-router-dom";
 import {logout} from "../../control/auth";
 import Success from "../shared/Success.component";
+import {Prompt} from "../shared/Prompt.component";
 
 const Wrapper = Styled.div`
     display:flex;
@@ -43,6 +44,8 @@ const InlineContainer = Styled.div`
 export function EditListing(props) {
 
     const [listing, setListing] = React.useState(null);
+    const [showPrompt, setShowPrompt] = React.useState(false);
+
     React.useEffect(() => {
         const {id, name, personCapacity, city, country, price, houseType, status} = props.selectedListing;
 
@@ -62,15 +65,28 @@ export function EditListing(props) {
     }, [props.selectedListing]);
 
     const [editListing, editedListing] = useMutation(EDIT_LISTING);
+    const [deleteListing, deletedListing] = useMutation(DELETE_LISTING);
 
 
     React.useEffect(()=>{listing && console.log("stat ", listing.status=='active')},[listing]);
     let history = useHistory();
 
     const handleDelete = () => {
+        deleteListing({variables: {id: listing.id}}).catch(e=>{
+                if(e.message=="GraphQL error: Unauthenticated!!"){
+                    logout(history);
+                }
+            }
+        );
+
+
+        props.close();
+
+        setShowPrompt(false);
 
 
     };
+
     const handleSave = () => {
 
         editListing({variables: {updatedListing: listing}}).catch(e=>{
@@ -101,7 +117,13 @@ export function EditListing(props) {
 
     };
 
-    if (editedListing.loading) {
+    if(deletedListing.data){
+        console.log("Deleted Listing", deletedListing.data);
+        props.refetch();
+
+    }
+
+    if (editedListing.loading || deletedListing.loading) {
         return (
             <Fade left>
                 <Loading/>
@@ -114,7 +136,9 @@ export function EditListing(props) {
 
 
     }
-    return <>{listing ?
+    return <>
+        <Prompt onYes={handleDelete} close={()=>setShowPrompt(false)} show={showPrompt} onNo={()=>setShowPrompt(false)}/>
+        {listing ?
         <Wrapper>
 
             <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
@@ -150,7 +174,7 @@ export function EditListing(props) {
                 </InlineContainer>
                 <InlineContainer style={{justifyContent: "space-evenly"}}>
                     <Button onClick={handleSave}>Save</Button>
-                    <Button onClick={handleDelete} style={{backgroundColor: "red", color: "white"}}>Delete</Button>
+                    <Button onClick={()=>setShowPrompt(true)} style={{backgroundColor: "red", color: "white"}}>Delete</Button>
                 </InlineContainer>
 
             </Column>
