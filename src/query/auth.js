@@ -37,6 +37,7 @@ export const GET_USER_BY_ID = gql`
         firstName
         lastName
         email
+        paypalAccount
         country
         street
         phone

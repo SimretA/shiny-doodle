@@ -35,6 +35,7 @@ export default function Profile(props) {
             phone,
             language,
             joinedDate,
+            paypalAccount,
             listings
         } = data.user;
 
@@ -65,6 +66,7 @@ export default function Profile(props) {
                             <Caption> email </Caption>
                             <Text style={{textTransform: "none"}}>{email}</Text>
                         </InlineWrapper>
+
                         <InlineWrapper>
                             <Caption>Phone</Caption>
                             <Text>{phone}</Text>
@@ -76,6 +78,10 @@ export default function Profile(props) {
                         <InlineWrapper>
                             <Caption>Joined in</Caption>
                             <Text>{new Date(joinedDate).getFullYear()}</Text>
+                        </InlineWrapper>
+                        <InlineWrapper>
+                            <Caption> PayPal Account<br/><small>(used for all payouts)</small> </Caption>
+                            <Text style={{textTransform: "none"}}>{paypalAccount}</Text>
                         </InlineWrapper>
                         <InlineWrapper>
                             <Text>{street}</Text>

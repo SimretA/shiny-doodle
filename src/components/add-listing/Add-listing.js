@@ -4,7 +4,6 @@ import Map from "../shared/Location-picker.component";
 import {useMutation} from '@apollo/react-hooks';
 import Success from "../shared/Success.component";
 import ReactFilestack from 'filestack-react';
-// import * as filestack from 'filestack-js';
 import {Button, Label, TextInput, DropDown} from "../shared/FormComponents";
 import {Wrapper, Second, FormContainer, InputContainer} from "./../login/login.styled";
 import {AuthContext} from "../../context/AuthContext";

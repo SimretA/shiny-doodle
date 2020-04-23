@@ -18,7 +18,8 @@ export default function EditProfile(props) {
         country,
         street,
         phone,
-        language
+        language,
+        paypalAccount
     } = props.user;
     const [account, setAccount] = React.useState({
         id,
@@ -28,7 +29,8 @@ export default function EditProfile(props) {
         country,
         street,
         phone,
-        language
+        language,
+        paypalAccount
     });
 
 
@@ -69,6 +71,11 @@ export default function EditProfile(props) {
             <Caption style={{margin: 5}}>email </Caption>
             <TextInput style={{margin: 5}} value={account.email}
                        onChange={(event) => setAccount({...account, email: event.target.value})}/>
+        </InlineWrapper>
+        <InlineWrapper>
+            <Caption style={{margin: 5}}>PayPal </Caption>
+            <TextInput style={{margin: 5}} value={account.paypalAccount}
+                       onChange={(event) => setAccount({...account, paypalAccount: event.target.value})}/>
         </InlineWrapper>
         <InlineWrapper>
             <Caption style={{margin: 5}}>Phone </Caption>
