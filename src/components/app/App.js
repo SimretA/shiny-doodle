@@ -61,7 +61,7 @@ const client = new ApolloClient({
                             console.log(err.message);
                             console.log("check");
                         }
-                        return forward(operation);
+                       // return forward(operation);
                         break;
                     default:
                         console.log("check");

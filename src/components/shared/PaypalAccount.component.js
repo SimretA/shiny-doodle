@@ -32,6 +32,7 @@ export function PaypalAccount({show, close, message}) {
                 }
             }
         });
+        close();
 
     };
     if (editedUser.loading || loading) {
@@ -41,7 +42,7 @@ export function PaypalAccount({show, close, message}) {
         </Modal>
     }
     if (editedUser.data) {
-        close();
+
     }
     return <Modal width={"30%"} show={show} close={() => {
     }}>
