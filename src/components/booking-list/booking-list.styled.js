@@ -14,11 +14,11 @@ export const ListWrapper = Styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    height: 100vh;
+    height: 85vh;
     
 `;
 export const MapWrapper = Styled.div`
     flex:3;
-    height: 100vh;
+    height: 85vh;
 
 `;

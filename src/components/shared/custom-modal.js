@@ -40,7 +40,7 @@ export function Modal(props) {
 
     return<ModalContainer style={{display:props.show?'block':'none'}} >
 
-        <Content>
+        <Content style={{width:props.width || "80%"}}>
             <Close onClick={props.close}>&times;</Close>
 
             {props.children}</Content>

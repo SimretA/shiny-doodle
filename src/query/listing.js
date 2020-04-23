@@ -1,14 +1,11 @@
 import {gql} from "apollo-boost";
 
-export const ADD_LISTING = gql`
-  mutation addNewListing($newListing: NewListingInput!) {
-    addNewListing(
-        input: $newListing
+export const CALCEL_LISTING = gql`
+  mutation cancelBooking($cancelBookingInput: CancelBookingInput) {
+    cancelBooking(
+        input: $cancelBookingInput
         ){
-            id
-            name
-            city
-            country
+            deleted
             
         }
     
@@ -140,6 +137,13 @@ export const GET_LISTING_BY_ID = gql`
             bedrooms
             bedrooms
             rating
+            user{
+                id
+                firstName
+                lastName
+                email
+                phone
+            }
             reviews{
               id
               content
@@ -318,6 +322,18 @@ export const EDIT_LISTING = gql`
                   
                 }
         
+        }
+    
+  }
+`;
+
+
+export const DELETE_LISTING = gql`
+  mutation deleteListing($id: String) {
+    deleteListing(
+        input: $id
+        ){
+            deleted
         }
     
   }

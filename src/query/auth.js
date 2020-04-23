@@ -37,6 +37,7 @@ export const GET_USER_BY_ID = gql`
         firstName
         lastName
         email
+        paypalAccount
         country
         street
         phone
@@ -48,6 +49,15 @@ export const GET_USER_BY_ID = gql`
           price
           country
         }
+        
+      }
+}`;
+
+export const GET_USER_PAYPAL_ID = gql`
+    query GetUser($id: String){
+      user(id: $id){
+        id
+        paypalAccount
         
       }
 }`;

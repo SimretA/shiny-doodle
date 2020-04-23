@@ -10,6 +10,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import EditProfile from "./Edit-profile.component";
 import ListingList from "./listing-list.component";
 
+
 export default function Profile(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
@@ -22,7 +23,7 @@ export default function Profile(props) {
     }
     if (error) {
         console.log(error);
-        return<div>Something went wrong</div>
+        return<div style={{marginTop:"100px"}}>Something went wrong</div>
     }
     if (data) {
         const {
@@ -34,6 +35,7 @@ export default function Profile(props) {
             phone,
             language,
             joinedDate,
+            paypalAccount,
             listings
         } = data.user;
 
@@ -64,6 +66,7 @@ export default function Profile(props) {
                             <Caption> email </Caption>
                             <Text style={{textTransform: "none"}}>{email}</Text>
                         </InlineWrapper>
+
                         <InlineWrapper>
                             <Caption>Phone</Caption>
                             <Text>{phone}</Text>
@@ -75,6 +78,10 @@ export default function Profile(props) {
                         <InlineWrapper>
                             <Caption>Joined in</Caption>
                             <Text>{new Date(joinedDate).getFullYear()}</Text>
+                        </InlineWrapper>
+                        <InlineWrapper>
+                            <Caption> PayPal Account<br/><small>(used for all payouts)</small> </Caption>
+                            <Text style={{textTransform: "none"}}>{paypalAccount}</Text>
                         </InlineWrapper>
                         <InlineWrapper>
                             <Text>{street}</Text>
