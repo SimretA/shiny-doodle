@@ -57,8 +57,11 @@ const client = new ApolloClient({
 
                     // handle other errors
                     case "INTERNAL_SERVER_ERROR":
-                        console.log("check");
-                        console.log(err);
+                        if(err.message=="Unathenticated!!") {
+                            console.log(err.message);
+                            console.log("check");
+                        }
+                        return forward(operation);
                         break;
                     default:
                         console.log("check");
