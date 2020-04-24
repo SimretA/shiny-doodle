@@ -226,9 +226,8 @@ export function AddListing(props) {
             }
 
             else {
-                console.log("submitting");
                 setWarn(false);
-                setShow(true);
+                setShow(true); //confirm paypal account before saving
 
 
             }
