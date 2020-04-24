@@ -130,12 +130,7 @@ export function EditListing(props) {
             </Fade>
         );
     }
-    if (editedListing.data) {
-        console.log(editedListing.data);
-        // return <Success message={"Your Listing has been updated, all bookings will be notified"}/>
 
-
-    }
     return <>
         <Prompt onYes={handleDelete} close={()=>setShowPrompt(false)} show={showPrompt} onNo={()=>setShowPrompt(false)}/>
         {listing ?
@@ -143,9 +138,6 @@ export function EditListing(props) {
 
             <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
             <Column>
-                <InlineContainer>
-                    <Label>{listing.status}</Label>
-                </InlineContainer>
                 <InlineContainer>
                     <TextInput value={listing.name}
                                onChange={(event) => setListing({...listing, name: event.target.value})}/>

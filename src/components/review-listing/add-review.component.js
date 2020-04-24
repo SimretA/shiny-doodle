@@ -18,8 +18,6 @@ export default function AddReview(props) {
             return;
         }
 
-        console.log(review);
-        console.log("account id", auth.account.id);
         addReview(
             {
                 variables: {
@@ -48,7 +46,7 @@ export default function AddReview(props) {
         );
     }
     if (addedReview.data) {
-        console.log(addedReview.data);
+        //refetch all reviews after adding a new one
         props.refetch && props.refetch();
          return <Success message={'Thank you for the review'}/>
     }

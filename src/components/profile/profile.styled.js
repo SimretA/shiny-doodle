@@ -8,6 +8,8 @@ export const Wrapper = Styled.div`
     flex-direction: column;
     @media screen and (min-width: 640px){
         flex-direction: row;
+        height: 85vh;
+        
     } 
     
 

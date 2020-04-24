@@ -60,6 +60,7 @@ export function BookingItem(props) {
     const diff = moment.duration(start.diff(now)).asDays();
     // console.log("the difference is ", moment.duration(start.diff(now)).asDays());
 
+    //redirect to paypal sandbox for paymen
     const handlePay = (bookingId) =>{
 
         const opts = {
@@ -76,7 +77,6 @@ export function BookingItem(props) {
         }).then((response) => {
             return response.text();
         }).then((data) => {
-            console.log("From api post ",data);
             window.location.replace(data);
         });
     };
@@ -112,9 +112,11 @@ export function BookingItem(props) {
             <PaypalAccount show={showPaypal} close={() => {
                 setShowPaypal(false);
                 if(props.data.confirmed){
+                    // if booking is confirmed allow cancellation
                     handleCancel();
                 }
                 else{
+                    //if booking is not confirmed allow confirmation
                     // alert("Top up");
                     handlePay(props.data.id);
                 }
