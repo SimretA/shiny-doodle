@@ -18,6 +18,7 @@ export function Explore(props) {
 
     const handleClick = (data) => {
 
+        //expand listing detail
         setVisible(true);
         setSelectedListing(data);
         setShowModal(true);
@@ -38,7 +39,7 @@ export function Explore(props) {
     }
     if (error) {
         console.log(error);
-        return <div>ERROR</div>
+        return <div style={{margin:"100px"}}>Something Went Wrong</div>
     }
 
     return (

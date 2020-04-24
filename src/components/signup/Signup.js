@@ -62,7 +62,8 @@ export function Signup() {
         );
     }
     if (addedUser.data) {
-        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName} Please check your email for validation.` }/>
+        return <Success message={`Thank You! ${addedUser.data.registerUsers.firstName}
+                A verification email has been sent to your email address.` }/>
     }
 
     return (

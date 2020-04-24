@@ -9,7 +9,6 @@ import {useMutation} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
 import moment from "moment";
 import Confetti from 'react-confetti';
-import {logout} from "../../control/auth";
 
 export default function AddBooking(props) {
 
@@ -71,13 +70,6 @@ export default function AddBooking(props) {
         }
 
     };
-    React.useEffect(() => {
-        console.log(addedBooking)
-    }, [addedBooking]);
-
-    React.useEffect(() => {
-        console.log(booking)
-    }, [booking]);
 
 
     if(loading){
@@ -91,8 +83,7 @@ export default function AddBooking(props) {
     }
 
     const handlePay = (bookingId) =>{
-        //"44723526-0438-458d-bc94-151620c0b13a"
-
+        //This method receives a tokenized link to paypal and redirects user to that page
         const opts = {
             bookingId: bookingId
 
@@ -107,12 +98,10 @@ export default function AddBooking(props) {
         }).then((response) => {
             return response.text();
         }).then((data) => {
-            console.log("From api post ",data);
-            window.location.replace(data);
+            window.location.replace(data); //redirect
         });
     };
     if (addedBooking.data) {
-        console.log(addedBooking.data);
         const bookingId = addedBooking.data.addBooking.id;
 
         return <>
@@ -133,15 +122,16 @@ export default function AddBooking(props) {
 
 
 
+    //Date validation
     const datePicker = (event, date) => {
 
         if (date == "start") {
-            if (((new Date(event.target.value)).getTime() - (new Date()).getTime()) / (1000 * 3600 * 24) < 3) {
+            if (((new Date(event.target.value)).getTime() - (new Date()).getTime()) / (1000 * 3600 * 24) < 3) { //get date difference between now and start date
                 setError("Book at least three days ahead from today please.");
 
             }
 
-            else if (booking.endBookDate && ((new Date(booking.endBookDate)).getTime() < (new Date(event.target.value)).getTime())) {
+            else if (booking.endBookDate && ((new Date(booking.endBookDate)).getTime() < (new Date(event.target.value)).getTime())) {//get date difference between start and end date
                 setError("Fix checkout day please...");
 
 

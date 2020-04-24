@@ -17,10 +17,9 @@ export default function ListDetail(props) {
     const{images} = props.data;
     const [next, setNext] = React.useState(false);
     const [back, setBack] = React.useState(false);
-    const [index, setindex] = React.useState(0);
-    const [imageSrc, setImageSrc] = React.useState("https://picsum.photos/id/870/200/300?grayscale&blur=2");
+    const [index, setindex] = React.useState(0); //to get image url from a list
+    const [imageSrc, setImageSrc] = React.useState("https://picsum.photos/id/870/200/300?grayscale&blur=2"); //default image incase theres a listing with no image
     const show = props.showModal ? 'flex' : 'none';
-    // let imageSrc = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
 
 
     React.useEffect(()=>{
@@ -29,14 +28,15 @@ export default function ListDetail(props) {
         if (images) {
             if (images.length > 0) {
 
-                // imageSrc = props.data.images[index].url;
                 setImageSrc(props.data.images[index].url);
             }
             if(images.length > 1){
+                //more than one image means scrollable
                 setNext(true);
                 setBack(false);
             }
             else{
+                //only one image is not scrollable
                 setNext(false);
                 setBack(false);
             }
