@@ -20,15 +20,15 @@ export function Login(props) {
     const [getUser, {data, loading, error}] = useLazyQuery(LOG_IN);
 
 
-    const[warn, setWarn] = React.useState("");
+    const [warn, setWarn] = React.useState("");
     const handleLogin = (evt) => {
         evt.preventDefault();
 
-        if(formInput.email.trim()===""||formInput.password.trim()===""){
+        if (formInput.email.trim() === "" || formInput.password.trim() === "") {
             setWarn("Please Fill All Fields");
 
         }
-        else{
+        else {
 
             setWarn("");
             getUser({variables: {email: formInput.email, password: formInput.password}});
@@ -36,56 +36,34 @@ export function Login(props) {
 
         }
 
-        //Login query goes here
 
 
     };
     if (loading) {
         return <Loading/>
     }
-    if(error){
-        return (
-            <Wrapper>
-                <FormContainer>
-
-                    <Second>Login</Second>
-                    <h5 style={{color:"red"}}>Invalid email or password</h5>
-
-                    <InputContainer>
-                        <Label htmlFor="email">Email</Label>
-                        <TextInput required type="email" id="email"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Enter email"
-                                   onChange={(evt) => setFormInput({...formInput, email: evt.target.value})}/>
-
-                    </InputContainer>
-                    <InputContainer>
-                        <Label htmlFor="exampleTextInputPassword1">Password</Label>
-                        <TextInput required type="password" id="exampleTextInputPassword1"
-                                   placeholder="Password"
-                                   onChange={(evt) => setFormInput({...formInput, password: evt.target.value})}/>
-
-                    </InputContainer>
-                    <Button type="submit" onClick={evt => handleLogin(evt)}>Login</Button>
-
-                </FormContainer>
-            </Wrapper>
-        );
-    }
     if (data && data.login) {
+        //sessionize and keep user logged in
         localStorage.setItem("token", data.login.token);
         localStorage.setItem("userId", data.login.userId);
-        setAuth({...auth, isAuthed: true, token: data.login.token, account: { id: data.login.userId, email: formInput.email}});
+        setAuth({
+            ...auth,
+            isAuthed: true,
+            token: data.login.token,
+            account: {id: data.login.userId, email: formInput.email}
+        });
         login(history, location);
     }
-
 
     return (
         <Wrapper>
             <FormContainer>
 
                 <Second>Login</Second>
-                <h5 style={{color:"red"}}>{warn}</h5>
+                <p style={{color: "red"}}>{error ? error.message == "GraphQL error: user is not confirmed"
+                    ? "Please use a link emailed to you to confirm your account"
+                    : "Invalid email or password"
+                    : ""} </p>
 
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>
@@ -108,4 +86,7 @@ export function Login(props) {
         </Wrapper>
     );
 }
+
+
+
 

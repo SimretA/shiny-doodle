@@ -27,8 +27,22 @@ const Wrapper = Styled.div`
         }
 
 `;
+const Confirmed = Styled.h5`
+    color: black;
+    padding: 3px;
+    border: yellow 1px solid;
+    border-radius: 5px;
+`;
+const Pending = Styled.h5`
+    color: red;
+    padding: 3px;
+    border: red 1px solid;
+    border-radius: 5px;
+`;
 
 export function BookingItem(props) {
+
+    const[loadingPay, setLoadingPay] = React.useState(false);
 
 
     const [expand, setExpand] = React.useState(false);
@@ -46,19 +60,43 @@ export function BookingItem(props) {
     const diff = moment.duration(start.diff(now)).asDays();
     // console.log("the difference is ", moment.duration(start.diff(now)).asDays());
 
-    const handleCancel = ()=>{
-        cancelBooking({variables: {
-                cancelBookingInput:{
+    //redirect to paypal sandbox for paymen
+    const handlePay = (bookingId) =>{
+
+        const opts = {
+            bookingId: bookingId
+
+        };
+        setLoadingPay(true);
+        fetch('https://alama-airbnb.herokuapp.com/pay', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        }).then((response) => {
+            return response.text();
+        }).then((data) => {
+            window.location.replace(data);
+        });
+    };
+
+
+    const handleCancel = () => {
+        cancelBooking({
+            variables: {
+                cancelBookingInput: {
                     id: props.data.id
                 }
-            }}).catch(e=>{
-                if(e.message=="GraphQL error: Unauthenticated!!"){
-                    logout(history);
-                }
+            }
+        }).catch(e => {
+            if (e.message == "GraphQL error: Unauthenticated!!") {
+                logout(history);
+            }
         });
 
     };
-    if(canceledBooking.data){
+    if (canceledBooking.data) {
         props.refetch();
     }
     if (loading) {
@@ -66,13 +104,22 @@ export function BookingItem(props) {
     }
     if (data) {
         return <>
-            <Prompt show={showPrompt} close={()=>setShowPrompt(false)} onYes={()=>{
+            <Prompt show={showPrompt} close={() => setShowPrompt(false)} onYes={() => {
                 setShowPaypal(true);
                 setShowPrompt(false);
-            }} message={diff<1?"You might not be eligible for any refund":"If you cancel now only half price will be refunded."}/>
-            <PaypalAccount show={showPaypal} close={()=>{
+            }}
+                    message={diff < 1 ? "You might not be eligible for any refund" : "If you cancel now only half price will be refunded."}/>
+            <PaypalAccount show={showPaypal} close={() => {
                 setShowPaypal(false);
-                handleCancel();
+                if(props.data.confirmed){
+                    // if booking is confirmed allow cancellation
+                    handleCancel();
+                }
+                else{
+                    //if booking is not confirmed allow confirmation
+                    // alert("Top up");
+                    handlePay(props.data.id);
+                }
 
             }} message={"The refund will be deposited to this account"}/>
             <Wrapper style={{textTransform: "capitalize"}} onClick={() => setExpand(!expand)}
@@ -81,13 +128,21 @@ export function BookingItem(props) {
                 <h4>{data.listing.name}</h4>
                 <p>{data.listing.street}, {data.listing.city} {data.listing.country}</p>
                 <h5>{new Date(props.data.startBookDate).toDateString()} - {new Date(props.data.endBookDate).toDateString()}</h5>
+                {props.data.confirmed ?
+                    <Confirmed>Confirmed</Confirmed> :
+                    <Pending>Pending</Pending>}
 
                 {expand ? <Fade down>
                     <HostDetail user={data.listing.user}/>
-                    <Button style={{}} onClick={() => {
+                    {props.data.confirmed ? <Button style={{}} onClick={() => {
 
-                        setShowPrompt(true);
-                    }}>Cancel</Button>
+                            setShowPrompt(true);
+                        }}>Cancel</Button> :
+                        <Button style={{}} onClick={() => {
+
+                            setShowPaypal(true);
+                        }}>Pay and Confirm</Button>}
+
                 </Fade> : <></>}
 
             </Wrapper>

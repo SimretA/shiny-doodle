@@ -151,7 +151,11 @@ export default function ReviewStrip(props) {
 
         <p>
             <small>{new Date(props.data.lastUpdatedAt).toDateString()}
+                {/*
+                    if created date and updated date are different show review has been updated
+                */}
                 <small>{props.data.lastUpdatedAt != props.data.createdAt ? "(edited)" : ""}</small>
+
             </small>
         </p>
 

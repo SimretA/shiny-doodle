@@ -34,12 +34,10 @@ const client = new ApolloClient({
     onError: ({ graphQLErrors, networkError, operation, forward }) => {
         if (graphQLErrors) {
             for (let err of graphQLErrors) {
-                // handle errors differently based on its error code
                 switch (err.extensions.code) {
                     case 'UNAUTHENTICATED':
-                        //TODO fix this
-                        console.log("TOYOOO");
-                        alert("logged out");
+                        console.log("logged out");
+
                         // old token has expired throwing AuthenticationError,
                         // one way to handle is to obtain a new token and
                         // add it to the operation context
@@ -60,6 +58,7 @@ const client = new ApolloClient({
                         if(err.message=="Unathenticated!!") {
                             console.log(err.message);
                             console.log("check");
+
                         }
                        // return forward(operation);
                         break;
@@ -79,6 +78,7 @@ function App(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
 
+    //check for active session and keep user logged in
     React.useEffect(()=>{
         if(localStorage.getItem("token") && localStorage.getItem("userId")){
             setAuth({...auth, isAuthed: true,
@@ -111,6 +111,26 @@ function App(props) {
         );
     }
 
+
+    function SignUpRoute({children, ...rest}) {
+        return (
+            <Route
+                {...rest}
+                render={({location}) =>
+                    !auth.isAuthed ?
+                        ( children)
+                        :(
+                        <Redirect
+                            to={{
+                                pathname: "/"
+                            }}
+                        />
+                    )
+                }
+            />
+        );
+    }
+
     return (
 
         <ApolloProvider client={client}>
@@ -131,7 +151,9 @@ function App(props) {
                             <Route path={"/explore"} exact
                                    render={() => <Explore {...props} />}/>
                             <Route path={"/login"} exact component={Login}/>
-                            <Route path={"/signup"} exact render={() => <Signup/>}/>
+                            <SignUpRoute path={"/signup"} exact>
+                                <Signup/>
+                            </SignUpRoute>
 
                             <PrivateRoute path={"/profile"} exact>
                                 <Profile/>
@@ -141,7 +163,7 @@ function App(props) {
                                 <BookingList />
                             </PrivateRoute>
                             <Route path="*">
-                                <div>404</div>
+                                <div style={{margin:'100px'}}>:( 404 The page you're looking for doesn't exist</div>
                             </Route>
                         </Switch>
                     </div>

@@ -12,18 +12,25 @@ export function PaypalAccount({show, close, message}) {
     const [getUserPaypal, {data, loading, error}] = useLazyQuery(GET_USER_PAYPAL_ID);
     const [editUser, editedUser] = useMutation(EDIT_USER);
 
+    const [warning, setWarning] = React.useState("");
 
     React.useEffect(() => {
 
         getUserPaypal({variables: {id: auth.account.id}});
     }, []);
 
-    if (data) {
-        console.log(data);
 
-    }
 
+
+
+    //Save a new account for current user
     const handleSave = () => {
+
+        if(paypalAccount.trim()===""){
+            setWarning("Please provide a new account");
+            return;
+        }
+        setWarning("");
         editUser({
             variables: {
                 newUser: {
@@ -36,14 +43,10 @@ export function PaypalAccount({show, close, message}) {
 
     };
     if (editedUser.loading || loading) {
-        return <Modal width={"30%"} show={show} close={() => {
-        }}>
-            <Loading/>
-        </Modal>
-    }
-    if (editedUser.data) {
+        return<Loading/>
 
     }
+
     return <Modal width={"30%"} show={show} close={() => {
     }}>
         {
@@ -65,6 +68,7 @@ export function PaypalAccount({show, close, message}) {
 
 
             <Label>New Account</Label>
+            <p style={{color:"red"}}>{warning}</p>
             <TextInput value={paypalAccount} onChange={(event) => setPaypalAccount(event.target.value)}/>
             <br/>
             <small>{message || "(This account will be used in all your listing payout)"}</small>

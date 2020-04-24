@@ -11,11 +11,10 @@ function CustomMap({loc, handleMark, width, height}) {
         height: height||200,
         latitude: 	9.005401,
         longitude: 38.763611,
-        zoom: 10
+        zoom: 11
     });
 
 
-    React.useEffect(()=>console.log("From map", loc),[loc]);
 
     return (
         <Map

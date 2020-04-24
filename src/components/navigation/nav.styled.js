@@ -19,7 +19,7 @@ export const NavLink=Styled.li`
     color: #FFFFFF !important;
     :hover{
         border-radius:5px;
-        border-bottom: solid 5px #fff; 
+        // border-bottom: solid 5px #fff; 
         color: #000000 !important   ; 
         text-decoration: none;
     }

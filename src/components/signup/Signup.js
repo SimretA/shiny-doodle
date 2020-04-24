@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FormContainer, Column, Wrapper, InputContainer} from "./signup.styled";
 import {useMutation} from '@apollo/react-hooks';
 import Success from "../shared/Success.component";
@@ -15,6 +15,7 @@ export function Signup() {
     const [addUser, addedUser] = useMutation(ADD_USER);
 
     const  [warn, setWarn] = useState("");
+
 
     React.useEffect(() => {
         console.log(addedUser);
@@ -61,7 +62,8 @@ export function Signup() {
         );
     }
     if (addedUser.data) {
-        return <Success message={`Welcome ${addedUser.data.registerUsers.firstName} Please check your email for validation.` }/>
+        return <Success message={`Thank You! ${addedUser.data.registerUsers.firstName}
+                A verification email has been sent to your email address.` }/>
     }
 
     return (

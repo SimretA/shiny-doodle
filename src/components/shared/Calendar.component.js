@@ -1,9 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import Styled from 'styled-components';
-import {Button} from "./FormComponents";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLongArrowAltUp, faLongArrowAltDown} from '@fortawesome/free-solid-svg-icons';
+import {faArrowAltCircleLeft, faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 
 const TH = Styled.th`
     padding: 10px;
@@ -17,9 +16,10 @@ export function Calendar(props) {
     const [bookingThisMonth, setBookingThisMonth] = React.useState([24, 25]);
     const [bookings, setBookings] = React.useState([]);
 
+    //get bookings' dates and duration every time selected booking is changed
+    //component reused in listing detail
     React.useEffect(() => {
         setBookings([]);
-
         props.bookings && props.bookings.map((booking) => {
             let start = moment(new Date(booking.startBookDate), "YYYY-MM-DD");
             let end = moment(new Date(booking.endBookDate), "YYYY-MM-DD");
@@ -33,6 +33,10 @@ export function Calendar(props) {
         });
     }, [props.bookings]);
 
+
+    //get each date to be marked when a month is changed on calendar.
+    //save days to be marked in the month on bookingsThisMonth
+    //called in a useEffect hook everytime the _dateObject(month) is changed
     const setDateBookings = () => {
         setBookingThisMonth([]);
         bookings.map(booking => {
@@ -51,7 +55,7 @@ export function Calendar(props) {
     };
 
     React.useEffect(() => {
-            console.log(_dateObject);
+
             setDateBookings();
 
         }, [_dateObject]
@@ -61,6 +65,7 @@ export function Calendar(props) {
         setDateBookings(), [bookings]);
 
 
+    //get on which day of the week the selected month begins
     const firstDayOfMonth = () => {
         let dateObject = _dateObject;
         let firstDay = moment(dateObject)
@@ -69,6 +74,7 @@ export function Calendar(props) {
         return firstDay;
     };
 
+    //blanks before the day of the week on which the month begins
     let blanks = [];
     for (let i = 0; i < firstDayOfMonth(); i++) {
         blanks.push(
@@ -76,11 +82,16 @@ export function Calendar(props) {
         );
     }
 
+
+    //days to be printed on current month
     let daysInMonth = [];
     for (let d = 1; d <= moment(_dateObject).daysInMonth(); d++) {
 
         daysInMonth.push(
-            <td key={d} style={{backgroundColor: bookingThisMonth.includes(d) ? 'yellow' : ""}}>
+            <td key={d} style={{
+                backgroundColor: bookingThisMonth.includes(d) ? '#6d6d6d' : "",
+                color: bookingThisMonth.includes(d) ? '#ffffff' : ""
+            }}>
                 {d}
             </td>
         );
@@ -106,6 +117,7 @@ export function Calendar(props) {
     });
 
 
+    //get abbreviated days
     const weekdayshort = moment.weekdaysShort();
 
     let weekdayshortname = weekdayshort.map(day => {
@@ -118,7 +130,7 @@ export function Calendar(props) {
 
     const monthPicker = () => {
         return <>
-            <FontAwesomeIcon icon={faLongArrowAltDown}
+            <FontAwesomeIcon icon={faArrowAltCircleLeft}
                              style={{fontSize: 25, marginRight: 5, color: "yellow"}}
                              onClick={() => {
                                  const newDate = _dateObject.add(-1, 'M');
@@ -129,7 +141,7 @@ export function Calendar(props) {
             />
 
             {_dateObject.format("MMMM")}
-            <FontAwesomeIcon icon={faLongArrowAltUp}
+            <FontAwesomeIcon icon={faArrowAltCircleRight}
                              style={{fontSize: 25, marginRight: 5, color: "yellow"}}
                              onClick={() => {
                                  const newDate = _dateObject.add(1, 'M');
@@ -142,10 +154,12 @@ export function Calendar(props) {
     };
 
 
-
     return <div>
 
+
         {monthPicker()}
+        <br/>
+        <small style={{margin: 0, padding: 0}}>(Availability)</small>
 
         {weekdayshortname}
         {rows.map((d, i) => {

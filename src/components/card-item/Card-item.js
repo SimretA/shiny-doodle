@@ -3,7 +3,6 @@ import {Wrapper, StatusTag} from './card-item.styled'
 import {Button} from "../shared/FormComponents";
 
 export function CardItem(props) {
-    // console.log("card item",props);
 
     return (
         <Wrapper onClick={() => {

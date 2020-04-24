@@ -17,32 +17,7 @@ export function AddListing(props) {
 
     const [auth, setAuth] = useContext(AuthContext);
     const [show, setShow] = useState(false);
-
-
-    let history = useHistory();
-
-    function handleUpload(res) {
-
-        if (res.filesUploaded.length > 0) {
-            setNewListing({...newListing, images: [...newListing.images, {url: res.filesUploaded[0].url}]})
-        }
-
-
-    }
-
-    const _onClickMap = (evt) => {
-        setNewListing({...newListing, geolocations: [{long: evt.lngLat[0], lat: evt.lngLat[1]}]});
-
-
-    };
-
-    const [addListing, addedListing] = useMutation(ADD_LISTING_2);
-
-    useEffect(() => {
-        console.log("added");
-        console.log(addedListing);
-    }, [addedListing]);
-    const [stage, setStage] = useState(1);
+    const [stage, setStage] = useState(1); //3 stages to divide up the inputs
     const [warn, setWarn] = useState(false);
     const [newListing, setNewListing] = useState(
         {
@@ -67,6 +42,29 @@ export function AddListing(props) {
             images: []
         }
     );
+
+
+    let history = useHistory();
+
+
+    //get links for each uploaded image
+    function handleUpload(res) {
+
+        if (res.filesUploaded.length > 0) {
+            setNewListing({...newListing, images: [...newListing.images, {url: res.filesUploaded[0].url}]})
+        }
+
+
+    }
+
+    //get location from map pinpoint and set it on listing state
+    const _onClickMap = (evt) => {
+        setNewListing({...newListing, geolocations: [{long: evt.lngLat[0], lat: evt.lngLat[1]}]});
+
+
+    };
+
+    const [addListing, addedListing] = useMutation(ADD_LISTING_2);
 
     const stage1 = (
         <>
@@ -189,7 +187,7 @@ export function AddListing(props) {
                         <Button onClick={onPick}>Pick</Button>
                     </div>
                 )}
-                apikey={'AkTKUy8PSQOeuJgw6XCqaz'}
+                apikey={'AybvCzJCyQnKdsNnIRm33z'}
                 onSuccess={(res) => handleUpload(res)}
             />
 
@@ -228,9 +226,8 @@ export function AddListing(props) {
             }
 
             else {
-                console.log("submitting");
                 setWarn(false);
-                setShow(true);
+                setShow(true); //confirm paypal account before saving
 
 
             }
@@ -258,7 +255,7 @@ export function AddListing(props) {
             return <Loading/>
         }
         else if (addedListing.error) {
-            return <h4>Something went wrong. try again please</h4>;
+            return <p style={{margin:"100px"}}>Something went wrong. try again please</p>;
         }
         else if (addedListing.data) {
             return <Success message={"Listing has been added."}/>
@@ -268,10 +265,8 @@ export function AddListing(props) {
             return (
                 <>
 
-                    <FormContainer>
-                        <Second>Stage {stage}</Second>
-                        {warn ? <p style={{color: "red"}}>All Fields Are Required</p> : <></>}
-                        {cont}
+                    <FormContainer style={{ height:"85vh", overflowY:"scroll"}}>
+
                         <InputContainer>
                             {
                                 stage > 1 ? <Button onClick={event => {
@@ -280,12 +275,16 @@ export function AddListing(props) {
                                     Back
                                 </Button> : <></>
                             }
+                            <Second>Stage {stage}</Second>
 
                             <Button onClick={event => {
                                 handleAdd(event)
                             }}>{stage < 3 ? "Next" : "Add"}
                             </Button>
                         </InputContainer>
+                        {warn ? <p style={{color: "red"}}>All Fields Are Required</p> : <></>}
+                        {cont}
+
 
                     </FormContainer>
                 </>
@@ -298,7 +297,7 @@ export function AddListing(props) {
                 setShow(false);
                 save();
             }}/>
-            <Wrapper>
+            <Wrapper style={{marginTop:"0px", marginBottom:"0px", height:"85vh", overflowY:"hidden"}}>
 
 
                 {content(addedListing)}

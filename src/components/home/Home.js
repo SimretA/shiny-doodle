@@ -13,7 +13,9 @@ export function Home() {
         city:"",
         country:""
     });
-    const [expand, setExpand] = React.useState(true);
+
+
+    const [expand, setExpand] = React.useState(true); //to expand the search fields
     const [getListings, {data, loading}] = useLazyQuery(SEARCH_LISTING);
     const [visible, setVisible] = React.useState(false);
     const [selectedListing, setSelectedListing] = React.useState({});
@@ -33,14 +35,15 @@ export function Home() {
 
         getListings({variables:{searchListingInput: searchInput}})
     }
-    if(data){
-        console.log(data);
-    }
+
     const[showModal, setShowModal] = React.useState(false);
 
     React.useEffect(()=>{
         if(data && data.searchListing && data.searchListing.length>0){
-            setExpand(false);
+            setExpand(false); //give room to incoming listings
+        }
+        else{
+            setExpand(true);
         }
 
     },[data]);
@@ -65,7 +68,7 @@ export function Home() {
                                                                                    />)}
                 </>:<></>}
                 {
-                    data && data.searchListing && data.searchListing.length===0? "Opps, No listing found:(":""
+                    data && data.searchListing && data.searchListing.length===0?<div style={{margin:"auto"}}> Opps, No listing found :(</div>:""
                 }
             </RightSideBar>
 
