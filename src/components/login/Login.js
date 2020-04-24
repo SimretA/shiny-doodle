@@ -7,6 +7,7 @@ import {TextInput, Button, Label} from "../shared/FormComponents";
 import {LOG_IN, GET_USER_BY_ID} from "../../query/auth";
 import {useLazyQuery} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
+import {emailValidation} from "../../control/validation";
 
 export function Login(props) {
 
@@ -26,6 +27,11 @@ export function Login(props) {
 
         if (formInput.email.trim() === "" || formInput.password.trim() === "") {
             setWarn("Please Fill All Fields");
+
+        }
+        else if(!emailValidation(formInput.email)){
+            setWarn("Invalid Email");
+
 
         }
         else {
@@ -63,7 +69,7 @@ export function Login(props) {
                 <p style={{color: "red"}}>{error ? error.message == "GraphQL error: user is not confirmed"
                     ? "Please use a link emailed to you to confirm your account"
                     : "Invalid email or password"
-                    : ""} </p>
+                    : warn} </p>
 
                 <InputContainer>
                     <Label htmlFor="email">Email</Label>
