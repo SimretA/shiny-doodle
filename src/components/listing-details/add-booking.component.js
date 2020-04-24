@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Data, InlineWrapper} from "./List-detail.styled";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar} from "@fortawesome/free-solid-svg-icons";
-import {Button, TextInput} from "../shared/FormComponents";
+import {Button, Label, TextInput} from "../shared/FormComponents";
 import {AuthContext} from "../../context/AuthContext";
 import {ADD_BOOKING} from "../../query/booking";
 import {useMutation} from "@apollo/react-hooks";
@@ -15,7 +15,7 @@ export default function AddBooking(props) {
     const [auth, setAuth] = useContext(AuthContext);
 
     const [addBooking, addedBooking] = useMutation(ADD_BOOKING);
-    const[loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
 
     const [error, setError] = React.useState("");
@@ -31,6 +31,7 @@ export default function AddBooking(props) {
         const formattedEndDate = moment(booking.endBookDate).format('MM-DD-YYYY');
 
         if (booking.startBookDate && booking.endBookDate) {
+            setError("");
             addBooking(
                 {
                     variables: {
@@ -58,7 +59,7 @@ export default function AddBooking(props) {
                                 break;
                             case "Unauthenticated!!":
                                 // logout(history);
-                                setAuth({...auth, isAuthed:false});
+                                setAuth({...auth, isAuthed: false});
                                 break;
                             default:
                                 setError("Something went wrong");
@@ -68,11 +69,14 @@ export default function AddBooking(props) {
                     }
                 })
         }
+        else {
+            setError("Please select check-in and check-out dates")
+        }
 
     };
 
 
-    if(loading){
+    if (loading) {
         return <Loading/>
     }
     if (addedBooking.loading) {
@@ -82,7 +86,7 @@ export default function AddBooking(props) {
         );
     }
 
-    const handlePay = (bookingId) =>{
+    const handlePay = (bookingId) => {
         //This method receives a tokenized link to paypal and redirects user to that page
         const opts = {
             bookingId: bookingId
@@ -109,17 +113,20 @@ export default function AddBooking(props) {
                 width={100}
                 height={500}
             />
-            <p style={{fontSize:"18"}}>Almost there!</p>
+            <p style={{fontSize: "18"}}>Almost there!</p>
             <InlineWrapper>
 
-                <p style={{fontSize:"18"}}><small> Booked from </small> {new Date(booking.startBookDate).toDateString()}
-                    <small> 'till </small> {new Date(booking.endBookDate).toDateString()}</p>
+                <p style={{fontSize: "18"}}>
+                    <small> Booked from</small>
+                    {new Date(booking.startBookDate).toDateString()}
+                    <small> 'till</small>
+                    {new Date(booking.endBookDate).toDateString()}</p>
             </InlineWrapper>
             <p> Please confirm your booking and finish payment.</p>
-            <Button onClick={()=>handlePay(bookingId)}>Pay ${(((new Date(booking.endBookDate)).getTime() - (new Date(booking.startBookDate)).getTime()) / (1000 * 3600 * 24)) * parseFloat(props.price)}</Button>
+            <Button onClick={() => handlePay(bookingId)}>Pay
+                ${(((new Date(booking.endBookDate)).getTime() - (new Date(booking.startBookDate)).getTime()) / (1000 * 3600 * 24)) * parseFloat(props.price)}</Button>
         </>;
     }
-
 
 
     //Date validation
@@ -151,7 +158,7 @@ export default function AddBooking(props) {
                 setError("Checkout date can't be this early.");
 
             }
-            else{
+            else {
 
                 setError("");
                 setBooking({...booking, endBookDate: event.target.value});
@@ -162,20 +169,21 @@ export default function AddBooking(props) {
     };
 
 
-
-
-
-
-
     return <>
         {auth.isAuthed ?
             <>
 
-                <p style={{color: 'red'}}>{error}</p>
+                <Data><FontAwesomeIcon icon={faCalendar}
+                                       style={{fontSize: 25, marginRight: 5}}/></Data>
                 <InlineWrapper>
-                    <Data><FontAwesomeIcon icon={faCalendar}
-                                           style={{fontSize: 25, marginRight: 5}}/></Data>
 
+                    <p style={{color: 'red', maxWidth:"200px"}}>{error}</p>
+                </InlineWrapper>
+
+                <InlineWrapper>
+
+
+                    <Label>Check-in</Label>
                     <TextInput type={"date"}
                                onChange={(event) => {
                                    console.log(event.target.value);
@@ -184,13 +192,14 @@ export default function AddBooking(props) {
                     />
                 </InlineWrapper>
                 <InlineWrapper>
+                    <Label>Check-out</Label>
                     <TextInput type={"date"}
                                onChange={(event) => datePicker(event, "end")}/>
 
-                    <Button onClick={handleAdd}>Book</Button>
+
                 </InlineWrapper>
-                <Button
-                    onClick={props.closeModal}> Cancel </Button></>
+                <Button onClick={handleAdd}>Book</Button>
+            </>
             :
             <h4>Please Login to Book</h4>}
 
