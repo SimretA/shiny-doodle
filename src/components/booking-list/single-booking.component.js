@@ -140,7 +140,8 @@ export function BookingItem(props) {
                         }}>Cancel</Button> :
                         <Button style={{}} onClick={() => {
 
-                            setShowPaypal(true);
+                            handlePay(props.data.id);
+                            // setShowPaypal(true);
                         }}>Pay and Confirm</Button>}
 
                 </Fade> : <></>}
