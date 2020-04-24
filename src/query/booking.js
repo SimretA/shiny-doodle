@@ -21,6 +21,7 @@ export const GET_BOOKING_BY_USER = gql`
         startBookDate
         endBookDate
         bookingDate
+        confirmed
         user{
             firstName
             lastName            
@@ -58,6 +59,7 @@ export const GET_BOOKING_BY_LISTING = gql`
         startBookDate
         endBookDate
         bookingDate
+        confirmed
         user{
             firstName
             lastName

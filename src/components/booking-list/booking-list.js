@@ -31,8 +31,6 @@ export function BookingList(props) {
         return <div>Something went wrong</div>
     }
     else if (data) {
-        console.log("bookings are", data);
-
 
         return <Wrapper>
 

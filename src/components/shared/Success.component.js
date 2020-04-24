@@ -3,9 +3,9 @@ import React from "react";
 
 export default function Success(props) {
 
-    return(
+    return (
         <div>
-            <h5>{props.message||"Successfully finished task"}</h5>
+            <p style={{fontSize: "20px"}}>{props.message || "Successfully finished task"}</p>
         </div>
     )
 
