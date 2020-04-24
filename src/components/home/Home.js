@@ -65,7 +65,7 @@ export function Home() {
                                                                                    />)}
                 </>:<></>}
                 {
-                    data && data.searchListing && data.searchListing.length===0? "Opps, No listing found:(":""
+                    data && data.searchListing && data.searchListing.length===0?<div style={{margin:"auto"}}> Opps, No listing found :(</div>:""
                 }
             </RightSideBar>
 

@@ -9,6 +9,7 @@ import {useMutation} from "@apollo/react-hooks";
 import Loading from "../shared/Loading.component";
 import moment from "moment";
 import Confetti from 'react-confetti';
+import {logout} from "../../control/auth";
 
 export default function AddBooking(props) {
 
@@ -54,7 +55,11 @@ export default function AddBooking(props) {
                                 setError("The listing is not available at this time");
                                 break;
                             case "Booking at start date exists for user":
-                                setError("You can't book different booking on the same date");
+                                setError("You're already booked at this date somewhere else.");
+                                break;
+                            case "Unauthenticated!!":
+                                // logout(history);
+                                setAuth({...auth, isAuthed:false});
                                 break;
                             default:
                                 setError("Something went wrong");

@@ -11,6 +11,10 @@ export const login = (history, location) =>{
 
 };
 
-export const logout = (history) =>{
+export const logout = (history, from) =>{
     history.push("/login");
+
+    // if(from){
+    //     history.replace
+    // }
 };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FormContainer, Column, Wrapper, InputContainer} from "./signup.styled";
 import {useMutation} from '@apollo/react-hooks';
 import Success from "../shared/Success.component";
@@ -15,6 +15,7 @@ export function Signup() {
     const [addUser, addedUser] = useMutation(ADD_USER);
 
     const  [warn, setWarn] = useState("");
+
 
     React.useEffect(() => {
         console.log(addedUser);
