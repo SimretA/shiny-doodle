@@ -314,7 +314,6 @@ export const EDIT_LISTING = gql`
         $bedrooms: Int
         $houseType: String
         $status: String
-        $anemitys: [UpdateAnemityInput]
 
 
 
@@ -331,7 +330,6 @@ export const EDIT_LISTING = gql`
         bedrooms: $bedrooms
         houseType: $houseType
         status: $status
-        anemitys: $anemitys
 
 
         }){

@@ -50,12 +50,12 @@ export function EditListing(props) {
     const [controlledAnemity, setControlledAnemity] = useState("");
 
 
-    React.useEffect(() => {
-        console.log(listing);
-    },[listing]);
+    // React.useEffect(() => {
+    //     console.log(listing);
+    // },[listing]);
 
     React.useEffect(() => {
-        console.log("listing", props.selectedListing);
+        // console.log("listing", props.selectedListing);
 
         const {id, name, personCapacity, city,
             images,
@@ -111,8 +111,7 @@ export function EditListing(props) {
                 personCapacity: listing.personCapacity,
                 bedrooms: listing.bedrooms,
                 houseType:  listing.houseType,
-                status: listing.status,
-                anemitys: listing.anemitys
+                status: listing.status
 
         }}).catch(e => {
                 if (e.message == "GraphQL error: Unauthenticated!!") {
@@ -171,9 +170,7 @@ export function EditListing(props) {
             </Fade>
         );
     }
-    if(editedListing.error){
-        console.log(editedListing.error);
-    }
+
 
     return <>
         <Prompt onYes={handleDelete} close={() => setShowPrompt(false)} show={showPrompt}

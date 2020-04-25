@@ -17,7 +17,7 @@ export default function Profile(props) {
     const {data, loading, error, refetch} = useQuery(GET_USER_BY_ID, {variables: {id: auth.account.id}});
     const [editable, setEditable] = React.useState(false);
 
-    console.log(auth.account.id);
+
 
     if (loading) {
         return <Loading/>
