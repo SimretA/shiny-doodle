@@ -170,7 +170,8 @@ export function AddListing(props) {
         <InputContainer>
             <Label htmlFor="anemities">Amenities</Label>
 
-            <TextInput  value={controlledAnemity} onChange={event=>setControlledAnemity(event.target.value)}  type={"text"} id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"}
+            <TextInput value={controlledAnemity} onChange={event => setControlledAnemity(event.target.value)}
+                       type={"text"} id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"}
                        onKeyPress={handleKeyPress}/>
 
         </InputContainer>
@@ -246,6 +247,7 @@ export function AddListing(props) {
             );
 
     }
+
     function handleBack(event) {
         event.preventDefault();
         setStage(stage - 1);
@@ -256,7 +258,7 @@ export function AddListing(props) {
             return <Loading/>
         }
         else if (addedListing.error) {
-            return <p style={{margin:"100px"}}>Something went wrong. try again please</p>;
+            return <p style={{margin: "100px"}}>Something went wrong. try again please</p>;
         }
         else if (addedListing.data) {
             return <Success message={"Listing has been added."}/>
@@ -266,22 +268,22 @@ export function AddListing(props) {
             return (
                 <>
 
-                    <FormContainer style={{ height:"85vh", overflowY:"scroll"}}>
+                    <FormContainer style={{height: "85vh", overflowY: "scroll"}}>
 
-                        <InputContainer style={{justifyContent:"space-around"}}>
+                        <InputContainer style={{justifyContent: "space-around"}}>
                             {
-                                stage > 1 ? <Button  style={{width: "150px", height:"35px"}} onClick={event => {
+                                stage > 1 ? <Button style={{width: "150px", height: "35px"}} onClick={event => {
                                     handleBack(event)
                                 }}>
                                     Back
-                                </Button> : <div style={{width: "150px", height:"35px"}}></div>
+                                </Button> : <div style={{width: "150px", height: "35px"}}></div>
                             }
                             <Second>Stage {stage}</Second>
 
-                            <Button style={{width: "150px", height:"35px"}}
+                            <Button style={{width: "150px", height: "35px"}}
                                     onClick={event => {
-                                handleAdd(event)
-                            }}>{stage < 3 ? "Next" : "Add"}
+                                        handleAdd(event)
+                                    }}>{stage < 3 ? "Next" : "Add"}
                             </Button>
                         </InputContainer>
                         {warn ? <p style={{color: "red"}}>All Fields Are Required</p> : <></>}
@@ -295,11 +297,15 @@ export function AddListing(props) {
     };
     return (
         <>
-            <PaypalAccount show={show} close={()=>{
-                setShow(false);
-                save();
-            }}/>
-            <Wrapper style={{marginTop:"0px", marginBottom:"0px", height:"85vh", overflowY:"hidden"}}>
+            <PaypalAccount show={show} save={save}
+                           closeWithNoSave={() => {
+                               setShow(false);
+                           }}
+                           close={() => {
+                               setShow(false);
+                               save();
+                           }}/>
+            <Wrapper style={{marginTop: "0px", marginBottom: "0px", height: "85vh", overflowY: "hidden"}}>
 
 
                 {content(addedListing)}

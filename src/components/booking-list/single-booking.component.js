@@ -20,8 +20,10 @@ const Wrapper = Styled.div`
         flex-direction: column;
         border: 1px yellow solid;
         margin-top: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 10px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
         :hover{
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
             margin-top: 0px;
             margin-bottom: 17px;
         }
@@ -42,7 +44,7 @@ const Pending = Styled.h5`
 
 export function BookingItem(props) {
 
-    const[loadingPay, setLoadingPay] = React.useState(false);
+    const [loadingPay, setLoadingPay] = React.useState(false);
 
 
     const [expand, setExpand] = React.useState(false);
@@ -61,7 +63,7 @@ export function BookingItem(props) {
     // console.log("the difference is ", moment.duration(start.diff(now)).asDays());
 
     //redirect to paypal sandbox for paymen
-    const handlePay = (bookingId) =>{
+    const handlePay = (bookingId) => {
 
         const opts = {
             bookingId: bookingId
@@ -109,19 +111,25 @@ export function BookingItem(props) {
                 setShowPrompt(false);
             }}
                     message={diff < 1 ? "You might not be eligible for any refund" : "If you cancel now only half price will be refunded."}/>
-            <PaypalAccount show={showPaypal} close={() => {
-                setShowPaypal(false);
-                if(props.data.confirmed){
-                    // if booking is confirmed allow cancellation
-                    handleCancel();
-                }
-                else{
-                    //if booking is not confirmed allow confirmation
-                    // alert("Top up");
-                    handlePay(props.data.id);
-                }
+            <PaypalAccount show={showPaypal}
+                           closeWithNoSave={() => setShowPaypal(false)}
+                           close={() => {
+                               setShowPaypal(false);
+                               if (props.data.confirmed) {
+                                   // if booking is confirmed allow cancellation
+                                   handleCancel();
+                               }
+                               else {
+                                   //if booking is not confirmed allow confirmation
+                                   // alert("Top up");
+                                   handlePay(props.data.id);
+                               }
 
-            }} message={"The refund will be deposited to this account"}/>
+                           }}
+
+                           message={"The refund will be deposited to this account"}
+
+            />
             <Wrapper style={{textTransform: "capitalize"}} onClick={() => setExpand(!expand)}
                      onMouseEnter={() => props.hoverOn && props.hoverOn(data.listing.geolocations)}>
 
