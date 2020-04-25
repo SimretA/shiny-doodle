@@ -15,7 +15,7 @@ const Wrapper = Styled.div`
 export function ListingBookingList(props) {
 
     React.useEffect(() => {
-        console.log("Listing listtttt ", props);
+        // console.log("Listing listtttt ", props);
         fetch();
     }, [props]);
     const [getBooking, {data, loading}] = useLazyQuery(GET_BOOKING_BY_LISTING);
@@ -33,7 +33,7 @@ export function ListingBookingList(props) {
         return <Loading/>
     }
     if (data) {
-        console.log(data);
+        // console.log(data);
 
 
         return <>
