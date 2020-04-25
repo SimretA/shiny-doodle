@@ -80,7 +80,7 @@ export const GET_LISTINGS = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -135,7 +135,7 @@ export const GET_LISTING_BY_ID = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             user{
                 id
@@ -191,7 +191,7 @@ export const GET_LISTING_BY_USER = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -240,7 +240,7 @@ export const SEARCH_LISTING = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -273,11 +273,37 @@ export const SEARCH_LISTING = gql`
     }
 `;
 
+
+
 export const EDIT_LISTING = gql`
-  mutation updateListing($updatedListing: UpdateListingInput) {
-    updateListing(
-        input: $updatedListing
-        ){
+ mutation updateListing(
+        $id: String
+        $name: String
+        $price: Float
+        $street: String
+        $city: String
+        $country: String
+        $personCapacity: Int
+        $bedrooms: Int
+        $houseType: String
+        $status: String
+        $images: [UpdateImageInput]
+        $anemitys: [UpdateAnemityInput]
+  ) {
+    updateListing(input:{
+        id: $id
+        name: $name
+        price: $price
+        street: $street
+        city: $city
+        country: $country
+        personCapacity: $personCapacity
+        bedrooms: $bedrooms
+        houseType: $houseType
+        status: $status
+        images: $images
+        anemitys: $anemitys
+        }){
              id
             name
             city

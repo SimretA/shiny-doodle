@@ -6,7 +6,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {useLazyQuery, useMutation} from "@apollo/react-hooks";
 import Loading from "./Loading.component";
 
-export function PaypalAccount({show, close, message}) {
+export function PaypalAccount({show, close, message, closeWithNoSave}) {
     const [auth, setAuth] = useContext(AuthContext);
     const [paypalAccount, setPaypalAccount] = React.useState("");
     const [getUserPaypal, {data, loading, error}] = useLazyQuery(GET_USER_PAYPAL_ID);
@@ -48,6 +48,7 @@ export function PaypalAccount({show, close, message}) {
     }
 
     return <Modal width={"30%"} show={show} close={() => {
+        closeWithNoSave();
     }}>
         {
             data && data.user.paypalAccount ?

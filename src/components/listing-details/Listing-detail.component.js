@@ -104,6 +104,8 @@ export default function ListDetail(props) {
                                 <Data><FontAwesomeIcon icon={faHome} style={{fontSize: 25, marginRight: 5}}/></Data>
                                 <Data>{props.data.name}, {props.data.houseType} - {props.data.city}, {props.data.country}
                                 </Data>
+                                <small>{`Bedrooms: ${props.data.bedrooms}  Bathrooms: ${props.data.bathrooms}`}</small>
+
                             </InlineWrapper>
                         </Fade>
                         <Fade right>
