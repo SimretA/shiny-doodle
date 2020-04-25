@@ -21,6 +21,9 @@ export default function ({userId}) {
     if(loading){
         return <Loading />
     }
+    if (error){
+        return <div style={{margin:"100px"}}>Something went wrong</div>
+    }
     if(data) {
         // console.log(data);
 

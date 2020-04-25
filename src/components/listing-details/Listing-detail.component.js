@@ -3,18 +3,26 @@ import {Wrapper, Data, InlineWrapper, Column, MapContainer, StickyColumn} from "
 import {Button} from "../shared/FormComponents";
 import Map from "../shared/Location-picker.component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faMoneyBill, faPersonBooth, faArrowCircleLeft, faArrowCircleRight} from '@fortawesome/free-solid-svg-icons'
+import {
+    faHome,
+    faMoneyBill,
+    faPersonBooth,
+    faArrowCircleLeft,
+    faArrowCircleRight
+} from '@fortawesome/free-solid-svg-icons'
 import 'react-calendar/dist/Calendar.css';
 import {Calendar} from "../shared/Calendar.component";
 import Review from './../review-listing/review-listing';
 import AddBooking from './add-booking.component';
 import 'react-calendar/dist/Calendar.css';
 import {Fade} from "react-reveal";
+import {Tag} from "../shared/Tag";
+import {InputContainer} from "../login/login.styled";
 
 
 export default function ListDetail(props) {
 
-    const{images} = props.data;
+    const {images} = props.data;
     const [next, setNext] = React.useState(false);
     const [back, setBack] = React.useState(false);
     const [index, setindex] = React.useState(0); //to get image url from a list
@@ -22,7 +30,7 @@ export default function ListDetail(props) {
     const show = props.showModal ? 'flex' : 'none';
 
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         setImageSrc("https://picsum.photos/id/870/200/300?grayscale&blur=2");
         setindex(0);
         if (images) {
@@ -30,42 +38,42 @@ export default function ListDetail(props) {
 
                 setImageSrc(props.data.images[index].url);
             }
-            if(images.length > 1){
+            if (images.length > 1) {
                 //more than one image means scrollable
                 setNext(true);
                 setBack(false);
             }
-            else{
+            else {
                 //only one image is not scrollable
                 setNext(false);
                 setBack(false);
             }
         }
 
-    },[props]);
+    }, [props]);
 
-    React.useEffect(()=>{
-        if(images && images.length> index){
+    React.useEffect(() => {
+        if (images && images.length > index) {
             setImageSrc(images[index].url)
         }
-    },[index]);
-    const goToNext = () =>{
-        if(index===images.length-2){
+    }, [index]);
+    const goToNext = () => {
+        if (index === images.length - 2) {
             setNext(false);
         }
-        if(index<images.length){
-            setindex(index+1);
+        if (index < images.length) {
+            setindex(index + 1);
             setBack(true);
 
         }
 
     };
-    const goBack = () =>{
-        if(index===1){
+    const goBack = () => {
+        if (index === 1) {
             setBack(false);
         }
-        if(index>0){
-            setindex(index-1);
+        if (index > 0) {
+            setindex(index - 1);
             setNext(true);
         }
 
@@ -86,17 +94,17 @@ export default function ListDetail(props) {
                     <Column>
                         <Fade right>
                             <InlineWrapper>
-                                {back?<FontAwesomeIcon icon={faArrowCircleLeft}
-                                                       onClick={goBack}
-                                                       style={{fontSize: 25, marginRight: 5}}/>:<></>}
+                                {back ? <FontAwesomeIcon icon={faArrowCircleLeft}
+                                                         onClick={goBack}
+                                                         style={{fontSize: 25, marginRight: 5}}/> : <></>}
                                 <img
                                     src={imageSrc}
                                     alt="Card cap"
                                     style={{width: 250, height: 250}}/>
-                                {next?
+                                {next ?
                                     <FontAwesomeIcon icon={faArrowCircleRight}
                                                      onClick={goToNext}
-                                                     style={{fontSize: 25, marginRight: 5}}/>:<></>}
+                                                     style={{fontSize: 25, marginRight: 5}}/> : <></>}
                             </InlineWrapper>
                         </Fade>
                         <Fade right>
@@ -104,7 +112,11 @@ export default function ListDetail(props) {
                                 <Data><FontAwesomeIcon icon={faHome} style={{fontSize: 25, marginRight: 5}}/></Data>
                                 <Data>{props.data.name}, {props.data.houseType} - {props.data.city}, {props.data.country}
                                 </Data>
-                                <small>{`Bedrooms: ${props.data.bedrooms}  Bathrooms: ${props.data.bathrooms}`}</small>
+                                <small>{`Bedrooms: ${props.data.bedrooms}  Bathrooms: ${props.data.bathrooms}`}
+                                    {props.data.anemitys && props.data.anemitys.map((anemity, i) => <Tag text={anemity.name}
+                                                                                                         key={i} index={i}
+                                    />)}
+                                </small>
 
                             </InlineWrapper>
                         </Fade>
@@ -117,13 +129,22 @@ export default function ListDetail(props) {
                             </InlineWrapper>
                         </Fade>
                         <Fade right>
-                            <InlineWrapper>
+                            <InlineWrapper style={{marginBottom:"0px", paddingBottom:"0px"}}>
                                 <Data><FontAwesomeIcon icon={faMoneyBill}
                                                        style={{fontSize: 25, marginRight: 5}}/></Data>
-                                <p>${props.data.price} with {props.data.personCapacity} people capacity
+                                <p >${props.data.price} with {props.data.personCapacity} people capacity
                                 </p>
                             </InlineWrapper>
+
+                            {/*<InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>*/}
+                                {/*{props.data.anemitys && props.data.anemitys.map((anemity, i) => <Tag text={anemity.name}*/}
+                                                                                                     {/*key={i} index={i}*/}
+                                {/*/>)}*/}
+
+
+                            {/*</InputContainer>*/}
                         </Fade>
+
                         <Fade right>
                             <InlineWrapper>
 
