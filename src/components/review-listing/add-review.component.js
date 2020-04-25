@@ -50,10 +50,10 @@ export default function AddReview(props) {
         props.refetch && props.refetch();
          return <Success message={'Thank you for the review'}/>
     }
-    return <div>
+    return <div style={{display:"flex", flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap", margin:"10px"}}>
         {auth.isAuthed ?
             <>
-                <TextAreaInput rows="5" cols="60" onChange={event => setReview(event.target.value)}/>
+                <TextAreaInput  onChange={event => setReview(event.target.value)} placeholder={"Leave a Review"}/>
                 <Button onClick={handleAdd}>Send</Button>
             </> :
             <a>Login to leave a review</a>}

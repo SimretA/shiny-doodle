@@ -18,7 +18,7 @@ export const TextInput = Styled.input`
       }
 `;
 export const TextAreaInput = Styled.textarea`
-        width: 1oo%;
+      width: 80%;
       flex: 3;
       font-size: 1rem;
       font-weight: 400;

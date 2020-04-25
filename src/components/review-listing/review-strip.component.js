@@ -23,6 +23,11 @@ const Wrapper = Styled.div`
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    :hover{
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
     
 `;
 
@@ -37,6 +42,7 @@ const InlineWrapper = Styled.div`
 const Menu = Styled.div`
     display; flex;
     flex-direction: row;
+    width: 200px;
 
 `;
 
@@ -110,23 +116,23 @@ export default function ReviewStrip(props) {
                     name={`${firstName} ${lastName}`} size="30"/>
             <p style={{paddingLeft: "15"}}>{firstName} {lastName}</p>
             {auth.account.id == id ?
-                <Menu>{expand ? <>
-                        <Fade left>
+                <Fade left> <Menu>{expand ? <>
+
                             <FontAwesomeIcon icon={faEdit} style={{
                                 fontSize: 16,
                                 paddingRight: "5",
                                 paddingLeft: "5",
                                 color: "yellow",
                                 marginRight: 5
-                            }} onClick={() => setEdit(true)}/></Fade>
-                        <Fade left>
+                            }} onClick={() => setEdit(true)}/>
+
                             <FontAwesomeIcon icon={faTrash}
                                              style={{fontSize: 16, paddingRight: "5", color: "red", marginRight: 5}}
-                                             onClick={() => handleDelete()}/></Fade>
-                        <Fade left>
+                                             onClick={() => handleDelete()}/>
+
                             <FontAwesomeIcon icon={faArrowLeft}
                                              style={{fontSize: 16, color: "gray", paddingRight: "5", marginRight: 5}}
-                                             onClick={() => setExpand(false)}/></Fade>
+                                             onClick={() => setExpand(false)}/>
                     </>
                     : <Fade right><FontAwesomeIcon icon={faArrowRight}
                                                    style={{
@@ -135,7 +141,7 @@ export default function ReviewStrip(props) {
                                                        paddingRight: "5",
                                                        marginRight: 5
                                                    }}
-                                                   onClick={() => setExpand(true)}/></Fade>}</Menu>
+                                                   onClick={() => setExpand(true)}/></Fade>}</Menu></Fade>
 
                 : <></>}
         </InlineWrapper>
