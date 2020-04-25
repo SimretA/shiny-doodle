@@ -68,7 +68,7 @@ export function PaypalAccount({show, close, message, closeWithNoSave}) {
         <div>
 
 
-            <Label>New Account</Label>
+            <Label>New PapPal Account</Label>
             <p style={{color:"red"}}>{warning}</p>
             <TextInput value={paypalAccount} onChange={(event) => setPaypalAccount(event.target.value)}/>
             <br/>
