@@ -37,7 +37,6 @@ export default function ({userId}) {
                 {data.listingByUser.map(datum => <Fade left><CardItem editable={true} handleClick={(data) => {
                     setShowModal(true);
                     setSelectedListing(data);
-                    console.log("clicked");
                 }} key={datum.id} {...datum} /></Fade>)}
 
 

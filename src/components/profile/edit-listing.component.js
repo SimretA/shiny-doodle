@@ -58,16 +58,15 @@ export function EditListing(props) {
         setListing({
             id,
             name,
-            personCapacity,
+            price,
             street,
             city,
             country,
-            price,
-            images,
-            bathrooms,
+            personCapacity,
             bedrooms,
             houseType,
             status,
+            images,
             anemitys: anemitys
 
         })
@@ -211,6 +210,21 @@ export function EditListing(props) {
                     <InlineContainer>
                         <TextInput value={listing.country}
                                    onChange={(event) => setListing({...listing, country: event.target.value})}/>
+                    </InlineContainer>
+
+                    <InlineContainer>
+                        <p>Bedrooms</p>
+                        <TextInput type={'number'} value={listing.bedrooms}
+                                   onChange={(event) => setListing({
+                                       ...listing,
+                                       bedrooms: parseInt(event.target.value)
+                                   })}/>
+                        {/*<p>Bathrooms</p>*/}
+                        {/*<TextInput type={'number'} value={listing.bathrooms}*/}
+                                   {/*onChange={(event) => setListing({*/}
+                                       {/*...listing,*/}
+                                       {/*bathrooms: parseInt(event.target.value)*/}
+                                   {/*})}/>*/}
                     </InlineContainer>
                     <InlineContainer style={{justifyContent: "space-evenly"}}>
                         <Button onClick={handleSave}>Save</Button>

@@ -80,7 +80,7 @@ export const GET_LISTINGS = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -135,7 +135,7 @@ export const GET_LISTING_BY_ID = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             user{
                 id
@@ -191,7 +191,7 @@ export const GET_LISTING_BY_USER = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -240,7 +240,7 @@ export const SEARCH_LISTING = gql`
             personCapacity
             houseType
             bedrooms
-            bedrooms
+            bathrooms
             rating
             reviews{
               id
@@ -283,10 +283,10 @@ export const EDIT_LISTING = gql`
         $street: String
         $city: String
         $country: String
-        $bedrooms: Int
-        $bathrooms: Int
         $personCapacity: Int
+        $bedrooms: Int
         $houseType: String
+        $status: String
         $images: [UpdateImageInput]
         $anemitys: [UpdateAnemityInput]
   ) {
@@ -297,10 +297,10 @@ export const EDIT_LISTING = gql`
         street: $street
         city: $city
         country: $country
-        bedrooms: $bedrooms
-        bathrooms: $bathrooms
         personCapacity: $personCapacity
+        bedrooms: $bedrooms
         houseType: $houseType
+        status: $status
         images: $images
         anemitys: $anemitys
         }){
