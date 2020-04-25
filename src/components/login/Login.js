@@ -50,6 +50,7 @@ export function Login(props) {
     }
     if (data && data.login) {
         //sessionize and keep user logged in
+        console.log("token and id",data.login.token,  "id", data.login.userId);
         localStorage.setItem("token", data.login.token);
         localStorage.setItem("userId", data.login.userId);
         setAuth({

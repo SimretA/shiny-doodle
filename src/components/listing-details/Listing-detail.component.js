@@ -113,15 +113,22 @@ export default function ListDetail(props) {
                                 <Data>{props.data.name}, {props.data.houseType} - {props.data.city}, {props.data.country}
                                 </Data>
                                 <small>{`Bedrooms: ${props.data.bedrooms}  Bathrooms: ${props.data.bathrooms}`}
-                                    {props.data.anemitys && props.data.anemitys.map((anemity, i) => <Tag text={anemity.name}
-                                                                                                         key={i} index={i}
-                                    />)}
+
                                 </small>
 
                             </InlineWrapper>
                         </Fade>
                         <Fade right>
+
+                            <InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>
+                                {props.data.anemitys && props.data.anemitys.map((anemity, i) => <Tag text={anemity.name}
+                                                                                                     key={i} index={i}
+                                />)}
+
+
+                            </InputContainer>
                             <InlineWrapper>
+
                                 <Data><FontAwesomeIcon icon={faPersonBooth}
                                                        style={{fontSize: 25, marginRight: 5}}/></Data>
                                 <p>By: {props.data.user && props.data.user.firstName} {props.data.user && props.data.user.lastName}
@@ -136,13 +143,6 @@ export default function ListDetail(props) {
                                 </p>
                             </InlineWrapper>
 
-                            {/*<InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>*/}
-                                {/*{props.data.anemitys && props.data.anemitys.map((anemity, i) => <Tag text={anemity.name}*/}
-                                                                                                     {/*key={i} index={i}*/}
-                                {/*/>)}*/}
-
-
-                            {/*</InputContainer>*/}
                         </Fade>
 
                         <Fade right>

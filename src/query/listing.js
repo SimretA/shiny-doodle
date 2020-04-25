@@ -74,6 +74,7 @@ export const GET_LISTINGS = gql`
             price
             createdAt
             geolocations{
+              id
               lat
               long
             }
@@ -87,9 +88,11 @@ export const GET_LISTINGS = gql`
               content
             }
             images{
+              id
               url
             }
             anemitys{
+              id
               name
             }
             bookings{
@@ -129,6 +132,7 @@ export const GET_LISTING_BY_ID = gql`
             createdAt
             status
             geolocations{
+              id
               lat
               long
             }
@@ -149,9 +153,11 @@ export const GET_LISTING_BY_ID = gql`
               content
             }
             images{
+              id
               url
             }
             anemitys{
+              id
               name
             }
             bookings{
@@ -179,12 +185,14 @@ export const GET_LISTING_BY_USER = gql`
         listingByUser(id: $id){
             id
             name
+            street
             city
             country
             price
             createdAt
             status
             geolocations{
+              id
               lat
               long
             }
@@ -198,9 +206,11 @@ export const GET_LISTING_BY_USER = gql`
               content
             }
             images{
+              id
               url
             }
             anemitys{
+              id
               name
             }
             bookings{
@@ -234,6 +244,7 @@ export const SEARCH_LISTING = gql`
             price
             createdAt
             geolocations{
+              id
               lat
               long
             }
@@ -247,9 +258,11 @@ export const SEARCH_LISTING = gql`
               content
             }
             images{
+              id
               url
             }
             anemitys{
+              id
               name
             }
             bookings{
@@ -274,35 +287,53 @@ export const SEARCH_LISTING = gql`
 `;
 
 
+/****
+ *
+ *
 
+
+
+ *
+ * */
+
+/***
+ *
+
+
+
+ *
+ * ***/
 export const EDIT_LISTING = gql`
  mutation updateListing(
         $id: String
         $name: String
         $price: Float
-        $street: String
         $city: String
         $country: String
         $personCapacity: Int
         $bedrooms: Int
         $houseType: String
         $status: String
-        $images: [UpdateImageInput]
         $anemitys: [UpdateAnemityInput]
+
+
+
+
+
   ) {
     updateListing(input:{
         id: $id
         name: $name
         price: $price
-        street: $street
         city: $city
         country: $country
         personCapacity: $personCapacity
         bedrooms: $bedrooms
         houseType: $houseType
         status: $status
-        images: $images
         anemitys: $anemitys
+
+
         }){
              id
             name
