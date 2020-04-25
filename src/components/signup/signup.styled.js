@@ -6,7 +6,7 @@ export const Wrapper = Styled.div`
     justify-content: center;
 
     @media screen and (min-width: 640px){
-            margin:50px;
+            margin:20px;
         } 
 
 `;

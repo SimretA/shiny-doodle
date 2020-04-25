@@ -19,6 +19,7 @@ export function AddListing(props) {
     const [show, setShow] = useState(false);
     const [stage, setStage] = useState(1); //3 stages to divide up the inputs
     const [warn, setWarn] = useState(false);
+    const [controlledAnemity, setControlledAnemity] = useState("");
     const [newListing, setNewListing] = useState(
         {
             name: "",
@@ -117,7 +118,7 @@ export function AddListing(props) {
         </InputContainer>
         <InputContainer>
             <Label htmlFor="bathrooms">BathRooms</Label>
-            <TextInput type="text" id="bathrooms"
+            <TextInput type="number" id="bathrooms"
                        value={newListing.bathrooms} onChange={evt => {
                 setNewListing({...newListing, bathrooms: parseInt(evt.target.value)})
             }}/>
@@ -151,8 +152,8 @@ export function AddListing(props) {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            setNewListing({...newListing, anemitys: [...newListing.anemitys, {name: event.target.value}]});
-            event.target.value = "";
+            setNewListing({...newListing, anemitys: [...newListing.anemitys, {name: controlledAnemity}]});
+            setControlledAnemity("");
         }
     };
 
@@ -169,7 +170,7 @@ export function AddListing(props) {
         <InputContainer>
             <Label htmlFor="anemities">Amenities</Label>
 
-            <TextInput defaultValue={""} type={"text"} id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"}
+            <TextInput  value={controlledAnemity} onChange={event=>setControlledAnemity(event.target.value)}  type={"text"} id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"}
                        onKeyPress={handleKeyPress}/>
 
         </InputContainer>
@@ -267,17 +268,18 @@ export function AddListing(props) {
 
                     <FormContainer style={{ height:"85vh", overflowY:"scroll"}}>
 
-                        <InputContainer>
+                        <InputContainer style={{justifyContent:"space-around"}}>
                             {
-                                stage > 1 ? <Button onClick={event => {
+                                stage > 1 ? <Button  style={{width: "150px", height:"35px"}} onClick={event => {
                                     handleBack(event)
                                 }}>
                                     Back
-                                </Button> : <></>
+                                </Button> : <div style={{width: "150px", height:"35px"}}></div>
                             }
                             <Second>Stage {stage}</Second>
 
-                            <Button onClick={event => {
+                            <Button style={{width: "150px", height:"35px"}}
+                                    onClick={event => {
                                 handleAdd(event)
                             }}>{stage < 3 ? "Next" : "Add"}
                             </Button>
