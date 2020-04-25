@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Styled from 'styled-components';
 import {Button, Label, TextInput} from "../shared/FormComponents";
 import {useMutation} from "@apollo/react-hooks";
@@ -9,6 +9,8 @@ import {useHistory} from "react-router-dom";
 import {logout} from "../../control/auth";
 import Success from "../shared/Success.component";
 import {Prompt} from "../shared/Prompt.component";
+import {Tag} from "../shared/Tag";
+import {InputContainer} from "../login/login.styled";
 
 const Wrapper = Styled.div`
     display:flex;
@@ -45,35 +47,41 @@ export function EditListing(props) {
 
     const [listing, setListing] = React.useState(null);
     const [showPrompt, setShowPrompt] = React.useState(false);
+    const [controlledAnemity, setControlledAnemity] = useState("");
 
     React.useEffect(() => {
-        const {id, name, personCapacity, city, country, price, houseType, status} = props.selectedListing;
+        const {id, name, personCapacity, city, street,
+            images,
+            country, price, houseType, bathrooms, bedrooms,
+            status, anemitys} = props.selectedListing;
 
-        console.log(props.selectedListing);
         setListing({
             id,
             name,
             personCapacity,
+            street,
             city,
             country,
             price,
+            images,
+            bathrooms,
+            bedrooms,
             houseType,
-            status
+            status,
+            anemitys: anemitys
 
         })
 
-    }, [props.selectedListing]);
+    }, [props]);
 
     const [editListing, editedListing] = useMutation(EDIT_LISTING);
     const [deleteListing, deletedListing] = useMutation(DELETE_LISTING);
 
-
-    React.useEffect(()=>{listing && console.log("stat ", listing.status=='active')},[listing]);
     let history = useHistory();
 
     const handleDelete = () => {
-        deleteListing({variables: {id: listing.id}}).catch(e=>{
-                if(e.message=="GraphQL error: Unauthenticated!!"){
+        deleteListing({variables: {id: listing.id}}).catch(e => {
+                if (e.message == "GraphQL error: Unauthenticated!!") {
                     logout(history);
                 }
             }
@@ -89,24 +97,40 @@ export function EditListing(props) {
 
     const handleSave = () => {
 
-        editListing({variables: {updatedListing: listing}}).catch(e=>{
-                if(e.message=="GraphQL error: Unauthenticated!!"){
+        editListing({variables: {...listing}}).catch(e => {
+                if (e.message == "GraphQL error: Unauthenticated!!") {
                     logout(history);
                 }
             }
         );
 
         props.refetch();
-        // props.close();
+        props.close();
 
     };
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            setListing({...listing, anemitys: [...listing.anemitys, {name: controlledAnemity}]});
+            setControlledAnemity("");
+        }
+    };
+
+    const removeAnemity = (i) => {
+        let array = listing.anemitys;
+        array.splice(i, 1);
+
+
+        setListing({...listing, anemitys: array});
+    };
+
     const handleSnooze = () => {
 
         let stat;
-        if(listing.status == 'active'){
+        if (listing.status == 'active') {
             stat = 'snoozed';
         }
-        else{
+        else {
             stat = 'active';
         }
 
@@ -117,7 +141,7 @@ export function EditListing(props) {
 
     };
 
-    if(deletedListing.data){
+    if (deletedListing.data) {
         console.log("Deleted Listing", deletedListing.data);
         props.refetch();
 
@@ -130,50 +154,75 @@ export function EditListing(props) {
             </Fade>
         );
     }
+    if(editedListing.error){
+        console.log(editedListing.error);
+    }
 
     return <>
-        <Prompt onYes={handleDelete} close={()=>setShowPrompt(false)} show={showPrompt} onNo={()=>setShowPrompt(false)}/>
+        <Prompt onYes={handleDelete} close={() => setShowPrompt(false)} show={showPrompt}
+                onNo={() => setShowPrompt(false)}/>
         {listing ?
-        <Wrapper>
+            <Wrapper>
 
-            <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
-            <Column>
-                <InlineContainer>
-                    <TextInput value={listing.name}
-                               onChange={(event) => setListing({...listing, name: event.target.value})}/>
-                </InlineContainer>
-                <InlineContainer>
-                    <Label>Price</Label>
-                    <TextInput type={'number'} value={listing.price}
-                               onChange={(event) => setListing({...listing, price: parseFloat(event.target.value)})}/>
-                </InlineContainer>
-                <InlineContainer>
-                    <Label>Guests</Label>
-                    <TextInput type={'number'} value={listing.personCapacity}
-                               onChange={(event) => setListing({...listing, personCapacity:parseInt(event.target.value)})}/>
-                </InlineContainer>
+                <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
+                <Column>
+                    <InlineContainer>
+                        <TextInput value={listing.name}
+                                   onChange={(event) => setListing({...listing, name: event.target.value})}/>
+                    </InlineContainer>
+                    <InlineContainer>
+                        <Label>Price</Label>
+                        <TextInput type={'number'} value={listing.price}
+                                   onChange={(event) => setListing({
+                                       ...listing,
+                                       price: parseFloat(event.target.value)
+                                   })}/>
+                    </InlineContainer>
+                    <InlineContainer>
+                        <Label>Guests</Label>
+                        <TextInput type={'number'} value={listing.personCapacity}
+                                   onChange={(event) => setListing({
+                                       ...listing,
+                                       personCapacity: parseInt(event.target.value)
+                                   })}/>
+                    </InlineContainer>
+                    {/*<InputContainer>*/}
+                        {/*<Label htmlFor="anemities">Amenities</Label>*/}
 
-            </Column>
-            <Column>
-                <InlineContainer>
-                    <TextInput value={listing.city}
-                               onChange={(event) => setListing({...listing, city: event.target.value})}/>
-                </InlineContainer>
+                        {/*<TextInput value={controlledAnemity}*/}
+                                   {/*onChange={event => setControlledAnemity(event.target.value)} type={"text"}*/}
+                                   {/*id={"anemties"} placeholder={"WiFi, AC, Kitchen, Parking etc"}*/}
+                                   {/*onKeyPress={handleKeyPress}/>*/}
 
-                <InlineContainer>
-                    <TextInput value={listing.country}
-                               onChange={(event) => setListing({...listing, country: event.target.value})}/>
-                </InlineContainer>
-                <InlineContainer style={{justifyContent: "space-evenly"}}>
-                    <Button onClick={handleSave}>Save</Button>
-                    <Button onClick={()=>setShowPrompt(true)} style={{backgroundColor: "red", color: "white"}}>Delete</Button>
-                </InlineContainer>
+                    {/*</InputContainer>*/}
+                    <InputContainer style={{justifyContent: "space-evenly", flexWrap: "wrap"}}>
+                        {listing.anemitys && listing.anemitys.map((anemity, i) => <Tag text={anemity.name} key={i} index={i}
+                                                                   removeAnemity={() => removeAnemity(i)}/>)}
 
-            </Column>
+                    </InputContainer>
 
-        </Wrapper> :
-        <></>
-             }
+                </Column>
+                <Column>
+                    <InlineContainer>
+                        <TextInput value={listing.city}
+                                   onChange={(event) => setListing({...listing, city: event.target.value})}/>
+                    </InlineContainer>
+
+                    <InlineContainer>
+                        <TextInput value={listing.country}
+                                   onChange={(event) => setListing({...listing, country: event.target.value})}/>
+                    </InlineContainer>
+                    <InlineContainer style={{justifyContent: "space-evenly"}}>
+                        <Button onClick={handleSave}>Save</Button>
+                        <Button onClick={() => setShowPrompt(true)}
+                                style={{backgroundColor: "red", color: "white"}}>Delete</Button>
+                    </InlineContainer>
+
+                </Column>
+
+            </Wrapper> :
+            <></>
+        }
     </>
 
 }

@@ -273,11 +273,37 @@ export const SEARCH_LISTING = gql`
     }
 `;
 
+
+
 export const EDIT_LISTING = gql`
-  mutation updateListing($updatedListing: UpdateListingInput) {
-    updateListing(
-        input: $updatedListing
-        ){
+ mutation updateListing(
+        $id: String
+        $name: String
+        $price: Float
+        $street: String
+        $city: String
+        $country: String
+        $bedrooms: Int
+        $bathrooms: Int
+        $personCapacity: Int
+        $houseType: String
+        $images: [UpdateImageInput]
+        $anemitys: [UpdateAnemityInput]
+  ) {
+    updateListing(input:{
+        id: $id
+        name: $name
+        price: $price
+        street: $street
+        city: $city
+        country: $country
+        bedrooms: $bedrooms
+        bathrooms: $bathrooms
+        personCapacity: $personCapacity
+        houseType: $houseType
+        images: $images
+        anemitys: $anemitys
+        }){
              id
             name
             city

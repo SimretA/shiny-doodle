@@ -12,7 +12,7 @@ export  const Tag =(props)=>{
         font-size: 12px;
     `;
     return(
-        <TagContainer key={props.key}>
+        <TagContainer >
             {props.text}
             <FontAwesomeIcon icon={faWindowClose}
                              style={{

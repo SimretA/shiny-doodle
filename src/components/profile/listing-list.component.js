@@ -17,12 +17,12 @@ export default function ({userId}) {
     const {data, loading, error, refetch} = useQuery(GET_LISTING_BY_USER, {variables: {id: userId}});
 
 
-    React.useEffect(()=>{console.log("seleceted lsting",selectedListing)},[selectedListing]);
+    // React.useEffect(()=>{console.log("seleceted lsting",selectedListing)},[selectedListing]);
     if(loading){
         return <Loading />
     }
     if(data) {
-        console.log(data);
+        // console.log(data);
 
         return<>
 
