@@ -166,6 +166,8 @@ export function EditListing(props) {
                 <Button onClick={handleSnooze}>{listing.status == 'active' ? "Snooze" : "Activate"}</Button>
                 <Column>
                     <InlineContainer>
+                        <Label>Name</Label>
+
                         <TextInput value={listing.name}
                                    onChange={(event) => setListing({...listing, name: event.target.value})}/>
                     </InlineContainer>
@@ -203,11 +205,13 @@ export function EditListing(props) {
                 </Column>
                 <Column>
                     <InlineContainer>
+                        <Label>City</Label>
                         <TextInput value={listing.city}
                                    onChange={(event) => setListing({...listing, city: event.target.value})}/>
                     </InlineContainer>
 
                     <InlineContainer>
+                        <Label>Country</Label>
                         <TextInput value={listing.country}
                                    onChange={(event) => setListing({...listing, country: event.target.value})}/>
                     </InlineContainer>
