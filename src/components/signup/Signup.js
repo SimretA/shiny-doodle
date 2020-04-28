@@ -63,7 +63,7 @@ export function Signup() {
             setWarn("Confirm Password");
             return
         }
-        else if (phoneValidation(account.phone)) {
+        else if (!phoneValidation(account.phone)) {
             setWarn("Please provide a valid phone number");
             return
         }
